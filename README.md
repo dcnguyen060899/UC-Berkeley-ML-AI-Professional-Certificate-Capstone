@@ -117,6 +117,75 @@ From the distribution from readmission and length of stay across features, I hav
 
 The summary statistics and visualizations suggest a pattern where patients with higher readmission counts tend to have longer stays. This pattern can also be observed across different categorical features, such as the type of admission, severity of illness, and hospital departments. Here are some specific insights:
 
+#### Readmission Count vs Length of Stay
+
+The summary statistics table indicates that the mean length of stay decreases slightly as the readmission count increases up to 10, then starts increasing again.
+
+Certainly! Here is a concise version of the table in Markdown format:
+
+```markdown
+### Correlation between Readmission Count and Length of Stay: -0.01
+
+| Readmission Count | Count   | Mean   | Std    | Min | 25% | 50% | 75% | Max  |
+|-------------------|---------|--------|--------|-----|-----|-----|-----|------|
+| 0                 | 92017.0 | 33.10  | 21.59  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 1                 | 71668.0 | 31.94  | 21.88  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 2                 | 53133.0 | 31.99  | 21.88  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 3                 | 37477.0 | 31.75  | 21.83  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 4                 | 25141.0 | 31.34  | 21.68  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 5                 | 15875.0 | 30.76  | 21.51  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 6                 | 9583.0  | 30.14  | 21.28  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 7                 | 5529.0  | 30.40  | 21.97  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 8                 | 3187.0  | 30.04  | 22.22  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 9                 | 1791.0  | 30.66  | 23.90  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 10                | 1030.0  | 31.57  | 25.14  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 11                | 630.0   | 31.52  | 25.81  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 12                | 357.0   | 33.64  | 27.95  | 5.0 | 15.0| 25.0| 35.0| 110.0|
+| 13                | 246.0   | 35.41  | 30.26  | 5.0 | 15.0| 25.0| 42.5| 110.0|
+| 14                | 172.0   | 37.18  | 31.40  | 5.0 | 15.0| 25.0| 55.0| 110.0|
+| 15                | 116.0   | 44.40  | 36.61  | 5.0 | 15.0| 25.0| 65.0| 110.0|
+| 16                | 90.0    | 45.94  | 38.12  | 5.0 | 15.0| 35.0| 82.5| 110.0|
+| 17                | 66.0    | 47.88  | 36.68  | 5.0 | 15.0| 35.0| 75.0| 110.0|
+| 18                | 49.0    | 49.90  | 33.80  | 5.0 | 25.0| 35.0| 65.0| 110.0|
+| 19                | 42.0    | 51.07  | 34.44  | 5.0 | 25.0| 45.0| 75.0| 110.0|
+| 20                | 34.0    | 47.35  | 35.87  | 5.0 | 25.0| 35.0| 70.0| 110.0|
+| 21                | 29.0    | 57.93  | 38.42  | 5.0 | 25.0| 55.0| 85.0| 110.0|
+| 22                | 24.0    | 55.21  | 32.92  | 5.0 | 15.0| 65.0| 85.0| 110.0|
+| 23                | 20.0    | 64.00  | 35.60  | 5.0 | 32.5| 75.0| 87.5| 110.0|
+| 24                | 18.0    | 54.72  | 32.88  | 5.0 | 35.0| 50.0| 75.0| 110.0|
+| 25                | 16.0    | 50.31  | 38.23  | 5.0 | 20.0| 50.0| 75.0| 110.0|
+| 26                | 13.0    | 60.38  | 40.02  | 5.0 | 25.0| 55.0| 110.0| 110.0|
+| 27                | 11.0    | 67.73  | 40.15  | 5.0 | 40.0| 75.0| 110.0| 110.0|
+| 28                | 10.0    | 58.50  | 41.17  | 15.0| 25.0| 45.0| 103.8| 110.0|
+| 29                | 9.0     | 62.22  | 46.11  | 5.0 | 15.0| 85.0| 110.0| 110.0|
+| 30                | 7.0     | 44.29  | 38.56  | 5.0 | 20.0| 35.0| 60.0| 110.0|
+| 31                | 6.0     | 47.50  | 39.21  | 5.0 | 17.5| 55.0| 110.0| 110.0|
+| 32                | 5.0     | 68.00  | 35.64  | 15.0| 55.0| 75.0| 85.0 | 110.0|
+| 33                | 5.0     | 62.00  | 39.94  | 15.0| 35.0| 55.0| 95.0 | 110.0|
+| 34                | 4.0     | 86.25  | 23.23  | 55.0| 77.5| 90.0| 98.8 | 110.0|
+| 35                | 4.0     | 30.00  | 28.87  | 5.0 | 5.0 | 30.0| 55.0 | 55.0 |
+| 36                | 3.0     | 51.67  | 5.77   | 45.0| 50.0| 55.0| 55.0 | 55.0 |
+| 37                | 3.0     | 48.33  | 5.77   | 45.0| 45.0| 45.0| 50.0 | 55.0 |
+| 38                | 3.0     | 61.67  | 20.82  | 45.0| 50.0| 55.0| 70.0 | 85.0 |
+| 39                | 2.0     | 72.50  | 53.03  | 35.0| 53.8| 72.5| 91.3 | 110.0|
+| 40                | 2.0     | 62.50  | 67.18  | 15.0| 38.8| 62.5
+
+| 86.3 | 110.0|
+| 41                | 2.0     | 92.50  | 24.75  | 75.0| 83.8| 92.5| 101.3| 110.0|
+| 42                | 2.0     | 72.50  | 53.03  | 35.0| 53.8| 72.5| 91.3 | 110.0|
+| 43                | 1.0    | 110.00  | NaN    | 110.0|110.0|110.0|110.0| 110.0|
+| 44                | 1.0    | 55.00   | NaN    | 55.0 | 55.0 | 55.0| 55.0 | 55.0 |
+| 45                | 1.0    | 75.00   | NaN    | 75.0 | 75.0 | 75.0| 75.0 | 75.0 |
+| 46                | 1.0    | 110.00  | NaN    | 110.0|110.0|110.0|110.0| 110.0|
+| 47                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
+| 48                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
+| 49                | 1.0    | 55.00   | NaN    | 55.0 | 55.0 | 55.0| 55.0 | 55.0 |
+```
+- Patients with 0 readmissions have a mean stay of approximately 33 days.
+- The mean length of stay for patients with 1-10 readmissions remains relatively stable around 31-32 days.
+- For patients with more than 10 readmissions, the mean length of stay increases significantly, suggesting that a subset of patients with frequent readmissions require extended hospital stays due to complications or chronic conditions.
+
+
 #### 1. Type of Admission
 
 - **Emergency**: Patients admitted through emergency services tend to have varied lengths of stay, with a noticeable portion having longer stays. This category also sees frequent readmissions, indicating that patients admitted in emergencies may require longer recovery times and are more likely to be readmitted.
