@@ -141,12 +141,12 @@ The summary statistics and visualizations suggest a pattern where patients with 
 ### Confirming the Pattern: Readmission and Length of Stay
 
 1. **Readmission Count vs. Length of Stay**
-   ![Readmission Count vs Length of Stay](Readmission_Count_vs_Length_of_Stay.png)
+   ![Readmission Count vs Length of Stay](images/Readmission_Count_vs_Length_of_Stay.png)
 
    - The box plot indicates a general trend where higher readmission counts are associated with longer lengths of stay. Patients with more frequent readmissions tend to have a higher median length of stay, especially noticeable beyond 10 readmissions.
 
 2. **Cumulative Stay vs. Length of Stay**
-   ![Cumulative Stay vs Length of Stay](Cumulative_Stay_vs_Length_of_Stay.png)
+   ![Cumulative Stay vs Length of Stay](images/Cumulative_Stay_vs_Length_of_Stay.png)
 
    - The scatter plot shows the distribution of cumulative stays in relation to individual lengths of stay. While there are some outliers, the data points suggest that patients with longer individual stays tend to accumulate more days in the hospital overall, reinforcing the pattern observed in the readmission count.
 ### Implications
