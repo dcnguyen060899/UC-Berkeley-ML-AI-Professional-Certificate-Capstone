@@ -29,6 +29,28 @@ This report provides an exploratory data analysis (EDA) of a hospital dataset to
 - **Observation**: Gynecology department has the highest readmissions.
 - **Interpretation**: This could indicate a higher volume of cases or a need for specialized follow-up care in this department.
 
+#### Total Readmissions by Ward Type
+![Total Readmissions by Ward Type](images/Untitled.png)
+- **Observation**: Ward type 'R' has the highest number of readmissions, followed by ward types 'Q' and 'S'. Ward types 'P', 'T', and 'U' have significantly lower readmissions.
+- **Interpretation**: This suggests that ward type 'R' handles a higher volume of patients or more complex cases that lead to higher readmissions. The lower readmissions in ward types 'P', 'T', and 'U' may indicate either lower patient volumes or more effective patient management.
+
+#### Total Readmissions by Ward Facility Code
+![Total Readmissions by Ward Facility Code](images/Untitled.png)
+- **Observation**: Ward facility code 'F' has the highest number of readmissions, followed by codes 'E' and 'D'. Codes 'A', 'B', and 'C' have lower readmissions.
+- **Interpretation**: This indicates that ward facility 'F' might be serving a larger or more critically ill patient population, resulting in higher readmissions. Facilities 'A', 'B', and 'C' might have better discharge planning or serve less critical cases.
+
+#### Total Readmissions by Type of Admission
+![Total Readmissions by Type of Admission](images/Untitled.png)
+- **Observation**: Trauma admissions have the highest number of readmissions, followed by emergency admissions. Urgent admissions have the lowest readmissions.
+- **Interpretation**: The higher readmissions for trauma cases reflect the critical and often complex nature of these patients, requiring more frequent readmissions. Emergency cases also show high readmissions due to their acute nature, while urgent cases have comparatively lower readmissions.
+
+#### Total Readmissions by Severity of Illness
+![Total Readmissions by Severity of Illness](images/Untitled.png)
+- **Observation**: Patients with moderate severity of illness have the highest number of readmissions, followed by those with extreme and minor severity.
+- **Interpretation**: This suggests that patients with moderate severity of illness are more likely to be readmitted, possibly due to ongoing health issues that require repeated hospital care. Patients with extreme severity might have higher mortality rates or more intensive care leading to fewer readmissions, while those with minor severity are less likely to be readmitted.
+
+
+
 ### Length of Stay
 
 #### Length of Stay by Hospital Type
