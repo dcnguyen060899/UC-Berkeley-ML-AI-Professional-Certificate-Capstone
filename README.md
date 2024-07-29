@@ -111,7 +111,7 @@ This report provides an exploratory data analysis (EDA) of a hospital dataset to
 - **Enhance Trauma Care Facilities**: Given the longer stays for trauma admissions, hospitals should ensure adequate resources and specialized care for these patients.
 - **Patient Support Programs**: Implement programs to support patients with longer lengths of stay, including social support and post-discharge follow-ups.
 
-From the distribution from readmission and length of stay across features, I have notice that readmission and length of stay distribution has similar pattern. 
+From the distribution from readmission and length of stay across features, I have notice that readmission and length of stay distribution has similar pattern. However, note that not all features that has the same distribution pattern bettewn readmission and length of stay. For example, ward facility code has the highest readmission in code F. But all ward facility codes exhibit a similar pattern in length of stay, with a high concentration of shorter stays (1-3 days).
 
 ### Insights from Readmission and Length of Stay Patterns in Categorical Features
 
