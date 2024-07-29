@@ -168,13 +168,6 @@ Certainly! Here is a concise version of the table in Markdown format:
 | 40                | 2.0     | 62.50  | 67.18  | 15.0| 38.8| 62.5| 86.3 | 110.0|
 | 41                | 2.0     | 92.50  | 24.75  | 75.0| 83.8| 92.5| 101.3| 110.0|
 | 42                | 2.0     | 72.50  | 53.03  | 35.0| 53.8| 72.5| 91.3 | 110.0|
-| 43                | 1.0    | 110.00  | NaN    | 110.0|110.0|110.0|110.0| 110.0|
-| 44                | 1.0    | 55.00   | NaN    | 55.0 | 55.0 | 55.0| 55.0 | 55.0 |
-| 45                | 1.0    | 75.00   | NaN    | 75.0 | 75.0 | 75.0| 75.0 | 75.0 |
-| 46                | 1.0    | 110.00  | NaN    | 110.0|110.0|110.0|110.0| 110.0|
-| 47                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
-| 48                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
-| 49                | 1.0    | 55.00   | NaN    | 55.0 | 55.0 | 55.0| 55.0 | 55.0 |
 
 - Patients with 0 readmissions have a mean stay of approximately 33 days.
 - The mean length of stay for patients with 1-10 readmissions remains relatively stable around 31-32 days.
