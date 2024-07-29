@@ -123,9 +123,6 @@ The summary statistics table indicates that the mean length of stay decreases sl
 
 Certainly! Here is a concise version of the table in Markdown format:
 
-```markdown
-### Correlation between Readmission Count and Length of Stay: -0.01
-
 | Readmission Count | Count   | Mean   | Std    | Min | 25% | 50% | 75% | Max  |
 |-------------------|---------|--------|--------|-----|-----|-----|-----|------|
 | 0                 | 92017.0 | 33.10  | 21.59  | 5.0 | 15.0| 25.0| 35.0| 110.0|
@@ -168,9 +165,7 @@ Certainly! Here is a concise version of the table in Markdown format:
 | 37                | 3.0     | 48.33  | 5.77   | 45.0| 45.0| 45.0| 50.0 | 55.0 |
 | 38                | 3.0     | 61.67  | 20.82  | 45.0| 50.0| 55.0| 70.0 | 85.0 |
 | 39                | 2.0     | 72.50  | 53.03  | 35.0| 53.8| 72.5| 91.3 | 110.0|
-| 40                | 2.0     | 62.50  | 67.18  | 15.0| 38.8| 62.5
-
-| 86.3 | 110.0|
+| 40                | 2.0     | 62.50  | 67.18  | 15.0| 38.8| 62.5| 86.3 | 110.0|
 | 41                | 2.0     | 92.50  | 24.75  | 75.0| 83.8| 92.5| 101.3| 110.0|
 | 42                | 2.0     | 72.50  | 53.03  | 35.0| 53.8| 72.5| 91.3 | 110.0|
 | 43                | 1.0    | 110.00  | NaN    | 110.0|110.0|110.0|110.0| 110.0|
@@ -180,7 +175,7 @@ Certainly! Here is a concise version of the table in Markdown format:
 | 47                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
 | 48                | 1.0    | 95.00   | NaN    | 95.0 | 95.0 | 95.0| 95.0 | 95.0 |
 | 49                | 1.0    | 55.00   | NaN    | 55.0 | 55.0 | 55.0| 55.0 | 55.0 |
-```
+
 - Patients with 0 readmissions have a mean stay of approximately 33 days.
 - The mean length of stay for patients with 1-10 readmissions remains relatively stable around 31-32 days.
 - For patients with more than 10 readmissions, the mean length of stay increases significantly, suggesting that a subset of patients with frequent readmissions require extended hospital stays due to complications or chronic conditions.
