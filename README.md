@@ -205,7 +205,8 @@ Certainly! Here is a concise version of the table in Markdown format:
 2. **Cumulative Stay vs. Length of Stay**
    ![Cumulative Stay vs Length of Stay](images/Cumulative_Stay_vs_Length_of_Stay.png)
 
-   - The scatter plot shows the distribution of cumulative stays in relation to individual lengths of stay. While there are some outliers, the data points suggest that patients with longer individual stays tend to accumulate more days in the hospital overall, reinforcing the pattern observed in the readmission count.
+   - The scatter plot shows the distribution of cumulative stays in relation to individual lengths of stay. While there are some outliers, the data points suggest that patients with longer individual stays tend to accumulate more days in the hospital overall, reinforcing the pattern observed in the readmission count. Overall, The visualization reinforces the pattern observed in the statistical summary. Higher readmission counts are generally associated with longer lengths of stay.
+
 ### Implications
 
 These insights imply that:
