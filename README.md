@@ -137,6 +137,18 @@ The summary statistics and visualizations suggest a pattern where patients with 
 - **TB & Chest disease**: This department shows higher lengths of stay and readmission counts, indicating the complexity and chronic nature of respiratory illnesses. Refer to the [Department vs Length of Stay](#length-of-stay-by-department) image.
 - **Surgery**: Surgical patients exhibit a broad range of stay lengths and readmission rates, depending on the type and severity of the surgery performed.
 
+
+### Confirming the Pattern: Readmission and Length of Stay
+
+1. **Readmission Count vs. Length of Stay**
+   ![Readmission Count vs Length of Stay](Readmission_Count_vs_Length_of_Stay.png)
+
+   - The box plot indicates a general trend where higher readmission counts are associated with longer lengths of stay. Patients with more frequent readmissions tend to have a higher median length of stay, especially noticeable beyond 10 readmissions.
+
+2. **Cumulative Stay vs. Length of Stay**
+   ![Cumulative Stay vs Length of Stay](Cumulative_Stay_vs_Length_of_Stay.png)
+
+   - The scatter plot shows the distribution of cumulative stays in relation to individual lengths of stay. While there are some outliers, the data points suggest that patients with longer individual stays tend to accumulate more days in the hospital overall, reinforcing the pattern observed in the readmission count.
 ### Implications
 
 These insights imply that:
