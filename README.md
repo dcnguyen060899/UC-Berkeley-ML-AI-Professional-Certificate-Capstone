@@ -289,3 +289,73 @@ Below are the feature importance visualizations from each model:
    - Investing in hospital facilities, such as upgrading bed grades and ensuring adequate extra rooms, can improve patient care quality and management efficiency.
 
 By focusing on these key areas, hospitals can better manage patient length of stay, improve patient outcomes, and optimize operational efficiency.
+
+# Comprehensive Classification Report, Confusion Matrix, and ROC-Curve Analysis
+
+This section presents an analysis of predictive modeling for patient length of stay using various machine learning models. The models evaluated include Random Forest, Gradient Boosting, CatBoost, and XGBoost. The performance of these models is assessed through classification reports, confusion matrices, and ROC-AUC curves.
+
+### Random Forest
+
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_rf](#confusion_matrix_rf)) indicates that the model struggles with accurately predicting the length of stay for several classes, particularly classes 0, 3, and 4.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_rf](#roc_rf)) demonstrate that the model has varying levels of performance across different classes, with AUC scores ranging from 0.68 to 0.93.
+
+### Gradient Boosting
+
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_gb](#confusion_matrix_gb)) shows similar issues as Random Forest, with poor prediction accuracy for classes 4, 6, 7, and 9.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_gb](#roc_gb)) display a range of AUC scores from 0.67 to 0.93, indicating varied performance across classes.
+
+### CatBoost
+
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_catboost](#confusion_matrix_catboost)) reflects challenges in predicting classes 4, 6, and 7 accurately.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_catboost](#roc_catboost)) show AUC scores from 0.69 to 0.93, indicating decent performance for most classes but still room for improvement.
+
+### XGBoost
+
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_xgboost](#confusion_matrix_xgboost)) reveals difficulties in accurately predicting classes 4, 6, and 7.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_xgboost](#roc_xgboost)) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
+
+## Analysis
+
+### Classification Reports
+The classification reports for all models show:
+- **Precision and Recall**: Precision and recall scores vary significantly across different classes, with lower scores for certain classes indicating that the models are struggling to predict those accurately.
+- **F1-Score**: The F1-scores are generally lower for classes 4, 6, and 7, suggesting that these classes are particularly challenging for the models.
+
+### Confusion Matrices
+The confusion matrices highlight:
+- **Misclassifications**: High levels of misclassifications for certain classes, especially those with fewer instances in the dataset, suggest that the models may be overfitting to more frequent classes.
+- **Diagonal Dominance**: Diagonal values (correct predictions) are not as dominant as desired, indicating that the models have room for improvement in accuracy.
+
+### ROC-AUC Curves
+The ROC-AUC curves reveal:
+- **Class-Wise Performance**: The models perform well for certain classes with AUC scores above 0.80, while performance is lower for others, indicating the need for further model tuning or additional feature engineering.
+- **Overall AUC**: Generally high AUC scores (above 0.70) for most classes suggest that the models have a reasonable ability to distinguish between different length-of-stay classes.
+
+## Conclusion and Recommendations
+- **Model Selection**: While all models exhibit reasonable performance, CatBoost and XGBoost show slightly better test accuracy and AUC scores, making them preferable for this task.
+- **Feature Engineering**: Further feature engineering, particularly focusing on classes with lower performance, could help improve model accuracy.
+- **Class Imbalance**: Addressing class imbalance through techniques like oversampling, undersampling, or using class weights could improve model performance for underrepresented classes.
+- **Hyperparameter Tuning**: Additional hyperparameter tuning, especially for models like CatBoost and XGBoost, may yield further performance improvements.
+
+By addressing these areas, the predictive accuracy and generalization capability of the models for patient length of stay can be enhanced, leading to more reliable predictions and better-informed healthcare management decisions.
+
+### Figures
+
+- **Figure 1**: Confusion Matrix for Random Forest
+![Confusion Matrix RF](images/confusion_matrix_rf.png)
+- **Figure 2**: ROC-AUC Curves for Random Forest
+![ROC-AUC RF](images/roc_rf.png)
+- **Figure 3**: Confusion Matrix for Gradient Boosting
+![Confusion Matrix GB](images/confusion_matrix_gb.png)
+- **Figure 4**: ROC-AUC Curves for Gradient Boosting
+![ROC-AUC GB](images/roc_gb.png)
+- **Figure 5**: Confusion Matrix for CatBoost
+![Confusion Matrix CatBoost](images/confusion_matrix_catboost.png)
+- **Figure 6**: ROC-AUC Curves for CatBoost
+![ROC-AUC CatBoost](sandbox:/mnt/data/roc_catboost.png)
+- **Figure 7**: Confusion Matrix for XGBoost
+![Confusion Matrix XGBoost](images/confusion_matrix_xgboost.png)
+- **Figure 8**: ROC-AUC Curves for XGBoost
+![ROC-AUC XGBoost](images/roc_xgboost.png)
+
+This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
