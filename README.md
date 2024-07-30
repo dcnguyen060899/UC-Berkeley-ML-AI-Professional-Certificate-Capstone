@@ -352,7 +352,7 @@ By addressing these areas, the predictive accuracy and generalization capability
 - **Figure 5**: Confusion Matrix for CatBoost
 ![Confusion Matrix CatBoost](images/confusion_matrix_catboost.png)
 - **Figure 6**: ROC-AUC Curves for CatBoost
-![ROC-AUC CatBoost](sandbox:/mnt/data/roc_catboost.png)
+![ROC-AUC CatBoost](images/roc_catboost.png)
 - **Figure 7**: Confusion Matrix for XGBoost
 ![Confusion Matrix XGBoost](images/confusion_matrix_xgboost.png)
 - **Figure 8**: ROC-AUC Curves for XGBoost
