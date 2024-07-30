@@ -296,23 +296,23 @@ This section presents an analysis of predictive modeling for patient length of s
 
 ### Random Forest
 
-- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_rf](#confusion_matrix_rf)) indicates that the model struggles with accurately predicting the length of stay for several classes, particularly classes 0, 3, and 4.
-- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_rf](#roc_rf)) demonstrate that the model has varying levels of performance across different classes, with AUC scores ranging from 0.68 to 0.93.
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_rf](#confusion-matrix-rf)) indicates that the model struggles with accurately predicting the length of stay for several classes, particularly classes 0, 3, and 4.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_rf](#roc-rf)) demonstrate that the model has varying levels of performance across different classes, with AUC scores ranging from 0.68 to 0.93.
 
 ### Gradient Boosting
 
-- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_gb](#confusion_matrix_gb)) shows similar issues as Random Forest, with poor prediction accuracy for classes 4, 6, 7, and 9.
-- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_gb](#roc_gb)) display a range of AUC scores from 0.67 to 0.93, indicating varied performance across classes.
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_gb](#confusion-matrix-gb)) shows similar issues as Random Forest, with poor prediction accuracy for classes 4, 6, 7, and 9.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_gb](#roc-gb)) display a range of AUC scores from 0.67 to 0.93, indicating varied performance across classes.
 
 ### CatBoost
 
-- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_catboost](#confusion_matrix_catboost)) reflects challenges in predicting classes 4, 6, and 7 accurately.
-- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_catboost](#roc_catboost)) show AUC scores from 0.69 to 0.93, indicating decent performance for most classes but still room for improvement.
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_catboost](#confusion-matrix-catboost)) reflects challenges in predicting classes 4, 6, and 7 accurately.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_catboost](#roc-catboost)) show AUC scores from 0.69 to 0.93, indicating decent performance for most classes but still room for improvement.
 
 ### XGBoost
 
-- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_xgboost](#confusion_matrix_xgboost)) reveals difficulties in accurately predicting classes 4, 6, and 7.
-- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_xgboost](#roc_xgboost)) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
+- **Confusion Matrix**: The confusion matrix (refer to the [confusion_matrix_xgboost](#confusion-matrix-xgboost)) reveals difficulties in accurately predicting classes 4, 6, and 7.
+- **ROC-AUC Curves**: The ROC-AUC curves (refer to the [roc_xgboost](#roc-xgboost)) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
 
 ## Analysis
 
