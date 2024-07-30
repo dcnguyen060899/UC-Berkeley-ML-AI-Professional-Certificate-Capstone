@@ -218,3 +218,74 @@ These insights imply that:
 
 # Comprehensive Modelling Insight Report
 
+This section presents an analysis of factors influencing patient length of stay in hospitals using various machine learning models. The models employed include Gradient Boosting, Random Forest, CatBoost, XGBoost, and Logistic Regression. The analysis highlights the most impactful features identified by each model.
+
+#### Model Performance Summary
+
+| Model              | Train Accuracy | Test Accuracy |
+|--------------------|----------------|---------------|
+| Gradient Boosting  | 41.93%         | 41.62%        |
+| Random Forest      | 49.68%         | 42.19%        |
+| CatBoost           | 46.23%         | 42.84%        |
+| XGBoost            | 45.80%         | 42.41%        |
+| Logistic Regression| 39.92%         | 40.10%        |
+
+
+#### Key Features Influencing Length of Stay
+The top features identified across different models provide valuable insights into the factors affecting patient length of stay:
+
+1. **Visitors with Patient**:
+   - This feature consistently showed a high impact across models, indicating that the number of visitors is significantly related to the length of stay. More visitors might be associated with better patient morale and support, potentially leading to longer stays.
+
+2. **Ward Type (Q, P, S)**:
+   - Different ward types play a crucial role in determining the length of stay. This might be due to varying levels of care and facilities available in different ward types.
+
+3. **Admission Deposit**:
+   - The amount of the admission deposit is a significant predictor. Higher deposits may correlate with longer stays due to the nature of the treatment required or the financial capability of the patients.
+
+4. **Bed Grade**:
+   - The grade of the bed, which likely reflects the quality and type of care received, is an important factor. Higher bed grades usually indicate more intensive care and longer stays.
+
+5. **Available Extra Rooms in Hospital**:
+   - The availability of extra rooms in the hospital also impacts the length of stay. Hospitals with more available rooms might be able to accommodate patients for longer periods.
+
+6. **Type of Admission (Emergency, Trauma)**:
+   - Emergency and trauma admissions are linked to longer stays, reflecting the severity and immediate need for intensive care in such cases.
+
+7. **Severity of Illness (Minor, Extreme, Moderate)**:
+   - The severity of the illness is a critical factor. More severe illnesses naturally lead to longer hospital stays due to the complexity and intensity of required medical interventions.
+
+8. **Hospital Codes and City Codes**:
+   - The specific hospital and city codes also play a role, likely reflecting differences in hospital policies, regional healthcare quality, and patient demographics.
+
+#### Visualizations
+Below are the feature importance visualizations from each model:
+
+- **Gradient Boosting**:
+  ![Gradient Boosting Feature Importances](images/gradient_boosting.png)
+- **Random Forest**:
+  ![Random Forest Feature Importances](images/random_forest.png)
+- **CatBoost**:
+  ![CatBoost Feature Importances](images/catboost.png)
+- **XGBoost**:
+  ![XGBoost Feature Importances](images/xgboost.png)
+- **Logistic Regression**:
+  ![Logistic Regression Feature Importances](images/logistic_regression.png)
+
+#### Insights and Recommendations
+1. **Resource Allocation**:
+   - Hospitals should consider allocating resources based on the ward types and severity of illness to optimize patient care and potentially reduce unnecessary prolonged stays.
+   
+2. **Visitor Management**:
+   - Developing policies around visitor management could indirectly influence the length of stay, as more visitors might be associated with better patient outcomes.
+
+3. **Financial Planning**:
+   - Understanding the financial implications of admission deposits can help in planning and managing hospital finances and patient billing systems.
+
+4. **Tailored Care Plans**:
+   - Personalized care plans based on the type of admission and severity of illness could enhance patient recovery and optimize the length of stay.
+
+5. **Facility Improvements**:
+   - Investing in hospital facilities, such as upgrading bed grades and ensuring adequate extra rooms, can improve patient care quality and management efficiency.
+
+By focusing on these key areas, hospitals can better manage patient length of stay, improve patient outcomes, and optimize operational efficiency.
