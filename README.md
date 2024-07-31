@@ -294,25 +294,32 @@ By focusing on these key areas, hospitals can better manage patient length of st
 
 This section presents an analysis of predictive modeling for patient length of stay using various machine learning models. The models evaluated include Random Forest, Gradient Boosting, CatBoost, and XGBoost. The performance of these models is assessed through classification reports, confusion matrices, and ROC-AUC curves.
 
+### Baseline Model
+
+The baseline model is a simple model that predicts the most frequent class for all instances. This serves as a comparison point for more complex models.
+
+- **Confusion Matrix**: The confusion matrix (Figure 1) indicates that the model predicts the most frequent class (class 2) for all instances.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 2) demonstrate that the baseline model has an AUC of 0.50 for all classes, indicating no predictive power.
+
 ### Random Forest
 
-- **Confusion Matrix**: The confusion matrix (Figure 1) indicates that the model struggles with accurately predicting the length of stay for several classes, particularly classes 0, 3, and 4.
-- **ROC-AUC Curves**: The ROC-AUC curves (Figure 2) demonstrate that the model has varying levels of performance across different classes, with AUC scores ranging from 0.68 to 0.93.
+- **Confusion Matrix**: The confusion matrix (Figure 3) indicates that the model struggles with accurately predicting the length of stay for several classes, particularly classes 0, 3, and 4.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 4) demonstrate that the model has varying levels of performance across different classes, with AUC scores ranging from 0.68 to 0.93.
 
 ### Gradient Boosting
 
-- **Confusion Matrix**: The confusion matrix (Figure 3) shows similar issues as Random Forest, with poor prediction accuracy for classes 4, 6, 7, and 9.
-- **ROC-AUC Curves**: The ROC-AUC curves (Figure 4) display a range of AUC scores from 0.67 to 0.93, indicating varied performance across classes.
+- **Confusion Matrix**: The confusion matrix (Figure 5) shows similar issues as Random Forest, with poor prediction accuracy for classes 4, 6, 7, and 9.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 6) display a range of AUC scores from 0.67 to 0.93, indicating varied performance across classes.
 
 ### CatBoost
 
-- **Confusion Matrix**: The confusion matrix (Figure 5) reflects challenges in predicting classes 4, 6, and 7 accurately.
-- **ROC-AUC Curves**: The ROC-AUC curves (Figure 6) show AUC scores from 0.69 to 0.93, indicating decent performance for most classes but still room for improvement.
+- **Confusion Matrix**: The confusion matrix (Figure 7) reflects challenges in predicting classes 4, 6, and 7 accurately.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 8) show AUC scores from 0.69 to 0.93, indicating decent performance for most classes but still room for improvement.
 
 ### XGBoost
 
-- **Confusion Matrix**: The confusion matrix (Figure 7) reveals difficulties in accurately predicting classes 4, 6, and 7.
-- **ROC-AUC Curves**: The ROC-AUC curves (Figure 8) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
+- **Confusion Matrix**: The confusion matrix (Figure 9) reveals difficulties in accurately predicting classes 4, 6, and 7.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 10) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
 
 ## Analysis
 
@@ -341,21 +348,25 @@ By addressing these areas, the predictive accuracy and generalization capability
 
 ### Figures
 
-- **Figure 1**: Confusion Matrix for Random Forest
+- **Figure 1**: Confusion Matrix for Baseline Model
+![Confusion Matrix Baseline](images/confusion_matrix_dummies)
+- **Figure 2**: ROC-AUC Curves for Baseline Model
+![ROC-AUC Baseline](images/roc_dummies)
+- **Figure 3**: Confusion Matrix for Random Forest
 ![Confusion Matrix RF](images/confusion_matrix_rf.png)
-- **Figure 2**: ROC-AUC Curves for Random Forest
+- **Figure 4**: ROC-AUC Curves for Random Forest
 ![ROC-AUC RF](images/roc_rf.png)
-- **Figure 3**: Confusion Matrix for Gradient Boosting
+- **Figure 5**: Confusion Matrix for Gradient Boosting
 ![Confusion Matrix GB](images/confusion_matrix_gb.png)
-- **Figure 4**: ROC-AUC Curves for Gradient Boosting
+- **Figure 6**: ROC-AUC Curves for Gradient Boosting
 ![ROC-AUC GB](images/roc_gb.png)
-- **Figure 5**: Confusion Matrix for CatBoost
+- **Figure 7**: Confusion Matrix for CatBoost
 ![Confusion Matrix CatBoost](images/confusion_matrix_catboost.png)
-- **Figure 6**: ROC-AUC Curves for CatBoost
+- **Figure 8**: ROC-AUC Curves for CatBoost
 ![ROC-AUC CatBoost](images/roc_catboost.png)
-- **Figure 7**: Confusion Matrix for XGBoost
+- **Figure 9**: Confusion Matrix for XGBoost
 ![Confusion Matrix XGBoost](images/confusion_matrix_xgboost.png)
-- **Figure 8**: ROC-AUC Curves for XGBoost
+- **Figure 10**: ROC-AUC Curves for XGBoost
 ![ROC-AUC XGBoost](images/roc_xgboost.png)
 
 This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
