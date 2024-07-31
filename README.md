@@ -274,7 +274,7 @@ Below are the feature importance visualizations from each model:
    - This is train with lbfgs solver 
   ![Logistic Regression Feature Importances](images/logistic_regression.png)
 
-   - This is train with quasi-Newton
+   - This is train with quasi-Newton solver
   ![Logistic Regression Feature Importances](images/logistic_regression_qn.png)
 
 #### Insights and Recommendations
