@@ -49,7 +49,10 @@ This report provides an exploratory data analysis (EDA) of a hospital dataset to
 - **Observation**: Patients with moderate severity of illness have the highest number of readmissions, followed by those with extreme and minor severity.
 - **Interpretation**: This suggests that patients with moderate severity of illness are more likely to be readmitted, possibly due to ongoing health issues that require repeated hospital care. Patients with extreme severity might have higher mortality rates or more intensive care leading to fewer readmissions, while those with minor severity are less likely to be readmitted.
 
-
+#### Total Readmissions by Age
+![Total Readmissions by Age](images/Total_Readmissions_by_Age.png)
+- **Observation:** Patients in the age groups 31-40 and 41-50 have the highest number of readmissions, followed by those in the 21-30 and 51-60 age groups. The lowest number of readmissions is seen in the youngest (0-10) and oldest (91-100) age groups.
+- **Interpretation:** This suggests that middle-aged adults (31-50) are more likely to be readmitted, possibly due to a higher prevalence of chronic conditions or lifestyle-related health issues that necessitate repeated hospital care. Younger children and older adults have lower readmission rates, which could be due to differing health care needs and mortality rates.
 
 ### Length of Stay
 
