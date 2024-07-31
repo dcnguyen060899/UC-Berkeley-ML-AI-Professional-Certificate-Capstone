@@ -272,7 +272,7 @@ Below are the feature importance visualizations from each model:
   ![XGBoost Feature Importances](images/xgboost.png)
 - **Logistic Regression**:
    - This is train with lbfgs solver 
-  ![Logistic Regression Feature Importances](images/logistic_regression_lbfgs.png)
+  ![Logistic Regression Feature Importances](images/logistic_regression.png)
 
    - This is train with quasi-Newton
   ![Logistic Regression Feature Importances](images/logistic_regression_qn.png)
