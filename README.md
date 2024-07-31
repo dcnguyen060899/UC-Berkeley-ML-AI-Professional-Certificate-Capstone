@@ -379,9 +379,9 @@ By addressing these areas, the predictive accuracy and generalization capability
 - **Figure 10**: ROC-AUC Curves for XGBoost
 ![ROC-AUC XGBoost](images/roc_xgboost.png)
 - **Figure 11**: Confusion Matrix for Logistic Regression
-![Confusion Matrix Logistic Regression (quasi-Newton)](images/confusion_matrix_lr.png)
+![Confusion Matrix Logistic Regression (quasi-Newton)](images/confusion_matrix_lr_qn.png)
 - **Figure 12**: ROC-AUC Curves for Logistic Regression
-![ROC-AUC Logistic Regression (quasi-Newton](roc_lr.png)
+![ROC-AUC Logistic Regression (quasi-Newton](roc_lr_qn.png)
 
 
 This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
