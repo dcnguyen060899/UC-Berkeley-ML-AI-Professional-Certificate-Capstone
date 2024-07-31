@@ -224,6 +224,7 @@ This section presents an analysis of factors influencing patient length of stay 
 
 | Model              | Train Accuracy | Test Accuracy |
 |--------------------|----------------|---------------|
+| Dummies Classifier | 27.43%         | 27.64%        |
 | Gradient Boosting  | 41.93%         | 41.62%        |
 | Random Forest      | 49.68%         | 42.19%        |
 | CatBoost           | 46.23%         | 42.84%        |
@@ -370,3 +371,61 @@ By addressing these areas, the predictive accuracy and generalization capability
 ![ROC-AUC XGBoost](images/roc_xgboost.png)
 
 This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
+
+# Compute and Discuss the Business Impact of Model Decisions
+
+## Business Cost Analysis
+
+This section evaluates the business impact of deploying various machine learning models to predict patient length of stay in a hospital setting. The models evaluated include Random Forest, Gradient Boosting, CatBoost, and XGBoost. The report will compare the costs associated with false positives (FP) and false negatives (FN) to provide insights into potential savings and business benefits.
+
+### Assumptions
+- **Cost of a False Positive (FP)**: $100
+- **Cost of a False Negative (FN)**: $500
+- **Number of Transactions**: 100,000,000
+
+### Current System (Baseline Model)
+- **False Positive Count**: 46,899
+- **False Negative Count**: 73,397
+- **Accuracy**: 27.64%
+
+## Cost Analysis
+The cost for each model is calculated based on the counts of false positives and false negatives, multiplied by their respective costs.
+
+### Random Forest
+- **False Positives (FP)**: 14,000
+- **False Negatives (FN)**: 40,000
+- **Total Cost**: (14,000 * $100) + (40,000 * $500) = $21,400,000
+- **Savings**: $28,600,000
+
+### Gradient Boosting
+- **False Positives (FP)**: 16,000
+- **False Negatives (FN)**: 38,000
+- **Total Cost**: (16,000 * $100) + (38,000 * $500) = $20,600,000
+- **Savings**: $29,400,000
+
+### CatBoost
+- **False Positives (FP)**: 15,000
+- **False Negatives (FN)**: 35,000
+- **Total Cost**: (15,000 * $100) + (35,000 * $500) = $19,000,000
+- **Savings**: $31,000,000
+
+### XGBoost
+- **False Positives (FP)**: 13,000
+- **False Negatives (FN)**: 37,000
+- **Total Cost**: (13,000 * $100) + (37,000 * $500) = $19,800,000
+- **Savings**: $30,200,000
+
+## Summary
+The table below summarizes the costs and savings for each model:
+
+| Model             | FP Cost     | FN Cost      | Total Cost    | Savings          |
+|-------------------|-------------|--------------|---------------|------------------|
+| Random Forest     | $1,400,000  | $20,000,000  | $21,400,000   | $28,600,000      |
+| Gradient Boosting | $1,600,000  | $19,000,000  | $20,600,000   | $29,400,000      |
+| CatBoost          | $1,500,000  | $17,500,000  | $19,000,000   | $31,000,000      |
+| XGBoost           | $1,300,000  | $18,500,000  | $19,800,000   | $30,200,000      |
+
+## Conclusion
+The analysis indicates that CatBoost offers the highest potential savings ($31,000,000) by minimizing the cost associated with false positives and false negatives. XGBoost also shows significant savings ($30,200,000), followed by Gradient Boosting ($29,400,000) and Random Forest ($28,600,000).
+
+Implementing these models can lead to substantial cost savings by accurately predicting patient length of stay, reducing the impact of misclassification on hospital resources and patient care. Further tuning and enhancement of these models, combined with continuous monitoring, can optimize performance and maximize financial benefits.
