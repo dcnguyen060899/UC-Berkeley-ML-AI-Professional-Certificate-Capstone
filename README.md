@@ -56,6 +56,11 @@ This report provides an exploratory data analysis (EDA) of a hospital dataset to
 
 ### Length of Stay
 
+#### Distribution of Length of Stay
+![Distribution of Length of Stay](images/los_dist.png)
+- **Observation**: The distribution of length of stay shows multiple peaks, with the highest frequencies around 10, 20, and 30 days. There are also smaller peaks at intervals beyond 30 days.
+- **Interpretation**: This multimodal distribution suggests that hospital stays often follow standardized durations, likely due to clinical protocols or typical recovery periods for certain treatments. The presence of peaks at regular intervals indicates that many patients are discharged after a predefined period, possibly aligned with the hospital's care plans and discharge policies. The smaller peaks at longer durations may reflect the needs of patients with more complex or severe conditions requiring extended care.
+
 #### Length of Stay by Hospital Type
 ![Hospital Type Code vs Length of Stay](images/Hospital_Type_Code_vs_Length_of_Stay.png)
 - **Observation**: Variability in the length of stay is observed across different hospital types.
