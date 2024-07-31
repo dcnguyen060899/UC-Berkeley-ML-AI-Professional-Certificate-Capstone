@@ -271,7 +271,11 @@ Below are the feature importance visualizations from each model:
 - **XGBoost**:
   ![XGBoost Feature Importances](images/xgboost.png)
 - **Logistic Regression**:
-  ![Logistic Regression Feature Importances](images/logistic_regression.png)
+   - This is train with lbfgs solver 
+  ![Logistic Regression Feature Importances](images/logistic_regression_lbfgs.png)
+
+   - This is train with quasi-Newton
+  ![Logistic Regression Feature Importances](images/logistic_regression_qn.png)
 
 #### Insights and Recommendations
 1. **Resource Allocation**:
@@ -322,6 +326,11 @@ The baseline model is a simple model that predicts the most frequent class for a
 - **Confusion Matrix**: The confusion matrix (Figure 9) reveals difficulties in accurately predicting classes 4, 6, and 7.
 - **ROC-AUC Curves**: The ROC-AUC curves (Figure 10) exhibit AUC scores from 0.70 to 0.93, suggesting reasonable performance for most classes.
 
+### Logistic Regression (quasi-Newton)
+
+- **Confusion Matrix**: The confusion matrix (Figure 11) shows that the model has poor prediction accuracy for several classes, with significant misclassifications.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 12) display a range of AUC scores from 0.62 to 0.91, indicating varied performance across classes.
+
 ## Analysis
 
 ### Classification Reports
@@ -369,6 +378,11 @@ By addressing these areas, the predictive accuracy and generalization capability
 ![Confusion Matrix XGBoost](images/confusion_matrix_xgboost.png)
 - **Figure 10**: ROC-AUC Curves for XGBoost
 ![ROC-AUC XGBoost](images/roc_xgboost.png)
+- **Figure 11**: Confusion Matrix for Logistic Regression
+![Confusion Matrix Logistic Regression (quasi-Newton)](images/confusion_matrix_lr.png)
+- **Figure 12**: ROC-AUC Curves for Logistic Regression
+![ROC-AUC Logistic Regression (quasi-Newton](roc_lr.png)
+
 
 This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
 
