@@ -2,12 +2,202 @@
 # Comprehensive EDA Insight Report
 
 ## Executive Summary
+Business Goal:
+To develop a predictive model that accurately forecasts patient Length of Stay (LOS) at the time of admission, enabling hospitals to optimize resource allocation, improve patient care, and enhance operational efficiency in the wake of challenges highlighted by the COVID-19 pandemic.
 
-This report provides an exploratory data analysis (EDA) of a hospital dataset to uncover patterns and insights related to patient readmissions and length of stay. The analysis focuses on various factors such as hospital type, ward type, admission type, severity of illness, and other key features. The goal is to provide actionable insights for hospital management and policy-making to enhance patient care and optimize hospital operations through EDA and modelling insights.
+Key Insights We Aim to Achieve:
+
+1. Identify the most significant factors influencing patient LOS across different hospital types, departments, and admission categories.
+
+2. Quantify the impact of patient characteristics, admission types, and hospital facilities on LOS to inform targeted interventions.
+
+3. Determine patterns in readmission rates and their relationship to LOS, allowing for improved discharge planning and follow-up care strategies.
+
+4. Assess the effectiveness of different ward types and facility codes in managing patient LOS to guide future resource allocation decisions.
+
+5. Analyze the correlation between admission severity and LOS to better prepare for high-risk patients and optimize treatment plans.
+
+6. Evaluate the potential cost savings and operational improvements achievable through accurate LOS predictions, particularly in reducing unnecessary extended stays and optimizing bed management.
 
 ## Key Insights
 
-### Patient Readmissions
+### Features Distribution
+![Features Distribution](images/features_distribution.png)
+1. Hospital Distribution:
+
+   - There's significant variation in the number of cases across different hospitals, with some (e.g., codes 8, 28) handling notably higher volumes.
+   - This suggests differences in hospital capacity, specialization, or regional patient density.
+
+2. Hospital Types:
+
+   - Type 'e' hospitals are most prevalent, followed by type 'b'.
+   - Types 'g' and 'a' are least common, indicating possible specialization or regional distribution patterns.
+
+3. City Distribution:
+
+   - Cities 1, 2, and 6 have the highest number of hospital cases.
+   - This could reflect population density or the presence of major medical centers in these areas.
+
+4. Hospital Regions:
+
+   - Region X has the highest number of cases, followed by Y and Z.
+   - This suggests regional differences in healthcare infrastructure or population health needs.
+
+5. Departments:
+
+   - Gynecology department has significantly more cases than others shown.
+   - This could indicate a focus on women's health services or higher demand in this area.
+
+6. Ward Types:
+
+   - R and Q wards are most common, while P, T, and U are rare.
+   - This may reflect the general layout and specialization of hospitals in the dataset.
+
+7. Ward Facilities:
+
+   - Facility F is most prevalent, followed by E and D.
+   - This could indicate standardization in hospital designs or common facility categorizations.
+
+8. Admission Types:
+
+   - Trauma admissions are slightly more common than Emergency, with Urgent being least frequent.
+   - This distribution provides insight into the types of cases hospitals are handling most often.
+
+9. Severity of Illness:
+
+   - Moderate cases are most common, followed by Minor. Extreme cases are least frequent.
+   - This gives an overview of the general patient condition spectrum hospitals are dealing with.
+
+10. Age Distribution:
+
+    - Patients aged 31-60 form the largest groups.
+    - Very young (0-10) and very old (91-100) patients are least common.
+    - This reflects the demographic of patients requiring hospital care, with middle-aged adults being the primary users.
+
+### Cluster Anlysis
+
+#### Facility Quality Analysis:
+![Numerical Cluster Pairplot](images/cluster_numerical.png)
+
+
+| Cluster | Bed Grade | Admission Deposit | Available Extra Rooms in Hospital | Visitors with Patient |
+|---------|-----------|-------------------|-----------------------------------|-----------------------|
+| 0       | 2.718777  | 4822.332569       | 3.191379                          | 3.207386              |
+| 1       | 2.643691  | 4915.111255       | 3.326893                          | 3.353973              |
+| 2       | 2.418740  | 4814.594104       | 3.076863                          | 3.309846              |
+| 3       | 2.683682  | 4924.294393       | 3.213104                          | 3.275624              |
+
+1. Cluster 0 (Balanced): Moderate bed grades, admission deposits, and extra rooms. Average visitor numbers. Represents well-balanced hospitals with efficient resource utilization.
+
+2. Cluster 1 (High-End): Second-highest bed grades, highest admission deposits and extra rooms. Most visitors. Indicates premium hospitals with better facilities and higher costs.
+
+3. Cluster 2 (Budget): Lowest bed grades, deposits, and extra rooms. Second-highest visitors. Suggests older or less-equipped facilities with high occupancy rates, possibly serving lower-income areas.
+
+4. Cluster 3 (Mixed): Highest bed grades, second-highest deposits. Average extra rooms and visitors. Represents a mix of high-quality facilities with moderate capacity and costs.
+
+Key insights:
+
+- Clear differentiation in facility quality and pricing across clusters
+
+- Visitor numbers don't vary significantly, suggesting similar patient support across hospital types
+
+- Resource availability (extra rooms) correlates with admission deposits
+
+- Opportunities exist for improving facilities in Cluster 2 and optimizing costs in Cluster 1
+
+- Cluster 0 could serve as a benchmark for balanced operations
+
+#### Cluster Demographics and Patient Outcomes Analysis
+
+1. Hospital Code Distribution:
+![Distribution of Hospital Code by Cluster](images/distribution_hospital_code_by_cluster.png)
+
+   - Cluster 2 has the highest representation across most hospital codes.
+   - Clusters 0 and 1 show more specialized distribution, dominating certain 
+
+2. Hospital Type Code:
+![Distribution of Hospital Type Code by Cluster](images/distribution_hospital_type_code_by_cluster.png)
+
+   - Type 'a' hospitals are primarily in Cluster 2, followed by Cluster 3.
+   - Type 'b' is dominated by Cluster 1.
+   - Type 'c' is exclusively in Cluster 2.
+   - Type 'e' is mainly in Cluster 0.
+  
+3. City Code Hospital:
+![Distribution of City Code Hospital by Cluster](images/distribution_city_code_hospital_by_cluster.png)
+
+   - Cities 1 and 2 have the highest case counts, primarily in Clusters 0 and 1 respectively.
+   - Cluster 2 is well-represented across most city codes.
+  
+4. Hospital Region Code:
+![Distribution of Hospital Region Code by Cluster](images/distribution_hospital_region_code_by_cluster.png)
+
+   - Region 'X' is dominated by Cluster 2.
+   - Region 'Y' is mainly Cluster 1.
+   - Region 'Z' is split between Clusters 0 and 3.
+
+5. Department Distribution:
+![Distribution of Deoartment by Cluster](images/distribution_department_by_cluster.png)
+
+   - Gynecology department has the highest case count across all clusters, with Cluster 2 leading.
+   - Radiotherapy and anesthesia show more even distribution across clusters.
+
+6. Ward Type Distribution:
+![Distribution of Ward Type by Cluster](images/distribution_ward_type_by_cluster.png)
+
+   - Ward type R is dominant in Cluster 2, followed by Cluster 3.
+   - Ward type Q is more evenly distributed across clusters, with Cluster 2 leading.
+   - Ward type S shows a similar pattern to Q, but with higher representation in Cluster 3.
+   - Ward types P, T, and U have minimal representation across all clusters.
+  
+7. Ward Facility Code:
+![Distribution of Ward Facility Type by Cluster](images/distribution_ward_facility_type_by_cluster.png)
+
+   - Facility F is overwhelmingly represented in Cluster 2.
+   - Facilities E and D are more prominent in Clusters 0 and 1 respectively.
+   - Facilities B, A, and C show lower overall counts but are mainly represented in Cluster 3.
+
+8. Type of Admission:
+![Distribution of Type of Admission by Cluster](images/distribution_type_of_admission_by_cluster.png)
+
+   - Trauma admissions are highest in Cluster 2, followed by emergency admissions.
+   - Emergency admissions are more evenly distributed across clusters compared to trauma.
+   - Urgent admissions have the lowest counts across all clusters.
+   - 
+9. Severity of Illness:
+![Distribution of Severity of Illness by Cluster](images/distribution_severity_of_illness_by_cluster.png)
+
+   - Moderate severity dominates across all clusters, with Cluster 2 having the highest count.
+   - Minor and extreme severities show similar patterns across clusters, with Cluster 2 leading in both.
+
+10. Age Distribution:
+![Distribution of Age by Cluster](images/distribution_age_by_cluster.png)
+
+    - Cluster 2 has the highest representation across most age groups.
+    - Age groups 31-40 and 41-50 have the highest counts across all clusters.
+    - There's a relatively even distribution of ages across clusters, with slight variations.
+
+11. City Code Patient Distribution:
+![Distribution of City Code Patient by Cluster](images/Distribution_of_City_Code_Patient_by_Cluster.png)
+
+    - City codes 8 and 9 have the highest patient counts across all clusters.
+    - Cluster 1 dominates in city codes 1 and 2, while Cluster 2 is predominant in city code 8.
+    - City code 9 shows high representation across all clusters, especially in Clusters 1 and 2.
+    - Clusters 0 and 3 have significant presence only in specific city codes, suggesting geographical focus.
+    - Patient counts vary widely across city codes, indicating differences in population density or hospital usage.
+    - City codes above 15 generally have low patient counts across all clusters.
+
+**Summary:**
+1. Specialization in Care: Cluster 2 appears to handle a high volume of cases across various ward types, admission types, and severity levels, suggesting it might represent larger, more comprehensive healthcare facilities.
+
+2. Emergency Preparedness: The high number of trauma and emergency admissions, particularly in Cluster 2, indicates a need for robust emergency services in these hospitals.
+
+3. Patient Demographics: The age distribution shows that hospitals across all clusters serve a wide range of age groups, with a slight emphasis on middle-aged patients (31-50 years).
+
+4. Facility Differentiation: The stark differences in ward facility codes across clusters suggest varying levels of infrastructure or specialization among hospital groups.
+
+5. Severity Management: All clusters handle a mix of illness severities, with a predominance of moderate cases. This suggests a need for versatile care capabilities across the hospital system.
+### Feature Engineering EDA - Patient Readmissions
 
 #### Total Readmissions by Hospital Type
 ![Total Readmissions by Hospital Type Code](images/Total_Readmissions_by_Hospital_Type_Code.png)
