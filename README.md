@@ -167,7 +167,7 @@ Key insights:
 5. Department Distribution:
 ![Distribution of Deoartment by Cluster](images/distribution_department_by_cluster.png)
 
-   - Gynecology department has the highest case count across all clusters, with Cluster 2 leading.
+   - Gynecology department has the highest case count across all clusters, with Cluster 1 leading.
    - Radiotherapy and anesthesia show more even distribution across clusters.
 
 6. Ward Type Distribution:
