@@ -188,7 +188,7 @@ Key insights:
 8. Type of Admission:
 ![Distribution of Type of Admission by Cluster](images/distribution_type_of_admission_by_cluster.png)
 
-   - Trauma admissions are highest in Cluster 2, followed by emergency admissions.
+   - Trauma admissions are highest in Cluster 1, followed by emergency admissions.
    - Emergency admissions are more evenly distributed across clusters compared to trauma.
    - Urgent admissions have the lowest counts across all clusters.
    - 
