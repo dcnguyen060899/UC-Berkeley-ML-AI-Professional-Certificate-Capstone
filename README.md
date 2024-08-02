@@ -195,8 +195,8 @@ Key insights:
 9. Severity of Illness:
 ![Distribution of Severity of Illness by Cluster](images/distribution_severity_of_illness_by_cluster.png)
 
-   - Moderate severity dominates across all clusters, with Cluster 2 having the highest count.
-   - Minor and extreme severities show similar patterns across clusters, with Cluster 2 leading in both.
+   - Moderate severity dominates across all clusters, with Cluster 1 having the highest count.
+   - Minor and extreme severities show similar patterns across clusters, with Cluster 1 leading in both.
 
 10. Age Distribution:
 ![Distribution of Age by Cluster](images/distribution_age_by_cluster.png)
