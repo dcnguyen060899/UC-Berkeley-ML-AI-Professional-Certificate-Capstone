@@ -201,7 +201,7 @@ Key insights:
 10. Age Distribution:
 ![Distribution of Age by Cluster](images/distribution_age_by_cluster.png)
 
-    - Cluster 2 has the highest representation across most age groups.
+    - Cluster 1 has the highest representation across most age groups.
     - Age groups 31-40 and 41-50 have the highest counts across all clusters.
     - There's a relatively even distribution of ages across clusters, with slight variations.
 
