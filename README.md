@@ -47,8 +47,34 @@ Key Insights We Aim to Achieve:
    - Most patients have 0-5 visitors
    - Sharp decline after 5 visitors
    - Very few cases with more than 10 visitors
-
   
+### Group-wise Statistics for Numerical Features
+| Stay                 | Available Extra Rooms in Hospital | Bed Grade | Admission Deposit | Visitors with Patient |
+|----------------------|-----------------------------------|-----------|-------------------|-----------------------|
+| 0-10                 | 3.268599                          | 2.583545  | 4615.214625       | 2.565158              |
+| 11-20                | 3.262814                          | 2.731786  | 4931.124829       | 2.738940              |
+| 21-30                | 3.359008                          | 2.496097  | 5025.310329       | 2.679487              |
+| 31-40                | 3.136242                          | 2.662974  | 4871.071067       | 3.453797              |
+| 41-50                | 3.334412                          | 2.539215  | 4888.818530       | 3.032785              |
+| 51-60                | 2.911731                          | 2.611000  | 4748.784397       | 4.390828              |
+| 61-70                | 3.179300                          | 2.559402  | 4845.449344       | 3.566691              |
+| 71-80                | 2.872733                          | 2.654671  | 4709.845426       | 4.892335              |
+| 81-90                | 2.844977                          | 2.841670  | 4590.644688       | 6.100661              |
+| 91-100               | 2.854611                          | 2.661844  | 4715.538879       | 5.315732              |
+| More than 100 Days   | 2.739638                          | 2.907527  | 4649.341763       | 7.891516              |
+
+- **Available Extra Rooms in Hospital**:
+  - Patients with shorter stays (0-10 days) have a higher average of extra rooms available compared to those with longer stays (more than 100 days).
+
+- **Bed Grade**:
+  - Patients with stays of 81-90 days and 'More than 100 Days' tend to have higher average bed grades.
+
+- **Admission_Deposit**:
+  - Admission deposits generally increase with the length of stay, peaking around 21-30 days.
+
+- **Visitors with Patient**:
+  - The number of visitors increases significantly with the length of stay. Patients with 'More than 100 Days' have the highest average number of visitors.
+
 ### Categorical Distribution
 ![Features Distribution](images/categorical_distribution.png)
 1. Hospital Distribution:
@@ -101,6 +127,75 @@ Key Insights We Aim to Achieve:
     - Patients aged 31-60 form the largest groups.
     - Very young (0-10) and very old (91-100) patients are least common.
     - This reflects the demographic of patients requiring hospital care, with middle-aged adults being the primary users.
+
+#### 1. **Regional and Admission Insights**
+![Regional and Admission Heatmap](images/heatmap_hospital_region_code_type_of_admission.png)
+   - **Observation**: Region X has the highest trauma admissions, Region Y balances emergency and trauma cases, and Region Z has the least trauma cases.
+   - **Interpretation**: Region X might have higher accident rates or superior trauma facilities. Region Y’s balanced intake indicates varied demographics or multiple specialties, while Region Z could have fewer incidents or limited trauma care.
+
+#### 2. **Department and Severity of Illness Insights**
+![Department and Severity of Illness Heatmap](images/heatmap_department_severity_of_illness.png)
+   - **Observation**: Gynecology has many moderate severity patients, anesthesia and radiotherapy handle many minor cases, and surgery has fewer patients overall.
+   - **Interpretation**: Gynecology manages complex but non-critical cases, anesthesia and radiotherapy handle routine procedures, and surgery deals with specialized or critical operations.
+
+#### 3. **Ward Type and Severity of Illness Insights**
+![Ward Type and Severity of Illness Heatmap](images/heatmap_ward_type_severity_of_illness.png)
+   - **Observation**: Wards Q and R manage the most moderate severity patients, Ward S handles a mix of minor and moderate cases, and Wards T and U have very few patients.
+   - **Interpretation**: Wards Q and R focus on complex but stable conditions, Ward S is versatile for various needs, and Wards T and U might be specialized or overflow units.
+
+#### 4. **Hospital Type and Department Insights**
+![Hospital Type and Department Heatmap](images/heatmap_hospital_type_code_department.png)
+   - **Observation**: Hospital type 'a' has many gynecology patients, type 'b' manages significant numbers in gynecology and anesthesia, while others handle fewer patients overall.
+   - **Interpretation**: Hospital type 'a' focuses on gynecology, type 'b' has diverse capabilities, and other types might be smaller or specialized facilities.
+
+#### 5. **Ward Facility and Age Insights**
+![Ward Facility and Age Heatmap](images/heatmap_ward_facility_code_age.png)
+   - **Observation**: Ward facility F handles many patients aged 21-50, while others have evenly distributed ages.
+   - **Interpretation**: Ward F caters to working-age adults, possibly due to specialized treatments, while others provide general or multi-specialty care.
+
+#### 6. **Hospital Code and Department Insights**
+![Hospital Code and Department Heatmap](images/heatmap_hospital_code_department.png)
+   - **Observation**: Hospitals 13 and 25 have many gynecology patients, while others show varied distributions.
+   - **Interpretation**: Hospitals 13 and 25 likely specialize in gynecology, while others offer balanced services across departments.
+
+#### 7. **Hospital Region and Severity of Illness Insights**
+![Hospital Region and Severity of Illness Heatmap](images/heatmap_hospital_region_code_severity_of_illness.png)
+   - **Observation**: Regions X and Y handle many moderate severity cases, Region Z has fewer patients across all severities.
+   - **Interpretation**: Regions X and Y might have better facilities or more hospitals, while Region Z handles fewer patients due to fewer facilities or lower population density.
+
+#### 8. **Type of Admission and Ward Type Insights**
+![Type of Admission and Ward Type Heatmap](images/heatmap_type_of_admission_ward_type.png)
+   - **Observation**: Trauma and emergency admissions are highest in wards Q and R, while urgent cases are evenly distributed.
+   - **Interpretation**: Wards Q and R specialize in severe cases, indicating specialized resources and staff, while urgent cases are managed flexibly.
+
+#### 9. **Type of Admission and Department Insights**
+![Type of Admission and Department Heatmap](images/heatmap_type_of_admission_department.png)
+   - **Observation**: Trauma admissions are highest in gynecology, emergency admissions are also high in gynecology and anesthesia.
+   - **Interpretation**: Gynecology handles significant trauma cases, indicating a role in urgent and complex care, while anesthesia manages many emergency cases due to urgent surgeries.
+
+#### 10. **Severity of Illness and Hospital Type Insights**
+![Severity of Illness and Hospital Type Heatmap](images/heatmap_severity_of_illness_hospital_type_code.png)
+   - **Observation**: Hospital type 'a' manages many moderate severity cases, types 'b' and 'c' handle significant numbers with balanced severity.
+   - **Interpretation**: Hospital type 'a' focuses on moderate severity cases, while types 'b' and 'c' offer versatile healthcare across severity levels.
+#### 11. **Ward Type and Department Insights**
+![Ward Type and Deparment Heatmap](images/heatmap_ward_type_department.png)
+- **Observation**: 
+  - **Ward R**: Highest patients in gynecology (100,000+), followed by anesthesia (13,000+) and radiotherapy (11,000+).
+  - **Ward Q**: Significant patients in gynecology (85,000+) and anesthesia (9,000+).
+  - **Ward S**: Balanced distribution in gynecology (59,000+), radiotherapy (7,900+), and anesthesia (7,600+).
+  - **Wards P, T, U**: Few patients across all departments, suggesting specialization or underutilization.
+
+- **Interpretation**: 
+  - **Wards R and Q**: Focus on gynecology and anesthesia.
+  - **Ward S**: Versatile, handling diverse medical needs.
+  - **Wards P, T, U**: Potentially specialized or less critical roles in patient management.
+
+### Recommendations
+- **Resource Allocation**: Focus on high-demand wards (R, Q) and evaluate underutilized wards (P, T, U) for potential repurposing.
+- **Specialized Care**: Enhance trauma and emergency care in high-demand regions (X, Y).
+- **Department Focus**: Prioritize resources in gynecology and anesthesia, particularly in hospitals with high patient volumes.
+- **Age-Specific Care**: Develop specialized programs for working-age adults in ward facility F.
+
 
 ### Cluster Anlysis
 
