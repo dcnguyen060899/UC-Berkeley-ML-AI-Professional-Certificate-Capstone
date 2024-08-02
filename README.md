@@ -179,7 +179,7 @@ Key insights:
    - Ward types P, T, and U have minimal representation across all clusters.
   
 7. Ward Facility Code:
-![Distribution of Ward Facility Type by Cluster](images/distribution_ward_facility_type_by_cluster.png)
+![Distribution of Ward Facility Code by Cluster](images/distribution_ward_facility_code_by_cluster.png)
 
    - Facility F is overwhelmingly represented in Cluster 2.
    - Facilities E and D are more prominent in Clusters 0 and 1 respectively.
