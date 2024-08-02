@@ -206,7 +206,7 @@ Key insights:
     - There's a relatively even distribution of ages across clusters, with slight variations.
 
 11. City Code Patient Distribution:
-![Distribution of City Code Patient by Cluster](images/Distribution_of_City_Code_Patient_by_Cluster.png)
+![Distribution of City Code Patient by Cluster](images/Distribution_of_city_code_patient_by_Cluster.png)
 
     - City codes 8 and 9 have the highest patient counts across all clusters.
     - Cluster 1 dominates in city codes 1 and 2, while Cluster 2 is predominant in city code 8.
