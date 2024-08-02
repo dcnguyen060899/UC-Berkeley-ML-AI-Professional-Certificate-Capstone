@@ -161,8 +161,8 @@ Key insights:
 ![Distribution of Hospital Region Code by Cluster](images/distribution_hospital_region_code_by_cluster.png)
 
    - Region 'X' is dominated by Cluster 2.
-   - Region 'Y' is mainly Cluster 1 and 3.
-   - Region 'Z' is split between Clusters 0.
+   - Region 'Y' is mainly Cluster 2 and 3.
+   - Region 'Z' is split between Clusters 1.
 
 5. Department Distribution:
 ![Distribution of Deoartment by Cluster](images/distribution_department_by_cluster.png)
