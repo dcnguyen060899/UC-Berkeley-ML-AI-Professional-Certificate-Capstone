@@ -21,8 +21,36 @@ Key Insights We Aim to Achieve:
 
 ## Key Insights
 
-### Features Distribution
-![Features Distribution](images/features_distribution.png)
+### Numerical Distribution
+![Features Distribution](images/numerical_distribution.png)
+1. Available Extra Rooms in Hospital:
+
+   - Most hospitals have 2-5 extra rooms available
+   - Peaks at 2, 3, and 4 extra rooms
+   - Very few hospitals have more than 10 extra rooms
+
+2. Bed Grade:
+
+   - Distinct grades at 1, 2, 3, and 4
+   - Grade 2 is most common, followed by grade 3
+   - Grades 1 and 4 are less frequent
+
+3. Admission Deposit:
+
+   - Normal distribution centered around 4000-5000
+   - Range mostly between 2000 and 8000
+   - Few outliers above 8000
+
+4. Visitors with Patient:
+
+   - Highly skewed distribution
+   - Most patients have 0-5 visitors
+   - Sharp decline after 5 visitors
+   - Very few cases with more than 10 visitors
+
+  
+### Categorical Distribution
+![Features Distribution](images/categorical_distribution.png)
 1. Hospital Distribution:
 
    - There's significant variation in the number of cases across different hospitals, with some (e.g., codes 8, 28) handling notably higher volumes.
