@@ -542,13 +542,14 @@ This section presents an analysis of factors influencing patient length of stay 
 | CatBoost           | 46.23%         | 42.84%        |
 | XGBoost            | 45.80%         | 42.41%        |
 | Logistic Regression| 39.92%         | 40.10%        |
+| Neural Network     | 65.24%         | 80.42%        |
 
 
 #### Key Features Influencing Length of Stay
-The top features identified across different models provide valuable insights into the factors affecting patient length of stay:
+The top features identified across different models, including the newly added neural network model, provide valuable insights into the factors affecting patient length of stay:
 
 1. **Visitors with Patient**:
-   - This feature consistently showed a high impact across models, indicating that the number of visitors is significantly related to the length of stay. More visitors might be associated with better patient morale and support, potentially leading to longer stays.
+   - This feature consistently showed a high impact across models, including the neural network model, indicating that the number of visitors is significantly related to the length of stay. More visitors might be associated with better patient morale and support, potentially leading to longer stays.
 
 2. **Ward Type (Q, P, S)**:
    - Different ward types play a crucial role in determining the length of stay. This might be due to varying levels of care and facilities available in different ward types.
@@ -560,7 +561,7 @@ The top features identified across different models provide valuable insights in
    - The grade of the bed, which likely reflects the quality and type of care received, is an important factor. Higher bed grades usually indicate more intensive care and longer stays.
 
 5. **Available Extra Rooms in Hospital**:
-   - The availability of extra rooms in the hospital also impacts the length of stay. Hospitals with more available rooms might be able to accommodate patients for longer periods.
+   - The availability of extra rooms in the hospital impacts the length of stay. Hospitals with more available rooms might be able to accommodate patients for longer periods.
 
 6. **Type of Admission (Emergency, Trauma)**:
    - Emergency and trauma admissions are linked to longer stays, reflecting the severity and immediate need for intensive care in such cases.
@@ -570,7 +571,7 @@ The top features identified across different models provide valuable insights in
 
 8. **Hospital Codes and City Codes**:
    - The specific hospital and city codes also play a role, likely reflecting differences in hospital policies, regional healthcare quality, and patient demographics.
-
+  
 #### Visualizations
 Below are the feature importance visualizations from each model:
 
@@ -589,27 +590,44 @@ Below are the feature importance visualizations from each model:
    - This trained with quasi-Newton solver
   ![Logistic Regression Feature Importances](images/logistic_regression_qn.png)
 
+- **Neural Network Model (LSTM)**:
+  - Fold 1:
+    ![Neural Network Feature Importances Fold 1](images/neural_network_feature_importances_f1.png)
+  - Fold 2:
+    ![Neural Network Feature Importances Fold 2](images/neural_network_feature_importances_f2.png)
+  - Fold 3:
+    ![Neural Network Feature Importances Fold 3](images/neural_network_feature_importances_f3.png)
+  - Fold 4:
+    ![Neural Network Feature Importances Fold 4](images/neural_network_feature_importances_f4.png)
+  - Fold 5:
+    ![Neural Network Feature Importances Fold 5](images/neural_network_feature_importances_f5.png)
+
+These visualizations illustrate the significance of various features in predicting patient length of stay, with the neural network model offering additional insights into complex relationships within the data.
+
 #### Insights and Recommendations
 1. **Resource Allocation**:
-   - Hospitals should consider allocating resources based on the ward types and severity of illness to optimize patient care and potentially reduce unnecessary prolonged stays.
-   
+   - Hospitals should consider allocating resources based on the ward types and severity of illness to optimize patient care and potentially reduce unnecessary prolonged stays. The neural network model has shown that the availability of extra rooms in the hospital is a significant predictor, suggesting that ensuring adequate room availability can positively impact patient care.
+
 2. **Visitor Management**:
-   - Developing policies around visitor management could indirectly influence the length of stay, as more visitors might be associated with better patient outcomes.
+   - Developing policies around visitor management could indirectly influence the length of stay, as more visitors might be associated with better patient outcomes. This insight was consistently highlighted across traditional and neural network models, indicating its strong impact on length of stay.
 
 3. **Financial Planning**:
-   - Understanding the financial implications of admission deposits can help in planning and managing hospital finances and patient billing systems.
+   - Understanding the financial implications of admission deposits can help in planning and managing hospital finances and patient billing systems. The neural network model also emphasized the importance of admission deposits as a predictor, reinforcing the need for careful financial management.
 
 4. **Tailored Care Plans**:
-   - Personalized care plans based on the type of admission and severity of illness could enhance patient recovery and optimize the length of stay.
+   - Personalized care plans based on the type of admission and severity of illness could enhance patient recovery and optimize the length of stay. Both traditional and neural network models identified these factors as critical predictors, highlighting the importance of customized patient care.
 
 5. **Facility Improvements**:
-   - Investing in hospital facilities, such as upgrading bed grades and ensuring adequate extra rooms, can improve patient care quality and management efficiency.
+   - Investing in hospital facilities, such as upgrading bed grades and ensuring adequate extra rooms, can improve patient care quality and management efficiency. The neural network model's insights into bed grades and hospital facilities support this recommendation, indicating that better facilities are associated with shorter stays.
 
-By focusing on these key areas, hospitals can better manage patient length of stay, improve patient outcomes, and optimize operational efficiency.
+6. **Hospital-Specific Strategies**:
+   - The neural network model provided additional insights into the specific hospital codes that significantly influence length of stay. Hospitals can use this information to develop tailored strategies for high-performing hospitals (e.g., hospital codes 1, 2, 4, 6, 7) and implement best practices in lower-performing ones.
+
+By focusing on these key areas, hospitals can better manage patient length of stay, improve patient outcomes, and optimize operational efficiency. The integration of insights from both traditional machine learning and neural network models ensures a comprehensive approach to healthcare management.
 
 # Comprehensive Classification Report, Confusion Matrix, and ROC-Curve Analysis
 
-This section presents an analysis of predictive modeling for patient length of stay using various machine learning models. The models evaluated include Random Forest, Gradient Boosting, CatBoost, and XGBoost. The performance of these models is assessed through classification reports, confusion matrices, and ROC-AUC curves.
+This section presents an analysis of predictive modeling for patient length of stay using various machine learning models. The models evaluated include Random Forest, Gradient Boosting, CatBoost, XGBoost, and a Neural Network model. The performance of these models is assessed through classification reports, confusion matrices, and ROC-AUC curves.
 
 ### Baseline Model
 
@@ -643,6 +661,31 @@ The baseline model is a simple model that predicts the most frequent class for a
 - **Confusion Matrix**: The confusion matrix (Figure 11) shows that the model has poor prediction accuracy for several classes, with significant misclassifications.
 - **ROC-AUC Curves**: The ROC-AUC curves (Figure 12) display a range of AUC scores from 0.62 to 0.91, indicating varied performance across classes.
 
+### Neural Network Model
+
+- **Confusion Matrix**: The confusion matrix (Figure 13) indicates the model has good prediction accuracy for most classes, with significant improvement over other models.
+- **ROC-AUC Curves**: The ROC-AUC curves (Figure 14) demonstrate high AUC scores across all classes, with scores ranging from 0.92 to 1.00, indicating excellent predictive performance.
+
+#### Aggregate Classification Report for Neural Network Model
+
+| Class | Precision | Recall | F1-Score | Support |
+|-------|-----------|--------|----------|---------|
+| 0     | 0.74      | 0.88   | 0.80     | 87491   |
+| 1     | 0.50      | 0.48   | 0.49     | 87491   |
+| 2     | 0.49      | 0.43   | 0.46     | 87491   |
+| 3     | 0.61      | 0.43   | 0.50     | 87491   |
+| 4     | 0.83      | 0.95   | 0.88     | 87491   |
+| 5     | 0.78      | 0.75   | 0.76     | 87491   |
+| 6     | 0.96      | 1.00   | 0.98     | 87491   |
+| 7     | 0.92      | 0.96   | 0.94     | 87491   |
+| 8     | 0.96      | 0.99   | 0.98     | 87491   |
+| 9     | 0.97      | 1.00   | 0.98     | 87491   |
+| 10    | 0.97      | 0.98   | 0.98     | 87491   |
+
+- **Accuracy**: 0.80
+- **Macro Average**: Precision 0.79, Recall 0.80, F1-Score 0.80
+- **Weighted Average**: Precision 0.79, Recall 0.80, F1-Score 0.80
+
 ## Analysis
 
 ### Classification Reports
@@ -661,10 +704,10 @@ The ROC-AUC curves reveal:
 - **Overall AUC**: Generally high AUC scores (above 0.70) for most classes suggest that the models have a reasonable ability to distinguish between different length-of-stay classes.
 
 ## Conclusion and Recommendations
-- **Model Selection**: While all models exhibit reasonable performance, CatBoost and XGBoost show slightly better test accuracy and AUC scores, making them preferable for this task.
+- **Model Selection**: While all models exhibit reasonable performance, CatBoost, XGBoost, and the Neural Network model show the best test accuracy and AUC scores, making them preferable for this task.
 - **Feature Engineering**: Further feature engineering, particularly focusing on classes with lower performance, could help improve model accuracy.
 - **Class Imbalance**: Addressing class imbalance through techniques like oversampling, undersampling, or using class weights could improve model performance for underrepresented classes.
-- **Hyperparameter Tuning**: Additional hyperparameter tuning, especially for models like CatBoost and XGBoost, may yield further performance improvements.
+- **Hyperparameter Tuning**: Further hyperparameter tuning, especially for models like CatBoost, XGBoost, and the Neural Network, may yield further performance improvements.
 
 By addressing these areas, the predictive accuracy and generalization capability of the models for patient length of stay can be enhanced, leading to more reliable predictions and better-informed healthcare management decisions.
 
@@ -694,11 +737,10 @@ By addressing these areas, the predictive accuracy and generalization capability
 ![Confusion Matrix Logistic Regression (quasi-Newton)](images/confusion_matrix_lr_qn.png)
 - **Figure 12**: ROC-AUC Curves for Logistic Regression
 ![ROC-AUC Logistic Regression (quasi-Newton](images/roc_lr_qn.png)
-
-
-This comprehensive evaluation highlights the strengths and areas for improvement in the current models, paving the way for enhanced predictive analytics in patient length of stay.
-
-Sure, let's update the section to include the total cost baseline calculation and include it in the summary table at the end.
+- **Figure 13**: Confusion Matrix for Neural Network Model
+![Confusion Matrix Neural Network](images/confusion_matrix_nn.png)
+- **Figure 14**: ROC-AUC Curves for Neural Network Model
+![ROC-AUC Neural Network](images/roc_nn.png)
 
 # Compute and Discuss the Business Impact of Model Decisions
 
@@ -786,3 +828,55 @@ The table below summarizes the costs and savings for each model:
 The analysis indicates that the deep learning model (LSTM) offers the highest potential savings ($30,388,400) by minimizing the cost associated with false positives and false negatives. This model outperforms all traditional machine learning models in terms of cost savings, highlighting the benefits of leveraging deep learning techniques for this specific application.
 
 Implementing the deep learning model can lead to substantial cost savings by accurately predicting patient length of stay, reducing the impact of misclassification on hospital resources and patient care. Further tuning and enhancement of this model, combined with continuous monitoring, can optimize performance and maximize financial benefits.
+
+
+# Deployment
+
+## Immediate Implementation Plan
+
+Based on the analysis insights, we propose the following immediate actions to optimize hospital operations and improve patient care:
+
+1. **Resource Allocation Enhancement**:
+   - **High-Demand Departments**: Allocate additional resources (staff, equipment, beds) to high-demand departments such as gynecology and surgery to manage patient flow better and reduce bottlenecks.
+   - **Targeted Distribution**: Utilize predictive models to forecast patient inflow and length of stay, enabling proactive resource allocation to departments with higher admission rates and longer stays (e.g., surgery, TB & Chest disease).
+
+2. **Bed and Staff Management Optimization**:
+   - **Bed Grade Management**: Assign beds based on patient severity and expected stay duration to optimize the use of high-grade beds for patients who need them most.
+   - **Extra Room Utilization**: Optimize the use of extra rooms for patients requiring extended care, improving patient management and reducing wait times for new admissions.
+
+3. **Specialized Care for Medium-Stay Patients**:
+   - **Focused Interventions**: Develop specialized care pathways and interventions for patients with stays of 10-40 days to manage their conditions more effectively, reducing their length of stay and freeing up hospital resources.
+
+4. **Visitor Management Program**:
+   - **Structured Programs**: Implement structured visitor programs to balance patient support with operational efficiency, potentially reducing the length of stay and improving patient throughput.
+
+5. **Financial Policy Adjustments**:
+   - **Admission Deposit Review**: Revise financial policies to ensure admission deposits do not inadvertently extend hospital stays, helping manage patient turnover more effectively and ensuring equitable access to care.
+
+6. **Addressing Regional Disparities**:
+   - **Sharing Best Practices**: Share best practices from high-performing hospitals in regions with better patient outcomes and resource management (e.g., Region X) with lower-performing regions (e.g., Region Z) to elevate the overall standard of care.
+   - **Geographical Strategy**: Tailor resource allocation and management strategies based on regional differences in hospital capacities and patient demographics.
+
+7. **Enhanced Follow-Up Care for High-Risk Patients**:
+   - **Targeted Follow-Up Programs**: Implement targeted follow-up care and support post-discharge for patients with higher readmission rates, such as those admitted for trauma or with severe illnesses, to reduce the likelihood of readmissions and ensure better long-term patient outcomes.
+
+8. **Continuous Model Improvement**:
+   - **Data-Driven Adjustments**: Regularly update and fine-tune predictive models with new data to ensure resource allocation strategies remain effective and responsive to changing patient needs and hospital capacities.
+
+## Summary of Business Impact
+
+The implementation of these strategies based on predictive insights and data analysis can lead to significant cost savings and operational improvements:
+
+- **Resource Allocation**: Optimized distribution of resources to high-demand areas, reducing bottlenecks and improving patient care.
+- **Length of Stay Reduction**: Specialized interventions and structured programs to reduce the length of stay for medium-stay patients.
+- **Readmission Rates**: Enhanced follow-up care for high-risk patients to reduce readmission rates.
+- **Financial Efficiency**: Revised financial policies to manage patient turnover more effectively.
+
+## Financial Impact
+
+The deployment of these strategies is expected to result in substantial cost savings:
+
+- **Deep Learning Model**: Potential savings of $30,388,400 by minimizing costs associated with false positives and false negatives.
+- **Traditional Models**: Significant savings ranging from $19,988,400 to $22,388,400 across different machine learning models.
+
+By implementing these immediate actions, hospitals can improve operational efficiency, enhance patient care quality, and achieve significant cost savings, paving the way for a data-driven approach to healthcare management.
