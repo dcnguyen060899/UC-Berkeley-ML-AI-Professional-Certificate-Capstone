@@ -762,11 +762,11 @@ This section evaluates the business impact of deploying machine learning and dee
 
 Calculate the total cost for the baseline model:
 
-**Total Cost (Baseline) = (False Positive Count (Baseline) \times Cost of FP) + (False Negative Count (Baseline) \times Cost of FN)**
+**Total Cost (Baseline) = (False Positive Count (Baseline) / times Cost of FP) + (False Negative Count (Baseline) / times Cost of FN)**
 
 Using the given values:
 
-**Total Cost (Baseline) = (46,899 \times $100) + (73,397 \times $500) = $4,689,900 + $36,698,500 = $41,388,400**
+**Total Cost (Baseline) = (46,899 / times $100) + (73,397 / times $500) = $4,689,900 + $36,698,500 = $41,388,400**
 
 ## Cost Analysis
 The cost for each model is calculated based on the counts of false positives and false negatives, multiplied by their respective costs.
