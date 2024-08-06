@@ -2,22 +2,13 @@
 # Comprehensive EDA Insight Report
 
 ## Executive Summary
-Business Goal:
-To develop a predictive model that accurately forecasts patient Length of Stay (LOS) at the time of admission, enabling hospitals to optimize resource allocation, improve patient care, and enhance operational efficiency in the wake of challenges highlighted by the COVID-19 pandemic.
+#### Project Goals and Objectives
 
-Key Insights We Aim to Achieve:
+The COVID-19 pandemic exposed significant challenges in hospital resource management, prompting our project to focus on identifying key factors affecting the duration of hospital stays. Our primary aim was to improve patient care, optimize resource allocation, and develop targeted strategies to reduce unnecessary extended hospitalizations. To achieve these objectives, we employed sophisticated machine learning and deep learning techniques, enabling us to:
 
-1. Identify the most significant factors influencing patient LOS across different hospital types, departments, and admission categories.
-
-2. Quantify the impact of patient characteristics, admission types, and hospital facilities on LOS to inform targeted interventions.
-
-3. Determine patterns in readmission rates and their relationship to LOS, allowing for improved discharge planning and follow-up care strategies.
-
-4. Assess the effectiveness of different ward types and facility codes in managing patient LOS to guide future resource allocation decisions.
-
-5. Analyze the correlation between admission severity and LOS to better prepare for high-risk patients and optimize treatment plans.
-
-6. Evaluate the potential cost savings and operational improvements achievable through accurate LOS predictions, particularly in reducing unnecessary extended stays and optimizing bed management.
+1. **Enhance Patient Care:** Understand the social, financial, and demographic factors that impact patient recovery times, enabling the development of personalized care plans.
+2. **Optimize Hospital Resources:** Identify operational bottlenecks and resource allocation inefficiencies to streamline patient management and reduce overall hospital stay durations.
+3. **Develop Targeted Interventions:** Utilize data-driven insights to create and implement strategies that address specific factors contributing to prolonged hospital stays.
 
 ## Key Insights
 
