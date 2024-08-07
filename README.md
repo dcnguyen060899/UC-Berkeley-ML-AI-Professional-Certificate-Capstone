@@ -67,7 +67,7 @@ The COVID-19 pandemic exposed significant challenges in hospital resource manage
   - The number of visitors increases significantly with the length of stay. Patients with 'More than 100 Days' have the highest average number of visitors.
 
 ### Categorical Distribution
-![Features Distribution](images/categorical_distribution.png)
+![Categorical Features Distribution](images/categorical_distribution.png)
 1. Hospital Distribution:
 
    - There's significant variation in the number of cases across different hospitals, with some (e.g., codes 8, 28) handling notably higher volumes.
