@@ -1,1 +1,11 @@
+title: "UC Berkeley ML AI Capstone Work Sample"
+description: "Hospital Length of Stay Prediction Project"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://your-username.github.io" # the base hostname & protocol for your site
 theme: jekyll-theme-primer
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
