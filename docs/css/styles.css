@@ -4,25 +4,17 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
 }
 
 header {
-    background-color: #003262; /* Berkeley Blue */
+    background-color: #003262; /* Restore Berkeley Blue background */
     color: #FFFFFF;
-    padding: 10px 0;
-    text-align: center;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    height: 80px; /* Adjust as needed */
 }
 
 header .logo {
@@ -60,6 +52,7 @@ header nav a:hover {
 /* Ensure the main content doesn't overlap with the header */
 main {
     padding: 20px 40px; /* Adjusted padding for better alignment */
+    flex: 1;
 }
 
 h2 {
