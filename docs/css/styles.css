@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: transparent; /* Remove blue background */
+    background-color: #003262; /* Restore Berkeley Blue background */
     color: #FFFFFF;
     padding: 0;
     display: flex;
@@ -19,23 +19,22 @@ header {
 
 header .logo {
     height: 100%;
-    width: 100%; /* Make logo container full width */
-    position: absolute; /* Position absolutely within header */
-    left: 0;
-    top: 0;
+    display: flex;
+    align-items: center;
+    background-color: white; /* Set logo background to white */
+    padding: 0 20px; /* Add some padding around the logo */
 }
 
 header .logo img {
     height: 100%;
-    width: 100%; /* Make image full width */
-    object-fit: cover; /* Ensure the image covers the area */
-    object-position: left; /* Align image to the left */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the entire logo is visible */
 }
 
 header nav {
-    position: relative; /* Ensure nav is above the logo */
-    z-index: 1;
-    margin-left: auto; /* Push nav to the right */
+    display: flex;
+    align-items: center;
+    height: 100%;
     padding-right: 20px;
 }
 
@@ -50,8 +49,9 @@ header nav a:hover {
     text-decoration: underline;
 }
 
+/* Ensure the main content doesn't overlap with the header */
 main {
-    padding: 20px;
+    padding-top: 80px; /* Should match the header height */
 }
 
 h2 {
