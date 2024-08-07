@@ -7,34 +7,36 @@ body {
 }
 
 header {
-    background-color: #003262; /* Berkeley Blue */
+    background-color: transparent; /* Remove blue background */
     color: #FFFFFF;
     padding: 0;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    height: 80px; /* Increased height to accommodate larger logo */
-    overflow: hidden; /* Hide overflow to prevent logo from spilling out */
+    height: 80px; /* Adjust as needed */
 }
 
 header .logo {
     height: 100%;
-    display: flex;
-    align-items: center;
+    width: 100%; /* Make logo container full width */
+    position: absolute; /* Position absolutely within header */
+    left: 0;
+    top: 0;
 }
 
 header .logo img {
-    height: 100%; /* Make the logo height 100% of the header */
-    width: auto; /* Maintain aspect ratio */
+    height: 100%;
+    width: 100%; /* Make image full width */
     object-fit: cover; /* Ensure the image covers the area */
-    margin-left: 0; /* Remove left margin */
+    object-position: left; /* Align image to the left */
 }
 
 header nav {
-    margin-right: 20px;
-    z-index: 1; /* Ensure nav is above the logo */
+    position: relative; /* Ensure nav is above the logo */
+    z-index: 1;
+    margin-left: auto; /* Push nav to the right */
+    padding-right: 20px;
 }
 
 header nav a {
