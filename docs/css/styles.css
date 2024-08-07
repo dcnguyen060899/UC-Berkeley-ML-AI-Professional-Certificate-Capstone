@@ -51,8 +51,7 @@ header nav a:hover {
 
 /* Ensure the main content doesn't overlap with the header */
 main {
-    padding: 20px 40px; /* Adjusted padding for better alignment */
-    flex: 1;
+    padding-top: 80px; /* Should match the header height */
 }
 
 h2 {
