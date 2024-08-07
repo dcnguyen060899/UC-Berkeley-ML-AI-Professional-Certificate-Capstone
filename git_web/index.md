@@ -1,7 +1,3 @@
----
-title: UC-Berkeley ML/AI Capstone Work Sample
----
-
 # UC-Berkeley-ML-AI---Capstone_Work_Sample
 # Comprehensive EDA Insight Report
 
