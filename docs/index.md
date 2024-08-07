@@ -1,9 +1,5 @@
-# UC-Berkeley-ML-AI---Capstone_Work_Sample
-
-# Hospital Length of Stay Prediction Project
-
 ## Executive Summary
-
+### Hospital Length of Stay Prediction
 Our project aimed to improve hospital resource management by predicting patient length of stay. Using advanced data analysis and machine learning techniques, we've identified key factors affecting stay duration and developed models to optimize patient care and resource allocation.
 
 ## Key Findings
