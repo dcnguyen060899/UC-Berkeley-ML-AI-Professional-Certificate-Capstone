@@ -9,21 +9,32 @@ body {
 header {
     background-color: #003262; /* Berkeley Blue */
     color: #FFFFFF;
-    padding: 10px 0;
+    padding: 0;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    height: 80px; /* Increased height to accommodate larger logo */
+    overflow: hidden; /* Hide overflow to prevent logo from spilling out */
+}
+
+header .logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 header .logo img {
-    height: 50px;
-    margin-left: 20px;
+    height: 100%; /* Make the logo height 100% of the header */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the area */
+    margin-left: 0; /* Remove left margin */
 }
 
 header nav {
     margin-right: 20px;
+    z-index: 1; /* Ensure nav is above the logo */
 }
 
 header nav a {
