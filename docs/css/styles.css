@@ -25,8 +25,7 @@ header a {
 
 main {
     padding: 20px;
-    margin-bottom: 150px; /* Added margin-bottom to push the footer down */
-    min-height: calc(100vh - 150px); /* Ensure main takes full height minus footer */
+    padding-bottom: 150px; /* Increase this value */
 }
 
 section h2 {
@@ -43,7 +42,7 @@ footer {
     color: #FFFFFF;
     text-align: center;
     padding: 10px 0;
-    position: relative; /* Change from fixed to relative */
+    position: fixed;
     width: 100%;
     bottom: 0;
 }
