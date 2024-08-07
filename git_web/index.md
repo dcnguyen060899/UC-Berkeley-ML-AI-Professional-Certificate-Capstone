@@ -10,7 +10,7 @@ Our project aimed to improve hospital resource management by predicting patient 
 
 ### 1. Patient Demographics and Hospital Characteristics
 
-![Age Distribution](images/distribution_age_by_cluster.png)
+![Distribution of Age by Cluster](images/distribution_age_by_cluster.png)
 
 - Middle-aged patients (31-60 years) form the largest group requiring hospital care.
 - Significant variations in patient volumes across hospital types and regions.
@@ -18,7 +18,7 @@ Our project aimed to improve hospital resource management by predicting patient 
 
 ### 2. Length of Stay Patterns
 
-![Length of Stay Distribution](images/los_dist.png)
+![Distribution of Length of Stay](images/los_dist.png)
 
 - Most common stay durations cluster around 10, 20, and 30 days.
 - Longer stays associated with:
@@ -28,7 +28,7 @@ Our project aimed to improve hospital resource management by predicting patient 
 
 ### 3. Readmission Insights
 
-![Readmissions by Department](images/Total_Readmissions_by_Department.png)
+![Total Readmissions by Department](images/Total_Readmissions_by_Department.png)
 
 - Higher readmission rates observed in:
   - Trauma cases
@@ -38,17 +38,25 @@ Our project aimed to improve hospital resource management by predicting patient 
 
 ### 4. Key Predictive Factors
 
-![Feature Importance](images/neural_network_feature_importances_f1.png)
+Our neural network model's SHAP (SHapley Additive exPlanations) analysis across 5 folds revealed consistent patterns in feature importance:
 
-Across all our models, including deep learning, the following factors consistently emerged as the most influential:
+![Neural Network Feature Importances Fold 1](images/neural_network_feature_importances_f1.png)
+![Neural Network Feature Importances Fold 2](images/neural_network_feature_importances_f2.png)
+![Neural Network Feature Importances Fold 3](images/neural_network_feature_importances_f3.png)
+![Neural Network Feature Importances Fold 4](images/neural_network_feature_importances_f4.png)
+![Neural Network Feature Importances Fold 5](images/neural_network_feature_importances_f5.png)
 
-- Number of visitors with the patient
+Across all folds and models, including traditional machine learning and deep learning approaches, the following factors consistently emerged as the most influential in predicting length of stay:
+
+- Hospital-specific factors (various hospital codes)
+- Number of available extra rooms in the hospital
 - Admission deposit amount
-- Available extra rooms in the hospital
-- Specific ward types (especially Q, P, S)
-- Type of admission (Emergency, Trauma)
+- Number of visitors with the patient
+- Specific ward types
+- Type of admission (particularly emergency and trauma)
 - Severity of illness
-- Specific hospital and city codes
+
+The consistency of these factors across different folds and modeling approaches underscores their robustness as predictors of hospital length of stay. However, the varying order of importance across folds suggests that the impact of these features may differ slightly depending on the specific subset of data, highlighting the complex nature of predicting hospital stay durations.
 
 ## Model Performance
 
