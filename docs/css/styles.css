@@ -131,3 +131,24 @@ section ul {
 section ul ul {
     padding-left: 20px; /* Indent nested list items less */
 }
+
+.readmission-stats {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.readmission-stats th, .readmission-stats td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: right;
+}
+
+.readmission-stats th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.readmission-stats tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
