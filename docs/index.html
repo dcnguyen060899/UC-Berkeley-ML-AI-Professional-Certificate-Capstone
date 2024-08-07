@@ -23,22 +23,23 @@
     <main>
         <section id="executive-summary">
             <h2>Executive Summary</h2>
-            <p>Our project aimed to improve hospital resource management by predicting patient length of stay...</p>
+            <h3>Hospital Length of Stay Prediction</h3>
+            <p>Our project aimed to improve hospital resource management by predicting patient length of stay. Using advanced data analysis and machine learning techniques, we've identified key factors affecting stay duration and developed models to optimize patient care and resource allocation.</p>
         </section>
 
         <section id="key-findings">
             <h2>Key Findings</h2>
             <h3>1. Patient Demographics and Hospital Characteristics</h3>
             <img src="images/distribution_age_by_cluster.png" alt="Distribution of Age by Cluster">
-            <p>Middle-aged patients (31-60 years) form the largest group requiring hospital care...</p>
+            <p>Middle-aged patients (31-60 years) form the largest group requiring hospital care. Significant variations in patient volumes across hospital types and regions. Hospital codes 8 and 28 handle notably higher volumes, suggesting differences in capacity or specialization.</p>
 
             <h3>2. Length of Stay Patterns</h3>
             <img src="images/los_dist.png" alt="Distribution of Length of Stay">
-            <p>Most common stay durations cluster around 10, 20, and 30 days...</p>
+            <p>Most common stay durations cluster around 10, 20, and 30 days. Longer stays are associated with trauma admissions, severe illnesses, and departments like surgery and TB & Chest disease.</p>
 
             <h3>3. Readmission Insights</h3>
             <img src="images/Total_Readmissions_by_Department.png" alt="Total Readmissions by Department">
-            <p>Higher readmission rates observed in trauma cases, moderate to extreme illness severity...</p>
+            <p>Higher readmission rates are observed in trauma cases, moderate to extreme illness severity, and the gynecology department. Patients with more than 10 readmissions tend to have significantly longer average stays.</p>
 
             <h3>4. Key Predictive Factors</h3>
             <img src="images/neural_network_feature_importances_f1.png" alt="Neural Network Feature Importances Fold 1">
@@ -46,11 +47,22 @@
             <img src="images/neural_network_feature_importances_f3.png" alt="Neural Network Feature Importances Fold 3">
             <img src="images/neural_network_feature_importances_f4.png" alt="Neural Network Feature Importances Fold 4">
             <img src="images/neural_network_feature_importances_f5.png" alt="Neural Network Feature Importances Fold 5">
-            <p>Across all folds and models, including traditional machine learning and deep learning approaches...</p>
+            <p>Our neural network model's SHAP (SHapley Additive exPlanations) analysis across 5 folds revealed consistent patterns in feature importance. Across all folds and models, including traditional machine learning and deep learning approaches, the following factors consistently emerged as the most influential in predicting length of stay:</p>
+            <ul>
+                <li>Hospital-specific factors (various hospital codes)</li>
+                <li>Number of available extra rooms in the hospital</li>
+                <li>Admission deposit amount</li>
+                <li>Number of visitors with the patient</li>
+                <li>Specific ward types</li>
+                <li>Type of admission (particularly emergency and trauma)</li>
+                <li>Severity of illness</li>
+            </ul>
+            <p>The consistency of these factors across different folds and modeling approaches underscores their robustness as predictors of hospital length of stay. However, the varying order of importance across folds suggests that the impact of these features may differ slightly depending on the specific subset of data, highlighting the complex nature of predicting hospital stay durations.</p>
         </section>
 
         <section id="model-performance">
             <h2>Model Performance</h2>
+            <p>Our deep learning model significantly outperformed traditional methods:</p>
             <table>
                 <tr>
                     <th>Model</th>
@@ -81,12 +93,18 @@
                     <td>40.10%</td>
                 </tr>
             </table>
+            <h3>ROC-AUC Curves for Neural Network Model</h3>
             <img src="images/roc_nn.png" alt="ROC-AUC Neural Network">
+            <p>The neural network model achieved high AUC scores (0.92 to 1.00) across all classes, indicating excellent predictive performance.</p>
         </section>
 
         <section id="business-impact">
             <h2>Business Impact</h2>
-            <p>Implementing our best model could lead to significant cost savings...</p>
+            <p>Implementing our best model could lead to significant cost savings:</p>
+            <ul>
+                <li>Potential annual savings: $30,388,400</li>
+                <li>Substantial reduction in misclassification costs (false positives/negatives)</li>
+            </ul>
             <table>
                 <tr>
                     <th>Model</th>
@@ -118,7 +136,17 @@
 
         <section id="recommendations">
             <h2>Recommendations</h2>
-            <p>Resource Allocation: Optimize based on ward types and illness severity...</p>
+            <p>Here are our recommendations based on the analysis:</p>
+            <ol>
+                <li><strong>Resource Allocation:</strong> Optimize based on ward types and illness severity. Focus on high-demand wards (R, Q) and evaluate underutilized wards (P, T, U).</li>
+                <li><strong>Visitor Management:</strong> Develop structured visitor programs balancing patient support with operational efficiency.</li>
+                <li><strong>Financial Planning:</strong> Adjust admission deposit strategies to manage patient turnover more effectively.</li>
+                <li><strong>Tailored Care Plans:</strong> Personalize care based on admission type and illness severity, with special focus on medium-stay patients (10-40 days).</li>
+                <li><strong>Facility Improvements:</strong> Invest in upgrading bed grades and ensuring adequate extra rooms to improve care quality and management efficiency.</li>
+                <li><strong>Hospital-Specific Strategies:</strong> Implement best practices from high-performing hospitals, particularly in regions X and Y.</li>
+                <li><strong>Enhanced Follow-Up Care:</strong> Implement targeted post-discharge support for high-risk patients to reduce readmission rates.</li>
+            </ol>
+            <p>We're confident these data-driven insights will transform our hospital operations, enhancing patient care while significantly reducing costs.</p>
         </section>
     </main>
 
