@@ -714,9 +714,9 @@ By addressing these areas, the predictive accuracy and generalization capability
 ### Figures
 
 - **Figure 1**: Confusion Matrix for Baseline Model
-![Confusion Matrix Baseline](images/confusion_matrix_dummies)
+![Confusion Matrix Baseline](images/confusion_matrix_dummies.png)
 - **Figure 2**: ROC-AUC Curves for Baseline Model
-![ROC-AUC Baseline](images/roc_dummies)
+![ROC-AUC Baseline](images/roc_dummies.png)
 - **Figure 3**: Confusion Matrix for Random Forest
 ![Confusion Matrix RF](images/confusion_matrix_rf.png)
 - **Figure 4**: ROC-AUC Curves for Random Forest
