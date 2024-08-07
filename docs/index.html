@@ -94,6 +94,114 @@
                 <li>Patients with more than 10 readmissions tend to have significantly longer average stays.</li>
                 <li>Age groups 31-40 and 41-50 have the highest number of readmissions.</li>
             </ul>
+            <table class="readmission-stats">
+                <thead>
+                    <tr>
+                        <th>Readmission Count</th>
+                        <th>Count</th>
+                        <th>Mean Stay (days)</th>
+                        <th>Std Dev</th>
+                        <th>Min Stay</th>
+                        <th>25% Quartile</th>
+                        <th>Median Stay</th>
+                        <th>75% Quartile</th>
+                        <th>Max Stay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>92017.0</td>
+                        <td>33.10</td>
+                        <td>21.59</td>
+                        <td>5.0</td>
+                        <td>15.0</td>
+                        <td>25.0</td>
+                        <td>35.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>71668.0</td>
+                        <td>31.94</td>
+                        <td>21.88</td>
+                        <td>5.0</td>
+                        <td>15.0</td>
+                        <td>25.0</td>
+                        <td>35.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>15875.0</td>
+                        <td>30.76</td>
+                        <td>21.51</td>
+                        <td>5.0</td>
+                        <td>15.0</td>
+                        <td>25.0</td>
+                        <td>35.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>1030.0</td>
+                        <td>31.57</td>
+                        <td>25.14</td>
+                        <td>5.0</td>
+                        <td>15.0</td>
+                        <td>25.0</td>
+                        <td>35.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>116.0</td>
+                        <td>44.40</td>
+                        <td>36.61</td>
+                        <td>5.0</td>
+                        <td>15.0</td>
+                        <td>25.0</td>
+                        <td>65.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>34.0</td>
+                        <td>47.35</td>
+                        <td>35.87</td>
+                        <td>5.0</td>
+                        <td>25.0</td>
+                        <td>35.0</td>
+                        <td>70.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td>16.0</td>
+                        <td>50.31</td>
+                        <td>38.23</td>
+                        <td>5.0</td>
+                        <td>20.0</td>
+                        <td>50.0</td>
+                        <td>75.0</td>
+                        <td>110.0</td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td>7.0</td>
+                        <td>44.29</td>
+                        <td>38.56</td>
+                        <td>5.0</td>
+                        <td>20.0</td>
+                        <td>35.0</td>
+                        <td>60.0</td>
+                        <td>110.0</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>This table shows a clear trend: as the number of readmissions increases, especially beyond 10, the average length of stay tends to increase significantly. For instance, patients with 15 readmissions have an average stay of 44.40 days, compared to 31.57 days for those with 10 readmissions.</p>
+            
             <h3>4. Facility Quality Analysis</h3>
             <img src="images/cluster_numerical.png" alt="Numerical Cluster Pair Plot">
             <table>
