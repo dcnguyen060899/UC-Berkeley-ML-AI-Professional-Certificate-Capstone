@@ -13,21 +13,17 @@ header {
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
 }
 
 header .logo img {
-    height: 60px;
-    position: absolute;
-    left: 10px;
-    top: 10px;
+    height: 50px;
+    margin-left: 20px;
 }
 
 header nav {
-    display: flex;
-    justify-content: space-around;
-    width: 80%;
+    margin-right: 20px;
 }
 
 header nav a {
