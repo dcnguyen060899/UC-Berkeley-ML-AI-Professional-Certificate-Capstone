@@ -1,9 +1,9 @@
 body {
-    background-color: #FFFFFF;
-    color: #333333;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -49,9 +49,11 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-/* Ensure the main content doesn't overlap with the header */
+
 main {
-    padding-top: 80px; /* Should match the header height */
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 60px; /* Increase this value if needed */
 }
 
 h2 {
@@ -88,9 +90,8 @@ footer {
     color: #FFFFFF;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
     width: 100%;
-    bottom: 0;
+    position: relative; /* Change from fixed to relative */
 }
 
 ul {
@@ -112,7 +113,8 @@ ul li:before {
     margin-left: -1em;
 }
 
-section {
+/* Ensure the last section has extra margin at the bottom */
+section:last-of-type {
     margin-bottom: 40px;
 }
 
