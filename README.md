@@ -1,4 +1,4 @@
-# [<u><em>UC-Berkeley-ML-AI---Capstone_Work_Sample</em>](https://dcnguyen060899.github.io/UC-Berkeley-ML-AI-Capstone_Work_Sample/)
+# [<u><em>UC-Berkeley ML/AI --- Capstone Work Sample</em>](https://dcnguyen060899.github.io/UC-Berkeley-ML-AI-Capstone_Work_Sample/)
 
 # Comprehensive EDA Insight Report
 
