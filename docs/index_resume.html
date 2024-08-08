@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume - UC Berkeley ML AI Capstone Work</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: #00274C; /* UC Berkeley color */
+            color: #FFFFFF;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header .logo img {
+            height: 60px;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        footer {
+            background-color: #00274C; /* UC Berkeley color */
+            color: #FFFFFF;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -12,20 +50,17 @@
             <img src="images/UC_Berkeley.png" alt="UC Berkeley Logo">
         </div>
         <nav>
-            <a href="index.html">Capstone Project</a>
+            <a href="index.html" style="color: #FFFFFF; text-decoration: none;">Capstone Project</a>
         </nav>
     </header>
 
     <main>
-        <section id="resume">
-            <h2>Resume</h2>
-            <iframe src="Resume.pdf" width="100%" height="800px"></iframe>
-        </section>
+        <iframe src="Resume.pdf"></iframe>
     </main>
 
     <footer>
         <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
-        <p><a href="index.html">Back to Capstone Project</a></p>
+        <p><a href="index.html" style="color: #FFFFFF; text-decoration: none;">Back to Capstone Project</a></p>
     </footer>
 </body>
 </html>
