@@ -401,7 +401,7 @@
         </section>
 
         <section id="recommendations">
-            <h2>Recommendations</h2>
+            <h2>Business Recommendations</h2>
             <ol>
                 <li><strong>Resource Allocation:</strong> Optimize based on ward types and illness severity. Focus on high-demand wards (R, Q) and evaluate underutilized wards (P, T, U).</li>
                 <li><strong>Visitor Management:</strong> Develop structured visitor programs balancing patient support with operational efficiency.</li>
@@ -414,7 +414,38 @@
                 <li><strong>Age-Specific Care:</strong> Develop specialized programs for working-age adults in ward facility F.</li>
                 <li><strong>Continuous Model Improvement:</strong> Regularly retrain and fine-tune models with new data, focusing on improving predictions for medium-length stays (10-40 days).</li>
             </ol>
-        </section>
+            <h2>Technical Recommendations</h2>
+            <p>To further improve our model performance and gain deeper insights, we propose the following technical steps:</p>
+            <ol>
+                <li>
+                    <strong>Enhanced Traditional Modeling:</strong>
+                    <ul>
+                        <li>Implement SMOTE (Synthetic Minority Over-sampling Technique) to address class imbalance.</li>
+                        <li>Apply Stratified K-Fold cross-validation to maintain class distribution across folds.</li>
+                        <li>Re-run traditional models (Random Forest, Gradient Boosting, XGBoost, CatBoost) with these techniques.</li>
+                        <li>Analyze changes in model performance and feature importance.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Ensemble Method Exploration:</strong>
+                    <ul>
+                        <li>Develop a voting classifier combining the best-performing traditional models.</li>
+                        <li>Compare the ensemble model's performance against our current LSTM Neural Network.</li>
+                        <li>Evaluate potential improvements in prediction accuracy and robustness.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Comparative Analysis:</strong>
+                    <ul>
+                        <li>Conduct a thorough comparison of all models, including the new ensemble approach.</li>
+                        <li>Assess trade-offs between model complexity, interpretability, and performance.</li>
+                        <li>Determine the most suitable model or combination of models for deployment.</li>
+                        <li>Consider the preference for ensemble methods over neural networks if performance is comparable, due to their superior interpretability.</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>By implementing these technical recommendations, we aim to potentially enhance our predictive capabilities and gain a more comprehensive understanding of the factors influencing hospital length of stay.</p>
+        </section>            
     </main>
 
     <footer>
