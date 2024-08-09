@@ -124,6 +124,7 @@ section p {
     margin-bottom: 10px;
     line-height: 1.6;
     padding-left: 20px; /* Add padding to indent the text */
+    margin-top: 0; /* Remove any margin that might cause gaps */
 }
 
 section ul {
