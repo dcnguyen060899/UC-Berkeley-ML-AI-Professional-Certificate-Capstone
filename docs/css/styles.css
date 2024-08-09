@@ -153,6 +153,7 @@ section ul ul {
   --berkeley-gray: #DDD5C7;
 }
 
+
 #chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -223,4 +224,9 @@ section ul ul {
   margin-left: 5px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+#user-input, #send-button {
+  background-color: lightblue; /* Temporary background color for debugging */
+  color: black; /* Ensure text is visible */
 }
