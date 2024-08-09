@@ -1,0 +1,7 @@
+services:
+- type: web
+  name: YourServiceName
+  env: python
+  buildCommand: pip install -r backend/dependencies/requirements.txt
+  startCommand: python backend/app.py  # or the appropriate start command for your application
+  autoDeploy: true
