@@ -99,3 +99,6 @@ header .logo img {
     object-fit: contain;
 }
 
+.logo-link, header .logo {
+    width: 300px; /* Adjust this value as needed */
+}
