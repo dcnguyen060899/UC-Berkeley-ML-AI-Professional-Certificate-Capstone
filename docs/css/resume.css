@@ -44,6 +44,8 @@ header nav a {
     text-decoration: none;
     margin: 0 15px;
     font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Match font family */
+    font-size: 16px; /* Adjust font size if necessary */
 }
 
 header nav a:hover {
