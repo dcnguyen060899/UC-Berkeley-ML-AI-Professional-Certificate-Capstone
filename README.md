@@ -147,8 +147,8 @@ The COVID-19 pandemic exposed significant challenges in hospital resource manage
 
 #### 6. **Hospital Code and Department Insights**
 ![Hospital Code and Department Heatmap](images/heatmap_hospital_code_department.png)
-   - **Observation**: Hospitals 13 and 25 have many gynecology patients, while others show varied distributions.
-   - **Interpretation**: Hospitals 13 and 25 likely specialize in gynecology, while others offer balanced services across departments.
+   - **Observation**: Hospitals 19, 23 and 26 have many gynecology patients, while others show varied distributions.
+   - **Interpretation**: Hospitals 19, 23 and 26 likely specialize in gynecology, while others offer balanced services across departments.
 
 #### 7. **Hospital Region and Severity of Illness Insights**
 ![Hospital Region and Severity of Illness Heatmap](images/heatmap_hospital_region_code_severity_of_illness.png)
