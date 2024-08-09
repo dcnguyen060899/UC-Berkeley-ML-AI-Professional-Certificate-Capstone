@@ -135,3 +135,13 @@ section ul {
 section ul ul {
     padding-left: 20px; /* Indent nested list items less */
 }
+
+.logo-link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    text-decoration: none;
+}
