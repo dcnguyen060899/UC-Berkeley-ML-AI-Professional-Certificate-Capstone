@@ -6,3 +6,4 @@ flask
 langchain-openai
 flask-cors
 llm
+gunicorn
