@@ -4,7 +4,6 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    padding-top: 80px; /* Should match the header height */
 }
 
 header {
@@ -14,9 +13,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
     height: 80px; /* Adjust as needed */
-    margin-bottom: 10px; /* Add this line */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -57,16 +55,7 @@ header nav a:hover {
 
 /* Ensure the main content doesn't overlap with the header */
 main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFFFFF;
-    height: calc(100% - 80px); /* Full height minus the header height */
-}
-
-main h2:first-child {
-    margin-top: -10px; /* Adjust as needed */
+    padding-top: 80px; /* Should match the header height */
 }
 
 h2 {
