@@ -19,6 +19,8 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 header .logo {
@@ -81,24 +83,24 @@ footer {
 }
 
 .logo-link {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logo-link .logo {
     height: 100%;
     display: flex;
     align-items: center;
     background-color: white;
     padding: 0 20px;
-    text-decoration: none;
 }
 
-header .logo {
-    height: 100%;
-}
-
-header .logo img {
+.logo-link .logo img {
     height: 100%;
     width: auto;
     object-fit: contain;
-}
-
-.logo-link, header .logo {
-    width: 300px; /* Adjust this value as needed */
 }
