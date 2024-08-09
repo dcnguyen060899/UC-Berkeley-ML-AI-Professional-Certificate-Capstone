@@ -3,5 +3,5 @@ services:
   name: YourServiceName
   env: python
   buildCommand: pip install -r backend/dependencies/requirements.txt
-  startCommand: python backend/app.py  # Replace this with your actual start command
+  startCommand: python backend/src/app.py  # Replace this with your actual start command
   autoDeploy: true
