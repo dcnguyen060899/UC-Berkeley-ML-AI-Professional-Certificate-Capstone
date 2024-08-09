@@ -117,6 +117,7 @@ ul li:before {
 
 section {
     margin-bottom: 40px;
+    margin-top: 0; /* Remove top margin to eliminate gaps */
 }
 
 section p {
