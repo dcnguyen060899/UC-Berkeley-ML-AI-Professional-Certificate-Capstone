@@ -7,7 +7,7 @@ from chatservice import ChatService
 import time
 
 load_dotenv()
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../docs', static_url_path='/')
 CORS(app)  # Initialize CORS with the Flask app
 
 
@@ -38,6 +38,10 @@ base_qa = {
     "What were the main challenges you faced during this project?": "The main challenges included dealing with imbalanced data, ensuring model generalization across different hospital types and regions, and accurately predicting outcomes for less common cases. Hyperparameter tuning and feature engineering were also critical to improving model performance."
 }
 
+@app.route("/")
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
+    
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
