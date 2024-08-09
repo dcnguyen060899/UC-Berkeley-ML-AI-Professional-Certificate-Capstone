@@ -78,11 +78,24 @@ footer {
 }
 
 .logo-link {
-    display: block;
     height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0 20px;
     text-decoration: none;
 }
 
 .logo-link:hover {
     text-decoration: none;
+}
+
+.logo-link .logo {
+    height: 100%;
+}
+
+.logo-link .logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
 }
