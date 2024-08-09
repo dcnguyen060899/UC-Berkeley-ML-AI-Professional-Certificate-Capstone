@@ -1,26 +1,21 @@
-body {
-    background-color: #FFFFFF;
-    color: #333333;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 header {
-    background-color: #003262;
+    background-color: #003262; /* Berkeley Blue background */
     color: #FFFFFF;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 80px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding-left: 0;
-    padding-right: 0;
+    position: relative;
+    height: 80px; /* Adjust as needed */
 }
 
 header .logo {
@@ -81,6 +76,7 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
 
 .logo-link {
     display: flex;
