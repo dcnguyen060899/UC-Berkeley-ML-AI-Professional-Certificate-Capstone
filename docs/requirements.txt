@@ -1,0 +1,8 @@
+Flask==2.1.1
+openai==0.27.2
+llama-index==0.5.4  # Replace with the correct version if necessary
+pydantic==1.9.1
+deeplake==3.6.4  # Include only if used in your project
+Pillow==9.1.0  # For image processing (PIL)
+matplotlib==3.5.1  # For plotting if used in your script
+pandas==1.4.2  # For data handling if necessary
