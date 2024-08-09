@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage('bot', 'Thinking...');
 
         // Call your Flask backend server hosted on Vercel
-        const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-t2gx.vercel.app', {
+        const response = await fetch('https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
