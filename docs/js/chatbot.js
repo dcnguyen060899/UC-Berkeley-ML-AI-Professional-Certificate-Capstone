@@ -9,7 +9,7 @@ async function sendMessage() {
       addMessage('bot', 'Thinking...');
 
       // Call your Vercel serverless function
-      const response = await fetch('https://<your-vercel-domain>.vercel.app/api/chat', {
+      const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-lqtw.vercel.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
