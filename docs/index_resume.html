@@ -6,45 +6,74 @@
     <title>Resume - UC Berkeley ML AI Capstone Work</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body, html {
+        body {
+            background-color: #FFFFFF;
+            color: #333333;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
         }
+
         header {
-            background-color: #00274C; /* UC Berkeley color */
-            padding: 10px 0;
+            background-color: #003262; /* Berkeley Blue background */
+            color: #FFFFFF;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-left: 20px;
+            position: relative;
+            height: 80px; /* Adjust as needed */
+        }
+
+        header .logo {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            background-color: white; /* Set logo background to white */
+            padding: 0 20px; /* Add some padding around the logo */
+        }
+
+        header .logo img {
+            height: 100%;
+            width: auto; /* Maintain aspect ratio */
+            object-fit: contain; /* Ensure the entire logo is visible */
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
             padding-right: 20px;
         }
-        header .logo img {
-            height: 60px;
-            background-color: transparent;
-        }
-        nav a {
+
+        header nav a {
             color: #FFFFFF;
             text-decoration: none;
+            margin: 0 15px;
             font-weight: bold;
         }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #FFFFFF;
+            padding-top: 80px; /* Should match the header height */
         }
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+
         footer {
-            background-color: #00274C; /* UC Berkeley color */
+            background-color: #003262; /* Berkeley Blue */
             color: #FFFFFF;
             text-align: center;
             padding: 10px 0;
@@ -60,7 +89,7 @@
             <img src="images/UC_Berkeley.png" alt="UC Berkeley Logo">
         </div>
         <nav>
-            <a href="index.html" style="color: #FFFFFF; text-decoration: none;">Capstone Project</a>
+            <a href="index.html">Capstone Project</a>
         </nav>
     </header>
 
