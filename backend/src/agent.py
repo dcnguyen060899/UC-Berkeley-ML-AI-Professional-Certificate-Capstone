@@ -1,4 +1,4 @@
-from langchain.agents import AgentType, create_react_agent
+from langchain.agents import AgentType, initialize_agent
 from langchain.tools import Tool
 #Project modules
 from llm import llm, memory
@@ -54,7 +54,7 @@ tools = [
 ]
 
 # Creationg of agent
-agent = create_react_agent(
+agent = initialize_agent(
     tools,
     llm,
     memory = memory,                    
