@@ -4,6 +4,6 @@ services:
     env: python
     buildCommand: |
       cd backend
-      pip install --no-cache-dir -r ./dependencies/requirements.txt
-    startCommand: python src/app.py  # Adjust this to the correct entry point for your application
+      pip install -r ./dependencies/requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:8000
     autoDeploy: true
