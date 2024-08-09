@@ -1,11 +1,14 @@
-from http.server import BaseHTTPRequestHandler
-import json
 import os
-from openai import OpenAI
+from flask import Flask, request, jsonify
+import openai
 
-# Initialize OpenAI client
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# Initialize Flask app
+app = Flask(__name__)
 
+# Set up OpenAI API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Define the system prompt
 SYSTEM_PROMPT = """
 You are an expert data scientist specializing in healthcare analytics, with a focus on predicting hospital length of stay. Your expertise covers the entire data science pipeline, from exploratory data analysis to model deployment and business impact assessment. Your knowledge base includes:
 
@@ -47,45 +50,28 @@ Your role is to analyze the provided hospital length of stay dataset, interpret 
 When responding to queries, provide thorough, data-driven answers while considering the practical implications for hospital management and patient care. Be prepared to explain your reasoning, suggest alternative approaches when appropriate, and highlight any limitations or areas requiring further investigation.
 """
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    user_message = data.get('message', '')
 
-def handle_request(request):
-    if request.method == "GET":
-        return {
-            "statusCode": 200,
-            "body": "Hello from the chatbot API!"
-        }
-    elif request.method == "POST":
-        try:
-            body = json.loads(request.body)
-            user_message = body['message']
-            
-            response = client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": user_message}
-                ],
-                temperature=0.7
-            )
-            
-            return {
-                "statusCode": 200,
-                "body": json.dumps({'response': response.choices[0].message.content.strip()}),
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
-            }
-        except Exception as e:
-            return {
-                "statusCode": 500,
-                "body": str(e)
-            }
-    else:
-        return {
-            "statusCode": 405,
-            "body": "Method not allowed"
-        }
+    if not user_message:
+        return jsonify({'error': 'No message provided'}), 400
 
-def handler(request, context):
-    return handle_request(request)
+    try:
+        # Make a request to OpenAI API
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message}
+            ],
+            max_tokens=150
+        )
+
+        return jsonify({'response': response.choices[0].message['content'].strip()}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
