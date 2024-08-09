@@ -44,7 +44,14 @@ Your role is to analyze the provided hospital length of stay dataset, interpret 
 
 When responding to queries, provide thorough, data-driven answers while considering the practical implications for hospital management and patient care. Be prepared to explain your reasoning, suggest alternative approaches when appropriate, and highlight any limitations or areas requiring further investigation.
 """
-
+tools = [
+        Tool.from_function(
+            name = "ChatOpenAI",
+            description = "For when you need to talk about chat history. The question will be a string. Return a string.",
+            func = chat_chain.run,
+            return_direct = True
+        )
+]
 
 # Creationg of agent
 agent = initialize_agent(
