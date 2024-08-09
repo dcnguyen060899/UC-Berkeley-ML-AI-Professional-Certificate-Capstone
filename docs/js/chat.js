@@ -5,17 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatOutput = document.getElementById("chatbot-messages");
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
+    let welcomeMessageSent = false; // Flag to track if welcome message is sent
 
     // Introduce the chatbot when the page loads
     function sendWelcomeMessage() {
         const welcomeMessage = "Hello! I'm your Berkeley AI Data Scientist Assistant. How can I help you today?";
         addMessage('bot', welcomeMessage);
+        welcomeMessageSent = true; // Set flag to true after message is sent
     }
     
     // Toggle chatbot visibility
     chatbotToggle.addEventListener("click", function () {
         chatbotContainer.classList.toggle("closed");
-        chatbotToggle.innerHTML = chatbotContainer.classList.contains('closed') ? '&#9660;' : '&#9650;';
+        chatbotToggle.innerHTML = chatbotContainer.classList.contains('closed') ? '&#9650;' : '&#9660;';
         if (!chatbotContainer.classList.contains("closed")) {
             sendWelcomeMessage();
         }
