@@ -1,7 +1,7 @@
 services:
-- type: web
-  name: YourServiceName
-  env: python
-  buildCommand: pip install -r backend/dependencies/requirements.txt
-  startCommand: python backend/src/app.py  # Replace this with your actual start command
-  autoDeploy: true
+  - type: web
+    name: YourServiceName
+    env: python
+    buildCommand: cd backend && pip install --no-cache-dir -r ./dependencies/requirements.txt
+    startCommand: python app.py  # Adjust this according to your entry script
+    autoDeploy: true
