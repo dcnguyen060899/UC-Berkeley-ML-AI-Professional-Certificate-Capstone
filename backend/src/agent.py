@@ -55,6 +55,7 @@ tools = [
 
 # Creationg of agent
 agent = initialize_agent(
+    tools,
     llm,
     memory = memory,                    
     verbose = True,
