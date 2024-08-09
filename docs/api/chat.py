@@ -48,20 +48,17 @@ When responding to queries, provide thorough, data-driven answers while consider
 """
 
 
-class handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write("Hello from the chatbot API!".encode())
-
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        data = json.loads(post_data.decode('utf-8'))
-        user_message = data['message']
-
+def handle_request(request):
+    if request.method == "GET":
+        return {
+            "statusCode": 200,
+            "body": "Hello from the chatbot API!"
+        }
+    elif request.method == "POST":
         try:
+            body = json.loads(request.body)
+            user_message = body['message']
+            
             response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
@@ -70,19 +67,25 @@ class handler(BaseHTTPRequestHandler):
                 ],
                 temperature=0.7
             )
-
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            response_data = json.dumps({'response': response.choices[0].message.content.strip()})
-            self.wfile.write(response_data.encode('utf-8'))
+            
+            return {
+                "statusCode": 200,
+                "body": json.dumps({'response': response.choices[0].message.content.strip()}),
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                }
+            }
         except Exception as e:
-            self.send_error(500, str(e))
+            return {
+                "statusCode": 500,
+                "body": str(e)
+            }
+    else:
+        return {
+            "statusCode": 405,
+            "body": "Method not allowed"
+        }
 
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
+def handler(request, context):
+    return handle_request(request)
