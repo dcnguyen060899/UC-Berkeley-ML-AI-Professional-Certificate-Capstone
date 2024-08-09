@@ -54,7 +54,7 @@ tools = [
 ]
 
 # Creationg of agent
-agent = initialize_agent(
+agent = create_react_agent(
     tools,
     llm,
     memory = memory,                    
