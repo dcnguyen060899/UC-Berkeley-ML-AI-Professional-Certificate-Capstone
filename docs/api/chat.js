@@ -1,26 +1,50 @@
-const { Configuration, OpenAIApi } = require("openai");
+document.addEventListener("DOMContentLoaded", function () {
+    const apiUrl = 'https://your-backend-api-url.onrender.com/chat'; // Replace with your actual backend API URL
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatOutput = document.getElementById("chatbot-messages");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+    // Toggle chatbot visibility
+    chatbotToggle.addEventListener("click", function () {
+        chatbotContainer.classList.toggle("closed");
+    });
+
+    // Send message to the chatbot
+    sendButton.addEventListener("click", function () {
+        const userMessage = userInput.value.trim();
+
+        if (userMessage) {
+            // Display user's message
+            chatOutput.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            userInput.value = ""; // Clear input field
+
+            // Send message to the backend
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display bot's response
+                chatOutput.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+                chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to the bottom
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                chatOutput.innerHTML += `<p><strong>Bot:</strong> Sorry, something went wrong. Please try again later.</p>`;
+            });
+        }
+    });
+
+    // Allow sending message with Enter key
+    userInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            sendButton.click();
+        }
+    });
 });
-const openai = new OpenAIApi(configuration);
-
-module.exports = async (req, res) => {
-  if (req.method === 'POST') {
-    try {
-      const { message } = req.body;
-
-      const completion = await openai.createCompletion({
-        model: "text-davinci-002",
-        prompt: message,
-        max_tokens: 150
-      });
-
-      res.status(200).json({ response: completion.data.choices[0].text.trim() });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to process request' });
-    }
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-};
