@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-input");
     const sendButton = document.getElementById("send-button");
 
+    // Introduce the chatbot when the page loads
+    function sendWelcomeMessage() {
+        const welcomeMessage = "Hello! I'm your Berkeley AI Data Scientist Assistant. How can I help you today?";
+        addMessage('bot', welcomeMessage);
+    }
+    
     // Toggle chatbot visibility
     chatbotToggle.addEventListener("click", function () {
         chatbotContainer.classList.toggle("closed");
@@ -47,4 +53,13 @@ document.addEventListener("DOMContentLoaded", function () {
             sendButton.click();
         }
     });
+    
+    // Add a message to the chat output
+    function addMessage(sender, text) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender);
+        messageElement.textContent = text;
+        chatOutput.appendChild(messageElement);
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+    }
 });
