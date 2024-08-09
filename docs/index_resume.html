@@ -6,12 +6,12 @@
     <title>Resume - UC Berkeley ML AI Capstone Work</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
-            background-color: #FFFFFF;
-            color: #333333;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -63,7 +63,7 @@
             justify-content: center;
             align-items: center;
             background-color: #FFFFFF;
-            padding-top: 80px; /* Should match the header height */
+            height: calc(100% - 80px); /* Full height minus the header height */
         }
 
         iframe {
