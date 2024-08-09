@@ -8,8 +8,8 @@ async function sendMessage() {
       // Show loading indicator
       addMessage('bot', 'Thinking...');
 
-      // Call your Vercel serverless function
-      const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-lqtw.vercel.app', {
+      // Call your Flask backend server hosted on Vercel
+      const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-chatbot.vercel.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
