@@ -15,10 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Toggle chatbot visibility
     chatbotToggle.addEventListener("click", function () {
         chatbotContainer.classList.toggle("closed");
+        chatbotToggle.innerHTML = chatbotContainer.classList.contains('closed') ? '&#9660;' : '&#9650;';
         if (!chatbotContainer.classList.contains("closed")) {
             sendWelcomeMessage();
         }
     });
+
 
     // Send message to the chatbot
     sendButton.addEventListener("click", function () {
