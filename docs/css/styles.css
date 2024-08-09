@@ -57,7 +57,12 @@ header nav a:hover {
 
 /* Ensure the main content doesn't overlap with the header */
 main {
-    padding-top: 20px; /* Reduced from 80px */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    height: calc(100% - 80px); /* Full height minus the header height */
 }
 
 main h2:first-child {
