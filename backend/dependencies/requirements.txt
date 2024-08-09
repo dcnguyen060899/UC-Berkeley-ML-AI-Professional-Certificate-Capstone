@@ -1,0 +1,14 @@
+transformers
+torch
+python-dotenv
+langchain
+langchain-community
+chainlit
+openai
+flask
+langchain-openai
+flask-cors
+neo4j
+pandas
+llm
+scikit-learn
