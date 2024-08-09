@@ -2,7 +2,6 @@ from langchain.agents import AgentType, initialize_agent
 from langchain.tools import Tool
 #Project modules
 from llm import llm, memory
-from tools.cypher import cypher_qa
 from tools.llmchain import chat_chain
 
 SYSTEM_MESSAGE = """
