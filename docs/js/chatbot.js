@@ -1,36 +1,64 @@
-async function sendMessage() {
-  const message = userInput.value.trim();
-  if (message) {
-    addMessage('user', message);
-    userInput.value = '';
+document.addEventListener('DOMContentLoaded', () => {
+  const chatbotContainer = document.getElementById('chatbot-container');
+  const chatbotToggle = document.getElementById('chatbot-toggle');
+  const userInput = document.getElementById('user-input');
+  const sendButton = document.getElementById('send-button');
+  const messagesContainer = document.getElementById('chatbot-messages');
 
-    try {
-      // Show loading indicator
-      addMessage('bot', 'Thinking...');
+  chatbotToggle.addEventListener('click', () => {
+    chatbotContainer.classList.toggle('closed');
+    chatbotToggle.textContent = chatbotContainer.classList.contains('closed') ? '^' : 'v';
+  });
 
-      // Call your Flask backend server hosted on Vercel
-      const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-chatbot.vercel.app', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: message }),
-      });
+  sendButton.addEventListener('click', sendMessage);
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
 
-      if (!response.ok) {
-        throw new Error('Failed to get response');
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (message) {
+      addMessage('user', message);
+      userInput.value = '';
+
+      try {
+        // Show loading indicator
+        addMessage('bot', 'Thinking...');
+
+        // Call your Flask backend server hosted on Vercel
+        const response = await fetch('uc-berkeley-ml-ai-capstone-work-sample-t2gx.vercel.app', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: message }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to get response');
+        }
+
+        const data = await response.json();
+
+        // Remove loading indicator
+        messagesContainer.removeChild(messagesContainer.lastChild);
+
+        // Add bot's response
+        addMessage('bot', data.response);
+      } catch (error) {
+        console.error('Error:', error);
+        addMessage('bot', 'Sorry, I encountered an error. Please try again later.');
       }
-
-      const data = await response.json();
-
-      // Remove loading indicator
-      messagesContainer.removeChild(messagesContainer.lastChild);
-
-      // Add bot's response
-      addMessage('bot', data.response);
-    } catch (error) {
-      console.error('Error:', error);
-      addMessage('bot', 'Sorry, I encountered an error. Please try again later.');
     }
   }
-}
+
+  function addMessage(sender, text) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    messageElement.textContent = text;
+    messagesContainer.appendChild(messageElement);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+});
