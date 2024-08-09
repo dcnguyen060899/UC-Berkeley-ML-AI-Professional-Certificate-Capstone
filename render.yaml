@@ -5,5 +5,5 @@ services:
     buildCommand: |
       cd backend
       pip install -r dependencies/requirements.txt
-    startCommand: startCommand: gunicorn app:app --chdir src --bind 0.0.0.0:8000
+    startCommand: gunicorn app:app --chdir backend/src --bind 0.0.0.0:8000
     autoDeploy: true
