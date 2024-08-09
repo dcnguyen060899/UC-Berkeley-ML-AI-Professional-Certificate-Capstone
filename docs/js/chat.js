@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     chatbotToggle.addEventListener("click", function () {
         chatbotContainer.classList.toggle("closed");
         chatbotToggle.innerHTML = chatbotContainer.classList.contains('closed') ? '&#9650;' : '&#9660;';
-        if (!chatbotContainer.classList.contains("closed")) {
+        if (!chatbotContainer.classList.contains("closed") && !welcomeMessageSent) {
             sendWelcomeMessage();
         }
     });
