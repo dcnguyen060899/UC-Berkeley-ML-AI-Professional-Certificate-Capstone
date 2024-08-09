@@ -1,19 +1,9 @@
 {
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs14.x"
-    }
-  },
+  "version": 2,
   "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
+    { "src": "api/chat.py", "use": "@vercel/python" }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    }
+    { "src": "/api/(.*)", "dest": "/api/chat.py" }
   ]
 }
