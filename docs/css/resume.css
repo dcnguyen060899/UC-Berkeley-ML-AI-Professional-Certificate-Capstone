@@ -8,14 +8,18 @@ body, html {
 }
 
 header {
-    background-color: #003262; /* Berkeley Blue background */
+    background-color: #003262;
     color: #FFFFFF;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    height: 80px; /* Adjust as needed */
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 header .logo {
@@ -86,16 +90,13 @@ footer {
     text-decoration: none;
 }
 
-.logo-link:hover {
-    text-decoration: none;
-}
-
-.logo-link .logo {
+header .logo {
     height: 100%;
 }
 
-.logo-link .logo img {
+header .logo img {
     height: 100%;
     width: auto;
     object-fit: contain;
 }
+
