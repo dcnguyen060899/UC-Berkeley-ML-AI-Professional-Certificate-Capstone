@@ -1,7 +1,2 @@
-Flask==2.3.2
-pydantic==1.10.7
-llama-index==0.5.9  # or the specific version you're using
-typing-extensions==4.7.1  # Ensures compatibility with typing extensions used in pydantic
-flask
-flask-cors
-openai
+Flask==2.1.2
+openai==0.27.0
