@@ -44,7 +44,6 @@ def index():
     
 @app.route("/chat", methods=["POST"])
 def chat():
-    print("Current base_qa dictionary:", base_qa)  # Debugging line
     data = request.get_json()
     user_message = data["message"]
 
