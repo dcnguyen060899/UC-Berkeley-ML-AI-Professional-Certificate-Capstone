@@ -47,7 +47,14 @@ Your role is to analyze the provided hospital length of stay dataset, interpret 
 When responding to queries, provide thorough, data-driven answers while considering the practical implications for hospital management and patient care. Be prepared to explain your reasoning, suggest alternative approaches when appropriate, and highlight any limitations or areas requiring further investigation.
 """
 
+
 class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write("Hello from the chatbot API!".encode())
+
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
@@ -76,6 +83,6 @@ class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
