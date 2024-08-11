@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     // Send message to the chatbot
     sendButton.addEventListener("click", function () {
         const userMessage = userInput.value.trim();
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Convert markdown-style links to clickable HTML links
                 const botMessage = convertMarkdownLinks(data.response);
                 // Display bot's response
-                chatOutput.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
+                chatOutput.innerHTML += `<p><strong>Bot:</strong> ${botMessage}</p>`;
                 chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to the bottom
             })
             .catch(error => {
@@ -71,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chatOutput.appendChild(messageElement);
         chatOutput.scrollTop = chatOutput.scrollHeight;
     }
+
     // Function to convert markdown-style links to clickable HTML links
     function convertMarkdownLinks(text) {
         const markdownLinkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
