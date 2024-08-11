@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function addMessage(sender, text) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender);
-        messageElement.textContent = text;
+        messageElement.innerHTML = text; // Use innerHTML to allow HTML content like links
         chatOutput.appendChild(messageElement);
         chatOutput.scrollTop = chatOutput.scrollHeight;
     }
