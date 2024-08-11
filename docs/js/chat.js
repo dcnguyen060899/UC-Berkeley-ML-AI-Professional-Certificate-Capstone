@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(data => {
+                // Convert markdown-style links to clickable HTML links
+                const botMessage = convertMarkdownLinks(data.response);
                 // Display bot's response
                 chatOutput.innerHTML += `<p><strong>Bot:</strong> ${data.response}</p>`;
                 chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to the bottom
@@ -68,5 +70,10 @@ document.addEventListener("DOMContentLoaded", function () {
         messageElement.textContent = text;
         chatOutput.appendChild(messageElement);
         chatOutput.scrollTop = chatOutput.scrollHeight;
+    }
+    // Function to convert markdown-style links to clickable HTML links
+    function convertMarkdownLinks(text) {
+        const markdownLinkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
+        return text.replace(markdownLinkPattern, '<a href="$2" target="_blank">$1</a>');
     }
 });
