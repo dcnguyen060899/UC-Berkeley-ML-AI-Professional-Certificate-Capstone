@@ -17,46 +17,14 @@
             </div>
         </a>
         <nav>
-            <div class="dropdown">
-                <button class="dropbtn">Executive Summary</button>
-                <div class="dropdown-content">
-                    <p>Optimize hospital resource management by predicting patient length of stay during COVID-19.</p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Project Goals</button>
-                <div class="dropdown-content">
-                    <p>Enhance patient care, optimize resources, and develop targeted interventions.</p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Key Findings</button>
-                <div class="dropdown-content">
-                    <p>Identified key factors like age, hospital type, and severity influencing length of stay.</p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Model Performance</button>
-                <div class="dropdown-content">
-                    <p>Neural Network achieved 80.42% test accuracy, highest among all models.</p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Business Impact</button>
-                <div class="dropdown-content">
-                    <p>Potential savings of $30 million by minimizing misclassification costs.</p>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Recommendations</button>
-                <div class="dropdown-content">
-                    <p>Optimize resources, tailor patient care, and implement structured visitor programs.</p>
-                </div>
-            </div>
+            <button class="popup-btn" data-target="executive-summary-popup">Executive Summary</button>
+            <button class="popup-btn" data-target="project-goals-popup">Project Goals</button>
+            <button class="popup-btn" data-target="key-findings-popup">Key Findings</button>
+            <button class="popup-btn" data-target="model-performance-popup">Model Performance</button>
+            <button class="popup-btn" data-target="business-impact-popup">Business Impact</button>
+            <button class="popup-btn" data-target="recommendations-popup">Recommendations</button>
         </nav>
-        <button id="profile-overlay-toggle" class="profile-btn">Profile</button>
     </header>
-
 
     <main>
         <section id="executive-summary">
@@ -501,28 +469,55 @@
     <footer>
         <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
     </footer>
-    
-    <!-- Profile Overlay -->
-    <div id="profile-overlay" class="overlay">
-        <div class="overlay-content">
-            <span id="close-overlay" class="closebtn">&times;</span>
-            <h2>Profile</h2>
-            <p>Choose what you'd like to view:</p>
-            <button id="resume-btn">Resume</button>
-            <button id="certification-btn">Certification</button>
-    
-            <div id="resume-content" class="profile-section">
-                <h3>Resume</h3>
-                <p>Include your resume content here or link to a PDF/Document.</p>
-            </div>
-            
-            <div id="certification-content" class="profile-section">
-                <h3>Certification</h3>
-                <p>Include your certification content here or a scanned copy of your certificate.</p>
-            </div>
+    <!-- Pop-up Structures -->
+    <div id="executive-summary-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Executive Summary</h2>
+            <p>In response to challenges exposed by the COVID-19 pandemic, our project focused on optimizing hospital resource management by predicting patient length of stay. Using advanced data analysis, machine learning, and deep learning techniques, we have identified key factors affecting stay duration and developed models to enhance patient care and resource allocation.</p>
         </div>
     </div>
     
+    <div id="project-goals-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Project Goals</h2>
+            <p>The project aimed to enhance patient care, optimize hospital resources, and develop targeted interventions to address factors contributing to prolonged hospital stays. Key goals included understanding the impact of social, financial, and demographic factors on recovery times, identifying operational inefficiencies, and proposing data-driven strategies to improve outcomes.</p>
+        </div>
+    </div>
+    
+    <div id="key-findings-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Key Findings</h2>
+            <p>Our analysis identified significant variations in patient demographics and hospital characteristics. Middle-aged patients (31-60 years) form the largest group requiring hospital care, with significant differences across hospital types and regions. Multiple peaks in stay duration were observed, with longer stays associated with trauma admissions, extreme severity of illness, and specific departments and wards.</p>
+        </div>
+    </div>
+    
+    <div id="model-performance-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Model Performance</h2>
+            <p>The deep learning model with LSTM layers outperformed traditional machine learning models, achieving an overall accuracy of 80.42% on the test set. The neural network model also achieved high AUC scores across all classes, indicating excellent predictive performance. The confusion matrix shows good prediction accuracy for most classes, with some challenges in distinguishing between certain adjacent classes.</p>
+        </div>
+    </div>
+    
+    <div id="business-impact-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Business Impact</h2>
+            <p>Implementing our best model could lead to significant cost savings, with potential savings of up to $30 million by minimizing misclassification costs. Improved resource allocation, targeted interventions, and enhanced patient care strategies could also optimize hospital operations and improve patient outcomes.</p>
+        </div>
+    </div>
+    
+    <div id="recommendations-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Recommendations</h2>
+            <p>We recommend optimizing resource allocation in high-demand wards, improving trauma and emergency care in high-demand regions, and implementing personalized patient care based on admission type and illness severity. Additionally, providing targeted post-discharge support for high-risk patients could reduce readmission rates and improve overall patient outcomes.</p>
+        </div>
+    </div>
+
     <!-- Chatbot Popup Structure -->
     <div id="chatbot-container" class="closed">
       <div id="chatbot-header">
