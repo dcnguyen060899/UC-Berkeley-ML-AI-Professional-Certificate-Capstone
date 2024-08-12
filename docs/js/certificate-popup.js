@@ -1,22 +1,22 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const certificateLink = document.getElementById("certificate-link");
+document.addEventListener("DOMContentLoaded", function() {
     const popup = document.getElementById("certificate-popup");
     const popupClose = document.querySelector(".popup-close");
+    const certificateLink = document.querySelector("a[href='index_certificate.html']");
 
-    // Show the popup when the link is clicked
-    certificateLink.addEventListener("click", function (e) {
-        e.preventDefault(); // Prevent default link behavior
+    // Open the popup when the link is clicked
+    certificateLink.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default link behavior
         popup.style.display = "block";
     });
 
-    // Hide the popup when the close button is clicked
-    popupClose.addEventListener("click", function () {
+    // Close the popup when the close button is clicked
+    popupClose.addEventListener("click", function() {
         popup.style.display = "none";
     });
 
-    // Hide the popup when clicking outside of the popup content
-    window.addEventListener("click", function (e) {
-        if (e.target === popup) {
+    // Close the popup when the user clicks outside of it
+    window.addEventListener("click", function(event) {
+        if (event.target === popup) {
             popup.style.display = "none";
         }
     });
