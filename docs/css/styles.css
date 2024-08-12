@@ -286,6 +286,7 @@ main {
     flex-grow: 1;
     margin-left: 0; /* No margin when sidebar is hidden */
     transition: margin-left 0.3s ease-in-out;
+    padding-top: 80px; /* Should match the header height */
 }
 
 main.sidebar-open {
