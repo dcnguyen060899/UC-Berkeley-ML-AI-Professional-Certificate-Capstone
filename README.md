@@ -1,6 +1,6 @@
 # [<u><em>UC-Berkeley ML/AI Professional Certificate --- Capstone</em>](https://ucberkeley-ml-ai-capstone.com/)
 
-# Comprehensive EDA Insight Report
+# Comprehensive Detail Report
 
 ## Executive Summary
 #### Project Goals and Objectives
