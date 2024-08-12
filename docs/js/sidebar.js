@@ -1,16 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
     const main = document.querySelector('main');
+    const chatbot = document.getElementById('chatbot-container');
     let timeoutId;
 
     function showSidebar() {
         sidebar.style.right = '0';
         main.classList.add('sidebar-open');
+        if (chatbot) chatbot.classList.add('sidebar-open');
     }
 
     function hideSidebar() {
-        sidebar.style.right = '-300px';
+        sidebar.style.right = 'calc(-1 * var(--sidebar-width))';
         main.classList.remove('sidebar-open');
+        if (chatbot) chatbot.classList.remove('sidebar-open');
     }
 
     document.addEventListener('mousemove', function(e) {
