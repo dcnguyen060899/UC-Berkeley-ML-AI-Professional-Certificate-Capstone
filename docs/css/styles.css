@@ -172,6 +172,10 @@ section ul ul {
     z-index: 1001;
 }
 
+.sidebar.open {
+    right: 0;
+}
+
 .sidebar h2 {
     margin-top: 0;
     color: var(--berkeley-blue);
