@@ -38,6 +38,12 @@ base_qa = {
     "What were the main challenges you faced during this project?": "The main challenges included dealing with imbalanced data, ensuring model generalization across different hospital types and regions, and accurately predicting outcomes for less common cases. Hyperparameter tuning and feature engineering were also critical to improving model performance."
 }
 
+@app.route("/clear-cache", methods=["GET"])
+def clear_cache():
+    with app.app_context():
+        cache.clear()
+    return "Cache cleared!", 200
+    
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
