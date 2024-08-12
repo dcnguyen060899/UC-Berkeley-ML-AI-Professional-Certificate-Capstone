@@ -4,8 +4,8 @@
 **Duy Nguyen**  
 Machine Learning and AI Professional  
 UC Berkeley Professional Certificate Program  
-Email: [duynguyen@example.com](mailto:dcnguyen060899@gmail.com)  
-LinkedIn: [linkedin.com/in/duwe-ng](https://www.linkedin.com/in/duwe-ng/)
+Email: [](mailto:dcnguyen060899@gmail.com)  
+LinkedIn: [](https://www.linkedin.com/in/duwe-ng/)
 
 
 ---
