@@ -1,27 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
+    const sidebarIndicator = document.getElementById('sidebar-indicator');
     const main = document.querySelector('main');
     let timeoutId;
 
     function showSidebar() {
-        sidebar.style.left = '0';
+        sidebar.classList.add('open');
         main.classList.add('sidebar-open');
+        sidebarIndicator.style.left = '250px';
     }
 
     function hideSidebar() {
-        sidebar.style.left = 'calc(-1 * var(--sidebar-width))';
+        sidebar.classList.remove('open');
         main.classList.remove('sidebar-open');
+        sidebarIndicator.style.left = '0';
     }
 
-    document.addEventListener('mousemove', function(e) {
-        const triggerDistance = 50; // Distance from the left edge to trigger the sidebar
-
-        if (e.clientX < triggerDistance) {
-            clearTimeout(timeoutId);
-            showSidebar();
+    sidebarIndicator.addEventListener('click', function() {
+        if (sidebar.classList.contains('open')) {
+            hideSidebar();
         } else {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(hideSidebar, 300); // Delay before hiding the sidebar
+            showSidebar();
         }
     });
 
