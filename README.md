@@ -1,5 +1,15 @@
 # [<u><em>UC-Berkeley ML/AI Professional Certificate --- Capstone</em>](https://ucberkeley-ml-ai-capstone.com/)
 
+
+**Duy Nguyen**  
+Machine Learning and AI Professional  
+UC Berkeley Professional Certificate Program  
+Email: [duynguyen@example.com](mailto:dcnguyen060899@gmail.com)  
+LinkedIn: [linkedin.com/in/duwe-ng](https://www.linkedin.com/in/duwe-ng/)
+
+
+---
+
 # Comprehensive Detail Report
 
 ## Executive Summary
