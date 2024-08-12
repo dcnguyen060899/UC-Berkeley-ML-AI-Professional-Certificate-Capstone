@@ -1,21 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
     const main = document.querySelector('main');
-    const chatbot = document.getElementById('chatbot-container');
+    let timeoutId;
 
-    sidebarToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('open');
-        main.classList.toggle('sidebar-open');
-        chatbot.classList.toggle('sidebar-open');
+    function showSidebar() {
+        sidebar.style.right = '0';
+        main.classList.add('sidebar-open');
+    }
+
+    function hideSidebar() {
+        sidebar.style.right = '-300px';
+        main.classList.remove('sidebar-open');
+    }
+
+    document.addEventListener('mousemove', function(e) {
+        const windowWidth = window.innerWidth;
+        const triggerDistance = 50; // Distance from the right edge to trigger the sidebar
+
+        if (e.clientX > windowWidth - triggerDistance) {
+            clearTimeout(timeoutId);
+            showSidebar();
+        } else {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(hideSidebar, 300); // Delay before hiding the sidebar
+        }
     });
 
-    // Close sidebar when clicking outside of it
-    document.addEventListener('click', function(event) {
-        if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-            sidebar.classList.remove('open');
-            main.classList.remove('sidebar-open');
-            chatbot.classList.remove('sidebar-open');
-        }
+    sidebar.addEventListener('mouseenter', function() {
+        clearTimeout(timeoutId);
+    });
+
+    sidebar.addEventListener('mouseleave', function() {
+        timeoutId = setTimeout(hideSidebar, 300);
     });
 });
