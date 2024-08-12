@@ -231,34 +231,59 @@ section ul ul {
   color: black; /* Ensure text is visible */
 }
 
-/* floating-sidebar */
-
+/* Sidebar styles */
 .floating-sidebar {
     position: fixed;
-    top: 100px; /* Adjust this value based on where you want the sidebar to appear vertically */
-    left: 10px; /* Adjust this value based on where you want the sidebar to appear horizontally */
-    width: 200px; /* Width of the sidebar */
-    background-color: #f8f9fa; /* Background color */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    top: 50px; /* Lower the position so it doesn't block the header */
+    left: 0;
+    width: 250px; /* Adjust the width */
+    background-color: #003262; /* UC Berkeley blue color */
+    color: white;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
+    transition: transform 0.3s ease;
+    transform: translateX(-230px); /* Hide the sidebar initially */
 }
 
+/* Sidebar expanded */
+.floating-sidebar.expanded {
+    transform: translateX(0); /* Show the sidebar */
+}
+
+/* Sidebar list */
 .floating-sidebar ul {
-    list-style-type: none; /* Removes bullets from list items */
+    list-style-type: none;
     padding: 0;
 }
 
 .floating-sidebar li {
-    margin-bottom: 10px; /* Space between list items */
+    margin-bottom: 15px;
 }
 
 .floating-sidebar a {
     text-decoration: none;
-    color: #007bff; /* Link color */
+    color: #ffffff; /* White text */
     font-weight: bold;
 }
 
 .floating-sidebar a:hover {
     text-decoration: underline; /* Underline on hover */
+}
+
+/* Toggle button styles */
+.toggle-sidebar-button {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    background-color: #003262; /* UC Berkeley blue color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
+    z-index: 1000;
+}
+
+.toggle-sidebar-button.expanded {
+    left: 230px; /* Move the button with the sidebar */
 }
