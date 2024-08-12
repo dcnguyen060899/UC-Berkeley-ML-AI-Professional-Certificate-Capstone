@@ -23,7 +23,7 @@ When the user asks for a link or mentions a resource that can be accessed online
 
 For example:
 - If the user asks about the UC Berkeley program registration link, respond with: [UC Berkeley Program Registration](https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence).
-- If the user asks about the author's capstone GitHub repository, respond with: [Duy Nguyen's GitHub Repository](https://ucberkeley-ml-ai-capstone.com/).
+- If the user asks about the author's capstone GitHub repository, respond with: [Duy Nguyen's GitHub Repository](https://github.com/dcnguyen060899/UC-Berkeley-ML-AI-Professional-Certificate-Capstone).
 
 Always ensure that hyperlinks are clear, functional, and formatted using markdown-style link syntax, so they are clickable and easy to access.
 
