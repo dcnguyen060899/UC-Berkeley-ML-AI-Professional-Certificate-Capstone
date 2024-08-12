@@ -17,16 +17,46 @@
             </div>
         </a>
         <nav>
-            <a href="#executive-summary">Executive Summary</a>
-            <a href="#project-goals">Project Goals</a>
-            <a href="#key-findings">Key Findings</a>
-            <a href="#model-performance">Model Performance</a>
-            <a href="#business-impact">Business Impact</a>
-            <a href="#recommendations">Recommendations</a>
-            <a href="index_resume.html">Resume</a>
-            <button id="profile-menu-button">Profile</button>
+            <div class="dropdown">
+                <button class="dropbtn">Executive Summary</button>
+                <div class="dropdown-content">
+                    <p>Optimize hospital resource management by predicting patient length of stay during COVID-19.</p>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Project Goals</button>
+                <div class="dropdown-content">
+                    <p>Enhance patient care, optimize resources, and develop targeted interventions.</p>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Key Findings</button>
+                <div class="dropdown-content">
+                    <p>Identified key factors like age, hospital type, and severity influencing length of stay.</p>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Model Performance</button>
+                <div class="dropdown-content">
+                    <p>Neural Network achieved 80.42% test accuracy, highest among all models.</p>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Business Impact</button>
+                <div class="dropdown-content">
+                    <p>Potential savings of $30 million by minimizing misclassification costs.</p>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Recommendations</button>
+                <div class="dropdown-content">
+                    <p>Optimize resources, tailor patient care, and implement structured visitor programs.</p>
+                </div>
+            </div>
         </nav>
+        <button id="profile-overlay-toggle" class="profile-btn">Profile</button>
     </header>
+
 
     <main>
         <section id="executive-summary">
@@ -472,14 +502,24 @@
         <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
     </footer>
     
-    <!-- Profile Overlay Menu -->
-    <div id="overlay-menu" class="hidden">
+    <!-- Profile Overlay -->
+    <div id="profile-overlay" class="overlay">
         <div class="overlay-content">
-            <ul>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#certification">Certification</a></li>
-            </ul>
-            <button id="close-overlay">Close</button>
+            <span id="close-overlay" class="closebtn">&times;</span>
+            <h2>Profile</h2>
+            <p>Choose what you'd like to view:</p>
+            <button id="resume-btn">Resume</button>
+            <button id="certification-btn">Certification</button>
+    
+            <div id="resume-content" class="profile-section">
+                <h3>Resume</h3>
+                <p>Include your resume content here or link to a PDF/Document.</p>
+            </div>
+            
+            <div id="certification-content" class="profile-section">
+                <h3>Certification</h3>
+                <p>Include your certification content here or a scanned copy of your certificate.</p>
+            </div>
         </div>
     </div>
     
