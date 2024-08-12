@@ -231,58 +231,34 @@ section ul ul {
   color: black; /* Ensure text is visible */
 }
 
-/* Floating Sidebar Styles */
+/* floating-sidebar */
+
 .floating-sidebar {
     position: fixed;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 200px;
-    background-color: #003262; /* Berkeley Blue */
-    color: #fff;
-    padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    top: 100px; /* Adjust this value based on where you want the sidebar to appear vertically */
+    left: 10px; /* Adjust this value based on where you want the sidebar to appear horizontally */
+    width: 200px; /* Width of the sidebar */
+    background-color: #f8f9fa; /* Background color */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    padding: 15px;
+    border-radius: 5px;
 }
 
 .floating-sidebar ul {
-    list-style-type: none;
+    list-style-type: none; /* Removes bullets from list items */
     padding: 0;
-    margin: 0;
 }
 
 .floating-sidebar li {
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Space between list items */
 }
 
 .floating-sidebar a {
     text-decoration: none;
-    color: #fff;
+    color: #007bff; /* Link color */
     font-weight: bold;
 }
 
 .floating-sidebar a:hover {
-    color: #FDB515; /* Berkeley Gold */
+    text-decoration: underline; /* Underline on hover */
 }
-
-.floating-sidebar a:active {
-    color: #D9661F; /* Berkeley Orange */
-}
-
-/* Main Content Styles */
-.main-content {
-    margin-left: 220px; /* Adjust depending on the width of the sidebar */
-    padding: 20px;
-}
-
-@media (max-width: 768px) {
-    .floating-sidebar {
-        width: 150px;
-        padding: 10px;
-    }
-
-    .main-content {
-        margin-left: 170px;
-    }
-}
-
