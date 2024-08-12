@@ -235,13 +235,13 @@ section ul ul {
 .floating-sidebar {
     position: fixed;
     top: 50%;
-    left: 0;
+    right: 0; /* Position the sidebar on the right side */
     transform: translateY(-50%);
     background-color: #003262;
     color: #ffffff;
     padding: 10px;
-    border-radius: 0 5px 5px 0;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px 0 0 5px; /* Adjusted border-radius for right alignment */
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2); /* Adjusted shadow direction */
     display: none; /* Hidden by default */
 }
 
@@ -267,7 +267,7 @@ section ul ul {
 #toggle-button {
     position: fixed;
     top: 10px;
-    left: 10px;
+    right: 10px; /* Position the toggle button on the right side */
     background-color: #003262;
     color: #ffffff;
     border: none;
@@ -280,4 +280,5 @@ section ul ul {
 #toggle-button:hover {
     background-color: #002147;
 }
+
 
