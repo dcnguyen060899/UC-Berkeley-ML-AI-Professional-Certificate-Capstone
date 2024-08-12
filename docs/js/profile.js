@@ -1,22 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const profileMenuButton = document.getElementById("profile-menu-button");
-    const overlayMenu = document.getElementById("overlay-menu");
-    const closeOverlayButton = document.getElementById("close-overlay");
+    // Toggle Profile Overlay
+    const profileToggle = document.getElementById('profile-overlay-toggle');
+    const profileOverlay = document.getElementById('profile-overlay');
+    const closeOverlayBtn = document.getElementById('close-overlay');
+    const resumeBtn = document.getElementById('resume-btn');
+    const certificationBtn = document.getElementById('certification-btn');
+    const resumeContent = document.getElementById('resume-content');
+    const certificationContent = document.getElementById('certification-content');
 
-    // Show overlay menu
-    profileMenuButton.addEventListener("click", function () {
-        overlayMenu.classList.remove("hidden");
+    profileToggle.addEventListener('click', function () {
+        profileOverlay.style.display = 'flex';
     });
 
-    // Close overlay menu
-    closeOverlayButton.addEventListener("click", function () {
-        overlayMenu.classList.add("hidden");
+    closeOverlayBtn.addEventListener('click', function () {
+        profileOverlay.style.display = 'none';
+        resumeContent.style.display = 'none';
+        certificationContent.style.display = 'none';
     });
 
-    // Close overlay when clicking outside the content
-    overlayMenu.addEventListener("click", function (event) {
-        if (event.target === overlayMenu) {
-            overlayMenu.classList.add("hidden");
-        }
+    resumeBtn.addEventListener('click', function () {
+        resumeContent.style.display = 'block';
+        certificationContent.style.display = 'none';
+    });
+
+    certificationBtn.addEventListener('click', function () {
+        certificationContent.style.display = 'block';
+        resumeContent.style.display = 'none';
     });
 });
