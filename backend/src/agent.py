@@ -950,6 +950,62 @@ The deployment of these strategies is expected to result in substantial cost sav
 - **Traditional Models**: Significant savings ranging from $19,988,400 to $22,388,400 across different machine learning models.
 
 By implementing these immediate actions, hospitals can improve operational efficiency, enhance patient care quality, and achieve significant cost savings, paving the way for a data-driven approach to healthcare management.
+
+>>> After following the CRISP-DM cycle, here is the ML pipeline check Llist:
+       ✅Capstone Submission Checklist 
+
+Hi All 👋, 
+
+I have summarized some of the key checklist items to go through before you submit your project.  This is based on the practical assignments I have reviewed in the course so far.
+
+If you have any questions/ comments/ feedback, please leave it in the comments.
+
+Thank you! 🙏
+
+
+Data Understanding and Cleaning
+Provide a clear description of your dataset, including the source, size, and any relevant details.
+
+EDA (Exploratory Data Analysis)
+Ensure your EDA is connected to the target column you are predicting/classifying.
+Use the correct chart types. Use 🔗DataVizCatalogue
+Include only essential charts. Each chart should have a headline that explicitly calls out the insights or relationships with the target variable or highlights something interesting
+Omit charts that do not provide significant insights or important information.
+Summarize your EDA into 5-6 key points on one slide, followed by additional slides that graphically highlight each EDA point.
+Do not perform numeric/correlation analysis on categorical values stored as numeric (e.g., region code, zipcode)
+
+Data Cleaning Pre-processing
+Document any data cleaning steps you performed, such as handling missing values, outliers, and inconsistencies.
+Provide an overview of your pre-processing techniques
+Detail any feature engineering steps taken, such as creating new features or transforming existing ones.
+Don't use LabelEncoder on independent categorical variables.
+Ensure categorical data is not treated as numeric (e.g., region code, zipcode) and don’t apply StandardScaler etc on these values. 
+Don’t apply StandardScaler on OneHotEncoded columns
+
+Modeling
+Include a dummy classifier/regressor to establish a baseline from random guessing, especially for imbalanced datasets.
+Provide a neat tabular comparison of key metrics from the ML models.
+Include performance metrics on both validation and test datasets
+For classification problems, include confusion matrix and ROC-AUC curves.
+Emphasize the interpretation of your models, highlighting which features are important for prediction.
+If possible, perform 🔗SHAP analysis to explain model predictions.
+For classification problems, if possible, compute and discuss the business impact of your decisions (e.g., fraud detection savings). Example: 
+🔗 Fraud detection - how much it saves
+
+Jupyter Notebook
+Submit a well-organized Jupyter notebook.
+Ensure your code includes necessary comments and explanations for clarity
+Resolve all warning messages. Either fix the issues or 🔗suppress the warnings if they are not critical.
+Re-run all your code in one go to ensure that everything executes smoothly and your analysis can be replicated without errors
+In JupyterNotebook, go to: Cell → Run All to re-run the entire notebook.
+Restart the kernel before this final go to make sure you are not referencing deleted or renamed variables
+Review imports and remove any that are unused
+
+Presentation and Documentation
+Develop a comprehensive presentation and use it to populate the GitHub README with key points.
+Uncle test: Can your README be understood by a person who has no clue about the project? Can he easily understand the key takeaways from EDA/ Modeling and Data pre-processing stages?
+Don’t include python code snippets in README. It should contain key findings/ insights
+
 """
 tools = [
         Tool.from_function(
