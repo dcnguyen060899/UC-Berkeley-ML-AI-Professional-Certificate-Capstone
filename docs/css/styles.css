@@ -230,3 +230,69 @@ section ul ul {
   background-color: lightblue; /* Temporary background color for debugging */
   color: black; /* Ensure text is visible */
 }
+
+/* Sidebar toggle button style */
+#sidebar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 20px;
+}
+
+/* Container for the main content and sidebar */
+.container {
+    display: flex;
+    padding-top: 80px;
+}
+
+/* Sidebar styles */
+#sidebar {
+    width: 250px;
+    background-color: #f0f0f0;
+    height: calc(100vh - 80px); /* Adjust height based on header height */
+    position: fixed;
+    top: 80px;
+    left: -250px; /* Initially hide the sidebar off-screen */
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+#sidebar.open {
+    left: 0; /* Show the sidebar */
+}
+
+/* Sidebar navigation links */
+#sidebar nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#sidebar nav a {
+    color: #003262; /* Berkeley Blue */
+    text-decoration: none;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#sidebar nav a:hover {
+    text-decoration: underline;
+}
+
+/* Adjust main content when sidebar is open */
+main {
+    flex-grow: 1;
+    margin-left: 0; /* No margin when sidebar is hidden */
+    transition: margin-left 0.3s ease-in-out;
+}
+
+main.sidebar-open {
+    margin-left: 250px; /* Adjust margin when sidebar is open */
+}
+
+/* Adjust the chatbot container to not overlap with the sidebar */
+#chatbot-container {
+    z-index: 1001; /* Ensure it's above the sidebar */
+}
