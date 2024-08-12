@@ -230,3 +230,49 @@ section ul ul {
   background-color: lightblue; /* Temporary background color for debugging */
   color: black; /* Ensure text is visible */
 }
+
+#sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #003262;
+    transition: 0.3s;
+    padding-top: 80px;
+    z-index: 1000;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+#sidebar nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#sidebar nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#sidebar nav a:hover {
+    text-decoration: underline;
+}
+
+#sidebar-toggle {
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+body.sidebar-active main {
+    margin-left: 250px;
+}
