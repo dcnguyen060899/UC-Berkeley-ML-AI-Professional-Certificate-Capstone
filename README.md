@@ -1,4 +1,4 @@
-# [<u><em>UC-Berkeley ML/AI --- Capstone Work Sample</em>](https://ucberkeley-ml-ai-capstone.com/)
+# [<u><em>UC-Berkeley ML/AI Professional Certificate --- Capstone</em>](https://ucberkeley-ml-ai-capstone.com/)
 
 # Comprehensive EDA Insight Report
 
