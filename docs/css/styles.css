@@ -53,57 +53,22 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-.sidebar {
-    position: fixed;
-    top: var(--header-height);
-    left: calc(-1 * var(--sidebar-width));
-    width: var(--sidebar-width);
-    height: calc(100vh - var(--header-height));
-    background-color: var(--berkeley-blue);
-    transition: left 0.3s ease-in-out;
-    overflow-y: auto;
-    z-index: 999;
-}
-
-.sidebar nav {
-    padding: 20px;
-}
-
-.sidebar nav a {
-    display: block;
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--berkeley-gray);
-}
-
-.sidebar nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
+/* Ensure the main content doesn't overlap with the header */
 main {
-    padding: 20px;
-    margin-top: var(--header-height);
-    margin-left: 0;
-    transition: margin-left 0.3s ease-in-out;
-}
-
-main.sidebar-open {
-    margin-left: var(--sidebar-width);
+    padding-top: 80px; /* Should match the header height */
 }
 
 h2 {
-    color: var(--berkeley-gold);
-    padding-left: 20px;
+    color: #FDB515; /* Berkeley Gold */
+    padding-left: 20px; /* Add padding to indent the title */
 }
 
 h3 {
-    color: var(--berkeley-blue);
+    color: #003262; /* Berkeley Blue */
     margin-top: 20px;
-    padding-left: 20px;
+    padding-left: 20px; /* Add padding to indent the title */
 }
 
-/* Existing styles for tables, lists, sections, etc. */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -120,12 +85,12 @@ th, td {
 }
 
 th {
-    background-color: var(--berkeley-blue);
+    background-color: #003262; /* Berkeley Blue */
     color: #FFFFFF;
 }
 
 footer {
-    background-color: var(--berkeley-blue);
+    background-color: #003262; /* Berkeley Blue */
     color: #FFFFFF;
     text-align: center;
     padding: 10px 0;
@@ -146,7 +111,7 @@ ul li {
 
 ul li:before {
     content: "•";
-    color: var(--berkeley-gold);
+    color: #FDB515; /* Berkeley Gold */
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -160,15 +125,15 @@ section {
 section p {
     margin-bottom: 10px;
     line-height: 1.6;
-    padding-left: 20px;
+    padding-left: 20px; /* Add padding to indent the text */
 }
 
 section ul {
-    padding-left: 40px;
+    padding-left: 40px; /* Add padding to indent the list items */
 }
 
 section ul ul {
-    padding-left: 20px;
+    padding-left: 20px; /* Indent nested list items less */
 }
 
 .logo-link {
@@ -181,12 +146,13 @@ section ul ul {
     text-decoration: none;
 }
 
-
 /* chatbot.css */
 :root {
   --berkeley-blue: #003262;
   --berkeley-gold: #FDB515;
   --berkeley-gray: #DDD5C7;
+  --sidebar-width: 250px;
+  --header-height: 80px;
 }
 
 
@@ -265,4 +231,37 @@ section ul ul {
 #user-input, #send-button {
   background-color: lightblue; /* Temporary background color for debugging */
   color: black; /* Ensure text is visible */
+}
+
+/* side bar */
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: calc(-1 * var(--sidebar-width));
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background-color: var(--berkeley-blue);
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.sidebar nav {
+    padding: 20px;
+}
+
+.sidebar nav a {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--berkeley-gray);
+}
+
+.sidebar nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+main.sidebar-open {
+    margin-left: var(--sidebar-width);
 }
