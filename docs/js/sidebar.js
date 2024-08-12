@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.querySelector(".floating-sidebar");
     const toggleButton = document.createElement("button");
-    toggleButton.textContent = "Toggle Sidebar";
-    toggleButton.style.position = "fixed";
-    toggleButton.style.top = "10px";
-    toggleButton.style.left = "10px";
-    toggleButton.style.zIndex = "1000"; /* Ensure the button is on top */
+    toggleButton.textContent = "☰"; /* Hamburger icon */
+    toggleButton.classList.add("toggle-sidebar-button");
     document.body.appendChild(toggleButton);
 
     toggleButton.addEventListener("click", function () {
-        if (sidebar.style.display === "none") {
-            sidebar.style.display = "block";
+        sidebar.classList.toggle("expanded");
+        toggleButton.classList.toggle("expanded");
+
+        if (sidebar.classList.contains("expanded")) {
+            toggleButton.textContent = "✕"; /* Close icon */
         } else {
-            sidebar.style.display = "none";
+            toggleButton.textContent = "☰"; /* Hamburger icon */
         }
     });
 });
