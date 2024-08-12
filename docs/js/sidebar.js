@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('mousemove', function(e) {
         const triggerDistance = 50; // Distance from the left edge to trigger the sidebar
 
-        if (e.clientX < triggerDistance) {
+        if (e.clientX < triggerDistance && e.clientY > 80) { // Check if below header
             clearTimeout(timeoutId);
             showSidebar();
         } else {
