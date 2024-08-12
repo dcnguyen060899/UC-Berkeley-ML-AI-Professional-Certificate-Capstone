@@ -1,19 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
-    const mainContent = document.getElementById('main-content');
-    const body = document.body;
+    const sidebar = document.getElementById('sidebar');
+    const main = document.querySelector('main');
 
     sidebarToggle.addEventListener('click', function() {
         sidebar.classList.toggle('active');
-        body.classList.toggle('sidebar-active');
+        main.classList.toggle('sidebar-active');
     });
 
     // Close sidebar when clicking outside of it
-    mainContent.addEventListener('click', function() {
-        if (body.classList.contains('sidebar-active')) {
+    document.addEventListener('click', function(event) {
+        const isClickInside = sidebar.contains(event.target) || sidebarToggle.contains(event.target);
+
+        if (!isClickInside && sidebar.classList.contains('active')) {
             sidebar.classList.remove('active');
-            body.classList.remove('sidebar-active');
+            main.classList.remove('sidebar-active');
         }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
     });
 });
