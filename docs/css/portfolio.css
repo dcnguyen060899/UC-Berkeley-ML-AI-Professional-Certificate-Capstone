@@ -109,3 +109,13 @@ position: fixed;
 width: 100%;
 bottom: 0;
 }
+
+.logo-link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    text-decoration: none;
+}
