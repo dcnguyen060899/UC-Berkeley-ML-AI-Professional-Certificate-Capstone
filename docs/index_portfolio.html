@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
+    <title>Duy Nguyen - Portfolio</title>
     <style>
         :root {
             --berkeley-blue: #003262;
@@ -20,21 +20,28 @@
         }
         
         header {
-            background-color: var(--berkeley-blue);
-            color: white;
+            background-color: #003262; /* Berkeley Blue background */
+            color: #FFFFFF;
+            padding: 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            justify-content: space-between;
+            position: relative;
+            height: 80px; /* Adjust as needed */
         }
 
-        .logo img {
-            height: 50px;
-            width: auto;
+        header .logo {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            background-color: white; /* Set logo background to white */
+            padding: 0 20px; /* Add some padding around the logo */
+        }
+        
+        header .logo img {
+            height: 100%;
+            width: auto; /* Maintain aspect ratio */
+            object-fit: contain; /* Ensure the entire logo is visible */
         }
         
         nav {
@@ -75,7 +82,7 @@
         }
         
         h1, h2 {
-            color: var(--berkeley-blue);
+            color: var(--berkeley-gold);
         }
         
         .project {
@@ -87,25 +94,28 @@
         }
         
         .project h3 {
-            color: var(--berkeley-gold);
+            color: var(--berkeley-blue);
         }
         
         footer {
-            background-color: var(--berkeley-blue);
-            color: white;
+            background-color: #003262; /* Berkeley Blue */
+            color: #FFFFFF;
             text-align: center;
-            padding: 1rem 0;
-            position: relative;
-            bottom: 0;
+            padding: 10px 0;
+            position: fixed;
             width: 100%;
+            bottom: 0;
         }
+        
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="images/UC_Berkeley.png" alt="UC Berkeley logo">
-        </div>
+        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
+            <div class="logo">
+                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
+            </div>
+        </a>
         <h1>Your Name</h1>
     </header>
     
