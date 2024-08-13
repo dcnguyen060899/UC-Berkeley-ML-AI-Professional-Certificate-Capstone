@@ -246,6 +246,15 @@ section ul ul {
     z-index: 999;
 }
 
+.sidebar.open {
+    left: 0;
+}
+
+/* When sidebar is open, move the indicator */
+.sidebar.open + #sidebar-indicator {
+    left: var(--sidebar-width);
+}
+
 .sidebar nav {
     padding: 20px;
 }
@@ -265,3 +274,26 @@ section ul ul {
 main.sidebar-open {
     margin-left: var(--sidebar-width);
 }
+
+/* side bar indicator */
+#sidebar-indicator {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: var(--berkeley-blue);
+    color: #FFFFFF;
+    padding: 10px 5px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    cursor: pointer;
+    z-index: 1000;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: left 0.3s ease-in-out;
+}
+
+#sidebar-indicator span {
+    font-weight: bold;
+}
+
