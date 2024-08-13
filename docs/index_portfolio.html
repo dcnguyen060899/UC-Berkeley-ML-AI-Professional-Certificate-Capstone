@@ -22,12 +22,19 @@
         header {
             background-color: var(--berkeley-blue);
             color: white;
-            text-align: center;
-            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
         }
         
         nav {
@@ -96,6 +103,9 @@
 </head>
 <body>
     <header>
+        <div class="logo">
+            <img src="images/UC_Berkeley.png" alt="UC Berkeley logo">
+        </div>
         <h1>Your Name</h1>
     </header>
     
@@ -129,7 +139,7 @@
         <section id="projects">
             <h2>Projects</h2>
             <div class="project">
-                <h3>Hospital Length of Stay Prediction</h3>
+                <h3><a href="index.html">Hospital Length of Stay Prediction</a></h3>
                 <p>Developed a machine learning model to predict patient length of stay in hospitals, optimizing resource allocation and improving patient care. Utilized neural networks and ensemble methods to achieve high accuracy in predictions.</p>
             </div>
             <div class="project">
