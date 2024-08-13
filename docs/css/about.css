@@ -1,54 +1,66 @@
-/* Basic Reset */
-* {
+/* Reset and basic styling */
+body, html {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #FFFFFF;
-    color: #333333;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
 }
 
-/* Header Styling */
+/* Header styling */
 header {
-    background-color: #003262; /* Berkeley Blue */
+    background-color: #003262; /* Berkeley Blue background */
     color: #FFFFFF;
-    padding: 10px 20px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+    position: relative;
+    height: 80px; /* Adjust as needed */
 }
 
 header .logo {
     height: 100%;
     display: flex;
     align-items: center;
-    background-color: white;
-    padding: 0 20px;
+    background-color: white; /* Set logo background to white */
+    padding: 0 20px; /* Add some padding around the logo */
 }
 
 header .logo img {
     height: 100%;
-    width: auto;
-    object-fit: contain;
+    width: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the entire logo is visible */
 }
 
-/* Sidebar Styling */
+header nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-right: 20px;
+}
+
+header nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Match font family */
+    font-size: 16px; /* Adjust font size if necessary */
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Sidebar styling */
 .sidebar {
     position: fixed;
-    top: 60px; /* Adjust for header height */
+    top: 80px; /* Adjust for header height */
     left: -250px;
     width: 250px;
-    height: calc(100vh - 60px); /* Adjust for header height */
+    height: calc(100vh - 80px); /* Adjust for header height */
     background-color: #003262; /* Berkeley Blue */
     transition: left 0.3s ease-in-out;
     overflow-y: auto;
@@ -104,11 +116,14 @@ main.sidebar-open {
     left: 0;
 }
 
-/* Main Content Styling */
+/* Main content styling */
 main {
-    margin-top: 60px; /* Adjust for header height */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
     padding: 20px;
-    transition: margin-left 0.3s ease-in-out;
+    margin-top: 80px; /* Adjust for header height */
 }
 
 main h2 {
@@ -138,14 +153,37 @@ main a:hover {
     text-decoration: underline;
 }
 
-/* Footer Styling */
+/* Footer styling */
 footer {
     background-color: #003262; /* Berkeley Blue */
     color: #FFFFFF;
     text-align: center;
     padding: 10px 0;
-    position: relative;
+    position: fixed;
     width: 100%;
     bottom: 0;
-    margin-top: 40px;
+}
+
+/* Logo link styling */
+.logo-link {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logo-link .logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0 20px;
+}
+
+.logo-link .logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
 }
