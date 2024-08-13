@@ -23,6 +23,15 @@ position: relative;
 height: 80px; /* Adjust as needed */
 }
 
+.header-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+    max-width: 1200px; /* or whatever max-width you prefer for your content */
+    margin: 0 auto;
+}
+
 header .logo {
 height: 100%;
 display: flex;
@@ -52,6 +61,7 @@ padding: 0;
 margin: 0;
 display: flex;
 justify-content: center;
+max-width: 1200px;
 }
 
 nav ul li {
