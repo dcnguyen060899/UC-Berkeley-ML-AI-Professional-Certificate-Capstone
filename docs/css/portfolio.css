@@ -46,6 +46,24 @@ width: auto; /* Maintain aspect ratio */
 object-fit: contain; /* Ensure the entire logo is visible */
 }
 
+header nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-right: 20px;
+}
+
+header nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
 nav {
 background-color: var(--berkeley-gold);
 padding: 0.5rem;
