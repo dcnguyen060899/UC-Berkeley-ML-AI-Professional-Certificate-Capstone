@@ -1008,6 +1008,184 @@ Develop a comprehensive presentation and use it to populate the GitHub README wi
 Uncle test: Can your README be understood by a person who has no clue about the project? Can he easily understand the key takeaways from EDA/ Modeling and Data pre-processing stages?
 Don’t include python code snippets in README. It should contain key findings/ insights
 
+>>> Finally, here is the comprehensive brochure containing all the details about the UC Berkeley Professional Certification in ML/AI program:
+
+---
+
+**PROFESSIONAL CERTIFICATE IN MACHINE LEARNING AND ARTIFICIAL INTELLIGENCE**
+
+**OVERVIEW**
+
+Technologies driven by machine learning (ML), artificial intelligence (AI), and generative AI (GenAI) have transformed industries and everyday life—from facial and voice recognition software to intelligent robotics for manufacturing, life-saving medical diagnostics, self-driving vehicles, and much more. The possibilities for ML/AI/generative AI applications are virtually unlimited and sought after in practically every industry segment. That's why global organizations are actively recruiting IT professionals with the specialized skills and proficiencies needed to develop future ML/AI technological innovations.
+
+**According to Statista:**
+
+- $200 billion was the valuation of the AI technology market in 2023
+- $1.8 trillion+ is projected by 2030
+- 37.3% is the compound annual growth rate (CAGR) projected for the global artificial intelligence market size from 2023 to 2030
+- $151,840 is the average salary for an ML/AI engineer in the United States in 2024
+
+(Source: Glassdoor)
+
+**WHO IS THIS PROGRAM FOR?**
+
+This program is designed to provide learners with the fundamental knowledge and practical applications of ML/AI tools and frameworks needed to transition into an exciting, high-demand career in this field. This program is for anyone with a technology or math background, including:
+
+- IT and engineering professionals who want to unlock new opportunities for career growth and chart a cutting-edge career path
+- Data and business analysts who want to gain better growth trajectories
+- Recent science, technology, engineering, and mathematics (STEM) graduates and academics who want to enter the private sector and scale the positive impact of evolving technologies
+
+**Also recommended:**
+
+- An educational background in STEM fields
+- Technical work experience
+- Some experience with Python, R, or SQL
+- Some experience with statistics and calculus
+
+**Future Job Titles:**
+
+This program will equip you with the hands-on skills needed to launch or accelerate your career in ML and AI. Representative job titles include:
+
+- Data Scientist
+- Machine Learning Scientist
+- Machine Learning Engineer
+- Artificial Intelligence Engineer
+
+**Applicants must have:**
+
+- A bachelor's degree or higher
+- Strong math skills
+- Some programming experience
+
+**PROGRAM EXPERIENCE**
+
+Learners should expect to dedicate a minimum of 15–20 hours per week to the program.
+
+**KEY TAKEAWAYS**
+
+In this program, you will:
+
+- Develop a comprehensive understanding of ML/AI concepts and identify the best ML models to fit various business situations
+- Learn how to implement the ML/data science life cycle and devise cutting-edge solutions to real-life problems within your organization
+- Develop a market-ready GitHub portfolio to show prospective employers
+- Learn from Berkeley's globally recognized faculty and gain a verified digital certificate of completion from Berkeley Executive Education
+- Interact and collaborate with industry experts to understand the technical and business applications of ML/AI
+- Analyze generative AI models, such as ChatGPT, and test their efficacy
+- Explore innovative business applications for generative AI
+
+**YOUR LEARNING JOURNEY**
+
+The Professional Certificate in Machine Learning and Artificial Intelligence is presented by Berkeley's world-class faculty, and it will give you the opportunity to learn cutting-edge skills from the world's best minds in ML/AI. This multimodule curriculum teaches the key ML/AI skills that organizations seek and includes recorded faculty videos and demonstrations, hands-on coding activities, discussions, quizzes, and a capstone project. By the end of the program, you will have a career-ready GitHub portfolio that demonstrates your ML/AI knowledge to potential employers.
+
+**PROGRAM MODULES**
+
+Get ready for an exciting career in ML/AI engineering. By the end of this program, you will be able to apply the latest ML/AI tools to model and analyze real-world data and draw informed conclusions. You will also have the expertise to confidently communicate ML/AI concepts and use them to solve complex problems.
+
+**Foundations of ML/AI (Section 1)**
+
+- Introduction to Machine Learning
+- Fundamentals of Statistics and Distribution Functions
+- Fundamentals of Data Analytics
+- Practical Applications I
+- Introduction to Data Analytics
+
+**ML/AI Techniques (Section 2)**
+
+- Gradient Descent and Optimization
+- Practical Application III
+- Feature Engineering and Overfitting
+- Practical Application II
+- Clustering and Principal Component Analysis
+- Model Selection and Regularization
+- Classifying Nonlinear Features
+- Linear and Multiple Regressions
+- Time Series Analysis and Forecasting
+- Decision Trees
+- Classification and k-Nearest Neighbors
+- Logistic Regression
+
+**Advanced Topics and Capstone Project (Section 3)**
+
+- Introduction to Generative AI (RNNs and GANs)
+- Natural Language Processing
+- Recommendation Systems
+- Deep Neural Networks I
+- Deep Neural Networks II
+- Ensemble Techniques
+- Capstone Project
+
+**INDUSTRY INSIGHTS**
+
+Gain a deeper understanding of ML/AI models and applications through real-world industry examples. Take away new ideas and problem-solving concepts to solve complex ML/AI problems within your own organization.
+
+**TOOLS AND RESOURCES IN THE PROGRAM**
+
+- Python
+- Google Colab
+- Seaborn
+- GitHub
+- Codio
+- Plotly
+- Jupyter
+- Pandas
+
+**CAPSTONE PROJECT**
+
+The knowledge you gain each week in this ML/AI program will prepare you to conduct your own research and analysis in a capstone project. You will gain the opportunity to interact with industry experts to identify a specific problem within your field and leverage their expertise along with the concepts, models, and tools taught in the program to devise a solution to your chosen problem. By the end of the program, you will come away with a professional-quality GitHub portfolio presentation that you can share on your LinkedIn profile or with potential employers.
+
+**PROGRAM FACULTY**
+
+- Gabriel Gomes: Researcher and lecturer with the Mechanical Engineering Department and the Institute of Transportation Studies at Berkeley.
+- Joshua Hug: Associate Teaching Professor with the Department of Electrical Engineering and Computer Sciences at Berkeley.
+
+**GUEST LECTURERS**
+
+- Reed Walker: Associate Professor of Business and Public Policy and Economics at Berkeley.
+- Jonathan Kolstad: Associate Professor | Egon & Joan von Kaschnitz Distinguished Professorship.
+
+**CAREER ASSISTANCE SERVICES**
+
+- Live career coaching and open Q&A sessions
+- Résumé feedback, mock interviews, and career development exercises
+- Assistance in crafting your elevator pitch and preparing for job interviews
+- Insights on negotiating your salary
+
+**CAREER PREPARATION AND GUIDANCE**
+
+**CERTIFICATE**
+
+Get recognized! Upon successful completion of the program, Berkeley Executive Education grants a verified digital certificate of completion to participants. Participants must complete 80 percent of the required activities, including a capstone project, to obtain the certificate of completion. This program also counts toward a Certificate of Business Excellence.
+
+**DURATION**
+
+6 months, online 15–20 hours per week
+
+**PROGRAM FEES**
+
+$7,900
+
+**ABOUT THE UNIVERSITY OF CALIFORNIA, BERKELEY**
+
+The University of California, Berkeley is a public research university in Berkeley, California. Founded in 1868, Berkeley serves as the flagship of the 10 University of California campuses. Since its founding, Berkeley has grown to instruct over 40,000 students per year in approximately 350 undergraduate and graduate degree programs, covering numerous disciplines on-campus and online.
+
+**ABOUT BERKELEY EXECUTIVE EDUCATION**
+
+Berkeley Executive Education offers a portfolio of online and in-person programs developed by the most forward-thinking minds in academia and industry to accelerate the careers of professionals around the globe.
+
+**ABOUT THE BERKELEY COLLEGE OF ENGINEERING**
+
+As one of the world’s top engineering schools, Berkeley Engineering Executive and Professional Education (EPE) cultivates an integrated perspective through a range of offerings.
+
+**ABOUT THE BERKELEY HAAS SCHOOL OF BUSINESS**
+
+As the second oldest business school in the United States, the Haas School of Business at the University of California, Berkeley, has been questioning the status quo since its foundation in 1898.
+
+**ABOUT EMERITUS**
+
+Berkeley Executive Education is collaborating with online education provider Emeritus to offer a portfolio of high-impact online programs.
+
+---
+
 """
 tools = [
         Tool.from_function(
