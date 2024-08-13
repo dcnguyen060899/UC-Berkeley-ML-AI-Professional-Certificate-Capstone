@@ -1,0 +1,151 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFFFFF;
+    color: #333333;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+    background-color: #003262; /* Berkeley Blue */
+    color: #FFFFFF;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0 20px;
+}
+
+header .logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    top: 60px; /* Adjust for header height */
+    left: -250px;
+    width: 250px;
+    height: calc(100vh - 60px); /* Adjust for header height */
+    background-color: #003262; /* Berkeley Blue */
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 999;
+    padding-bottom: 60px;
+}
+
+.sidebar nav {
+    padding: 20px;
+}
+
+.sidebar nav a {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #DDD5C7; /* Berkeley Gray */
+}
+
+.sidebar nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar Icon Button */
+.sidebar-icon {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #FDB515; /* Berkeley Gold */
+    color: #003262; /* Berkeley Blue */
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.sidebar-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+main.sidebar-open {
+    margin-left: 250px;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+/* Main Content Styling */
+main {
+    margin-top: 60px; /* Adjust for header height */
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+main h2 {
+    color: #FDB515; /* Berkeley Gold */
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+main h3 {
+    color: #003262; /* Berkeley Blue */
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+main p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+main a {
+    color: #FDB515; /* Berkeley Gold */
+    text-decoration: none;
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #003262; /* Berkeley Blue */
+    color: #FFFFFF;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    margin-top: 40px;
+}
