@@ -74,10 +74,14 @@ text-decoration: none;
 font-weight: bold;
 }
 
-main {
+/* main {
 max-width: 800px;
 margin: 120px auto 0;
 padding: 20px;
+} */
+
+main {
+    padding-top: 80px; /* Should match the header height */
 }
 
 section {
