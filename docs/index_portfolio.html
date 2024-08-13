@@ -20,28 +20,21 @@
         }
         
         header {
-            background-color: #003262; /* Berkeley Blue background */
-            color: #FFFFFF;
-            padding: 0;
+            background-color: var(--berkeley-blue);
+            color: white;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            position: relative;
-            height: 80px; /* Adjust as needed */
+            align-items: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
 
-        header .logo {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            background-color: white; /* Set logo background to white */
-            padding: 0 20px; /* Add some padding around the logo */
-        }
-        
-        header .logo img {
-            height: 100%;
-            width: auto; /* Maintain aspect ratio */
-            object-fit: contain; /* Ensure the entire logo is visible */
+        .logo img {
+            height: 50px;
+            width: auto;
         }
         
         nav {
@@ -82,7 +75,7 @@
         }
         
         h1, h2 {
-            color: var(--berkeley-gold);
+            color: var(--berkeley-blue);
         }
         
         .project {
@@ -94,19 +87,18 @@
         }
         
         .project h3 {
-            color: var(--berkeley-blue);
+            color: var(--berkeley-gold);
         }
         
         footer {
-            background-color: #003262; /* Berkeley Blue */
-            color: #FFFFFF;
+            background-color: var(--berkeley-blue);
+            color: white;
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            width: 100%;
+            padding: 1rem 0;
+            position: relative;
             bottom: 0;
+            width: 100%;
         }
-        
     </style>
 </head>
 <body>
