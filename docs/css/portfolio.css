@@ -173,3 +173,18 @@ bottom: 0;
 .logo-link:hover {
     text-decoration: none;
 }
+
+.profile-photo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--berkeley-gold);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
