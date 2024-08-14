@@ -121,9 +121,20 @@ section ul ul {
     padding-left: 20px; /* Indent nested list items less */
 }
 
-h1, h2 {
-color: var(--berkeley-gold);
+h2 {
+    color: #FDB515; /* Berkeley Gold */
+    padding-left: 20px; /* Add padding to indent the title */
 }
+
+h3 {
+    color: #003262; /* Berkeley Blue */
+    margin-top: 20px;
+    padding-left: 20px; /* Add padding to indent the title */
+}
+
+/* h1, h2 {
+color: var(--berkeley-gold);
+} */
 
 .project {
 background-color: #f9f9f9;
