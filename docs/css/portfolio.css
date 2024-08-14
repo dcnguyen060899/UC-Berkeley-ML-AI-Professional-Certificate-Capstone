@@ -26,7 +26,7 @@ header {
     right: 0;
     z-index: 1000;
 }
-
+/* 
 .header-content {
     display: flex;
     justify-content: flex-start;
@@ -34,7 +34,7 @@ header {
     padding: 10px 20px;
     max-width: 1200px; /* or whatever max-width you prefer for your content */
     margin: 0 auto;
-}
+} */
 
 header .logo {
 height: 100%;
@@ -44,7 +44,7 @@ background-color: white; /* Set logo background to white */
 padding: 0 20px; /* Add some padding around the logo */
 }
 
-header .logo img {
+header .logo img {\
 height: 100%;
 width: auto; /* Maintain aspect ratio */
 object-fit: contain; /* Ensure the entire logo is visible */
