@@ -101,6 +101,7 @@ main {
     margin: 30px auto 0;
     padding: 20px;
     padding-top: 80px;
+    flex: 1;
 }
 
 section {
