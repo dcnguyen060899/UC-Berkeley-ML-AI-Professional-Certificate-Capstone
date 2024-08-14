@@ -142,7 +142,7 @@ background-color: #003262; /* Berkeley Blue */
 color: #FFFFFF;
 text-align: center;
 padding: 10px 0;
-position: relative;
+position: fixed;
 width: 100%;
 bottom: 0;
 }
