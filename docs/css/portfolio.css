@@ -13,14 +13,18 @@ padding: 0;
 }
 
 header {
-background-color: #003262; /* Berkeley Blue background */
-color: #FFFFFF;
-padding: 0;
-display: flex;
-align-items: center;
-justify-content: space-between;
-position: fixed;
-height: 80px; /* Adjust as needed */
+    background-color: #003262; /* Berkeley Blue background */
+    color: #FFFFFF;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    height: 80px; /* Adjust as needed */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 .header-content {
