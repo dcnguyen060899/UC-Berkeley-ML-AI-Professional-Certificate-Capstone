@@ -44,7 +44,7 @@ background-color: white; /* Set logo background to white */
 padding: 0 20px; /* Add some padding around the logo */
 }
 
-header .logo img {\
+header .logo img {
 height: 100%;
 width: auto; /* Maintain aspect ratio */
 object-fit: contain; /* Ensure the entire logo is visible */
