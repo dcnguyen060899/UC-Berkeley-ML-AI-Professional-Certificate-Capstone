@@ -22,7 +22,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
     height: 80px; /* Adjust as needed */
     top: 0;
     left: 0;
@@ -105,6 +105,7 @@ main {
     padding: 20px;
     padding-top: 80px;
     flex: 1;
+    padding-bottom: 60px;
 }
 
 section {
@@ -157,7 +158,7 @@ background-color: #003262; /* Berkeley Blue */
 color: #FFFFFF;
 text-align: center;
 padding: 10px 0;
-position: fixed;
+position: relative;
 width: 100%;
 bottom: 0;
 }
