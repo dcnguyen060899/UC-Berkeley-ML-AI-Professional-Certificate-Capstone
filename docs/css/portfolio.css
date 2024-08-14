@@ -68,7 +68,7 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-nav {
+/* nav {
 background-color: var(--berkeley-gold);
 padding: 0.5rem;
 position: fixed;
@@ -94,7 +94,7 @@ nav ul li a {
 color: var(--berkeley-blue);
 text-decoration: none;
 font-weight: bold;
-}
+} */
 
 main {
     max-width: 800px;
@@ -153,7 +153,7 @@ background-color: #003262; /* Berkeley Blue */
 color: #FFFFFF;
 text-align: center;
 padding: 10px 0;
-position: fixed;
+position: relative;
 width: 100%;
 bottom: 0;
 }
