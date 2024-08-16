@@ -1,4 +1,8 @@
-// ai_agent_simulation.js
+import React, { useState, useEffect } from 'react';
+import { Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const ChatMessage = ({ sender, message }) => (
   <div className={`mb-4 ${sender === 'AI Agent' ? 'text-blue-600' : sender === 'Booking.com' ? 'text-green-600' : 'text-red-600'}`}>
@@ -24,11 +28,11 @@ const simulationScript = [
   { sender: 'McKinsey', message: "Agreed. This context will help us deliver a much more relevant and usable model for Booking.com." }
 ];
 
-function AIAgentMeetingSimulation() {
-  const [messages, setMessages] = React.useState([]);
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+export default function AIAgentMeetingSimulation() {
+  const [messages, setMessages] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentIndex < simulationScript.length) {
       const timer = setTimeout(() => {
         setMessages(prev => [...prev, simulationScript[currentIndex]]);
@@ -41,19 +45,14 @@ function AIAgentMeetingSimulation() {
   return (
     <div className="w-full max-w-2xl mx-auto p-4 border rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4">AI Agent Meeting Simulation: Booking.com and McKinsey</h2>
-      <div className="h-96 mb-4 p-4 border rounded overflow-y-auto">
+      <ScrollArea className="h-96 mb-4 p-4 border rounded">
         {messages.map((msg, index) => (
           <ChatMessage key={index} sender={msg.sender} message={msg.message} />
         ))}
-      </div>
+      </ScrollArea>
       <div className="text-center text-gray-500">
         {currentIndex >= simulationScript.length ? "Simulation complete" : "Simulating meeting..."}
       </div>
     </div>
   );
 }
-
-// Render the component when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<AIAgentMeetingSimulation />, document.getElementById('simulation-root'));
-});
