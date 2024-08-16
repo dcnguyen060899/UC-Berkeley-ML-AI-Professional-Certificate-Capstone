@@ -222,3 +222,102 @@ bottom: 0;
     height: 100%;
     object-fit: cover;
 }
+
+/* chatbot simulation*/
+#simulation {
+    background-color: #f9f9f9;
+}
+
+#simulation-root {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.max-w-2xl {
+    max-width: 42rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.h-96 {
+    height: 24rem;
+}
+
+.border {
+    border: 1px solid #e2e8f0;
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-gray-500 {
+    color: #6b7280;
+}
+
+.text-blue-600 {
+    color: #2563eb;
+}
+
+.text-green-600 {
+    color: #059669;
+}
+
+.text-red-600 {
+    color: #dc2626;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px 10px;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    h3 {
+        font-size: 1.2em;
+    }
+}
+
