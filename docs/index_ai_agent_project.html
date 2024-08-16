@@ -60,7 +60,7 @@
     <script type="text/babel">
         // Paste the React component code here
         const ChatMessage = ({ sender, message }) => (
-          <div className={`mb-4 ${sender === 'AI Agent' ? 'text-red-600' : sender === 'Booking.com' ? 'text-blue-600' : 'text-black-600'}`}>
+          <div className={`mb-4 ${sender === 'AI Agent' ? 'text-black-600' : sender === 'Booking.com' ? 'text-blue-600' : 'text-red-600'}`}>
             <strong>{sender}:</strong> {message}
           </div>
         );
