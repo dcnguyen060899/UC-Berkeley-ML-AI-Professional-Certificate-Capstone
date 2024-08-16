@@ -109,6 +109,10 @@ main {
     min-height: calc(100vh - 100px);
 }
 
+main > section:first-of-type {
+    margin-top: 40px; /* Adds space between the logo and the first section */
+}
+
 section {
 margin-bottom: 40px;
 }
