@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Performance Analysis</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React and ReactDOM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    
+    <!-- Recharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.3/Recharts.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 p-8">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } = Recharts;
+
+        const data = [
+            { term: "2019 Fall", actual: 2.56, predicted: 2.717, laterTrend: null, phase: "Adjustment" },
+            { term: "2020 Spring", actual: 2.97, predicted: 2.739, laterTrend: null, phase: "Adjustment" },
+            { term: "2020 Summer", actual: 2.85, predicted: 2.761, laterTrend: null, phase: "Adjustment" },
+            { term: "2020 Fall", actual: 2.68, predicted: 2.784, laterTrend: null, phase: "Transition" },
+            { term: "2021 Spring", actual: 2.68, predicted: 2.806, laterTrend: null, phase: "Transition" },
+            { term: "2021 Summer", actual: 2.86, predicted: 2.828, laterTrend: 2.86, phase: "Stabilization" },
+            { term: "2021 Fall", actual: 2.88, predicted: 2.850, laterTrend: 2.88, phase: "Stabilization" },
+            { term: "2022 Spring", actual: 2.87, predicted: 2.873, laterTrend: 2.87, phase: "Stabilization" },
+            { term: "2022 Summer", actual: 2.88, predicted: 2.895, laterTrend: 2.88, phase: "Mastery" },
+            { term: "2022 Fall", actual: 2.94, predicted: 2.917, laterTrend: 2.94, phase: "Mastery" }
+        ];
+
+        const CustomTooltip = ({ active, payload, label }) => {
+            if (active && payload && payload.length) {
+                return (
+                    <div className="tooltip">
+                        <p className="font-bold">{label}</p>
+                        <p className="text-purple-600">Actual GPA: {payload[0].value.toFixed(2)}</p>
+                        {payload[1] && <p className="text-orange-500">Predicted: {payload[1].value.toFixed(2)}</p>}
+                        {payload[2] && <p className="text-green-500">Later Trend: {payload[2].value?.toFixed(2) || 'N/A'}</p>}
+                        <p className="text-gray-600 mt-2">Phase: {data.find(d => d.term === label).phase}</p>
+                    </div>
+                );
+            }
+            return null;
+        };
+
+        function App() {
+            return (
+                <div className="max-w-7xl mx-auto">
+                    <div className="card">
+                        <div className="card-header">
+                            <h1 className="card-title">Academic Performance Analysis</h1>
+                        </div>
+                        <div className="card-content">
+                            <div style={{ height: "600px" }}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis 
+                                            dataKey="term" 
+                                            angle={-45}
+                                            textAnchor="end"
+                                            height={60}
+                                        />
+                                        <YAxis 
+                                            domain={[2.5, 3]} 
+                                            label={{ value: 'GPA', angle: -90, position: 'insideLeft' }}
+                                        />
+                                        <Tooltip content={<CustomTooltip />} />
+                                        <Legend verticalAlign="top" height={36} />
+                                        
+                                        <ReferenceLine x="2020 Fall" stroke="#666" strokeDasharray="3 3" label={{ value: "Transition Phase", position: 'top' }} />
+                                        <ReferenceLine x="2021 Summer" stroke="#666" strokeDasharray="3 3" label={{ value: "Stabilization", position: 'top' }} />
+                                        
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="actual" 
+                                            stroke="#8884d8" 
+                                            name="Actual GPA"
+                                            strokeWidth={2}
+                                            dot={{ r: 4 }}
+                                        />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="predicted" 
+                                            stroke="#ff7300" 
+                                            name="Overall Trend"
+                                            strokeWidth={2}
+                                            strokeDasharray="5 5"
+                                        />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="laterTrend" 
+                                            stroke="#82ca9d" 
+                                            name="Later Terms (R² = 0.855)"
+                                            strokeWidth={3}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+
+                            <div className="stats-panel grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                <div className="bg-gray-50 p-4 rounded-lg">
+                                    <h3 className="stats-title">Statistical Insights</h3>
+                                    <ul className="stats-list">
+                                        <li>Initial Period R² = 0.262 (High variability)</li>
+                                        <li>Later Period R² = 0.855 (Strong linear fit)</li>
+                                        <li>Overall positive growth trajectory</li>
+                                    </ul>
+                                </div>
+                                <div className="phase-analysis">
+                                    <h3 className="phase-title">Academic Journey Phases</h3>
+                                    <ul className="stats-list">
+                                        <li>Adjustment: Initial university adaptation</li>
+                                        <li>Transition: Development of study strategies</li>
+                                        <li>Stabilization: Consistent performance</li>
+                                        <li>Mastery: Sustained academic excellence</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+
+    <!-- Babel for JSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+</body>
+</html>
