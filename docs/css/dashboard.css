@@ -139,22 +139,30 @@
     font-weight: 500;
 }
 
-.phase-adjustment { 
-    background: rgba(253, 181, 21, 0.2);
-    color: var(--berkeley-blue);
+/* Adjustment phase - warm yellow */
+.phase-adjustment {
+    background-color: #FFF3DC;
+    color: #8B6B44;
+    border: 1px solid #FFE4B5;
 }
 
-.phase-transition { 
-    background: rgba(0, 50, 98, 0.1);
-    color: var(--berkeley-blue);
+/* Transition phase - cool blue */
+.phase-transition {
+    background-color: #E3F2FD;
+    color: #1565C0;
+    border: 1px solid #90CAF9;
 }
 
-.phase-stabilization { 
-    background: rgba(221, 213, 199, 0.3);
-    color: var(--berkeley-blue);
+/* Stabilization phase - soft green */
+.phase-stabilization {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #A5D6A7;
 }
 
-.phase-mastery { 
-    background: rgba(0, 50, 98, 0.15);
-    color: var(--berkeley-blue);
+/* Mastery phase - deep purple */
+.phase-mastery {
+    background-color: #EDE7F6;
+    color: #4527A0;
+    border: 1px solid #B39DDB;
 }
