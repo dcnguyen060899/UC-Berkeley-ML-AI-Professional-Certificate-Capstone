@@ -1,87 +1,92 @@
-/* Logo styles */
-.logo img {
-    max-height: 50px;
-}
-
-/* Main content spacing */
-body {
-    padding-top: 90px; /* Add padding to account for fixed header height + some extra space */
+/* Use Berkeley brand colors */
+:root {
+    --berkeley-blue: #003262;
+    --berkeley-gold: #FDB515;
+    --berkeley-gray: #DDD5C7;
 }
 
 /* Dashboard container styles */
 .dashboard-container {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 10px;
-    margin: 20px auto; /* Maintain margin for the container */
+    margin: 20px auto;
     padding: 15px;
     max-width: 1000px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Chart container styles - significantly reduced height */
-.chart-container {
-    height: 250px; /* Reduced from 300px */
-    margin: 5px 0; /* Reduced from 10px */
-    position: relative;
-}
-
-/* Card styles - reduced margins and padding */
+/* Card styles with Berkeley branding */
 .card {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 10px; /* Reduced from 15px */
-    padding: 10px; /* Reduced from 15px */
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .card-header {
-    margin-bottom: 5px; /* Reduced from 10px */
+    margin-bottom: 5px;
 }
 
 .card-title {
-    font-size: 1.1rem; /* Slightly smaller */
+    color: var(--berkeley-gold);
+    font-size: 1.2rem;
     font-weight: 600;
-    color: #1a1a1a;
     margin: 0;
+    padding-left: 20px;
 }
 
-/* Canvas rendering optimization */
-canvas {
-    image-rendering: crisp-edges;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
+/* Chart container styles */
+.chart-container {
+    height: 250px;
+    margin: 5px 0;
+    position: relative;
 }
 
-/* Analysis grid styles - tightened spacing */
+/* Analysis grid styles */
 .analysis-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px; /* Reduced from 15px */
-    margin: 10px 0; /* Reduced from 15px */
+    gap: 15px;
+    margin: 15px 0;
 }
 
 .analysis-box {
-    background: #f8f9fa;
+    background: #f9f9f9;
+    border: 1px solid var(--berkeley-gray);
     border-radius: 6px;
-    padding: 10px; /* Reduced from 12px */
+    padding: 12px;
 }
 
-/* Conclusion section styles */
-.card-content {
-    padding: 10px 15px;
+.analysis-box h3 {
+    color: var(--berkeley-blue);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding-left: 20px;
 }
 
+.analysis-box ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.analysis-box li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* Conclusion section */
 .conclusion-text {
+    color: var(--berkeley-blue);
     font-size: 1rem;
-    color: #333;
     margin-bottom: 12px;
+    padding-left: 20px;
 }
 
 .conclusion-list {
     list-style-type: none;
-    padding-left: 0;
-    margin: 0;
+    padding-left: 20px;
 }
 
 .conclusion-list li {
@@ -89,35 +94,62 @@ canvas {
     padding-left: 20px;
     position: relative;
     line-height: 1.4;
-    font-size: 0.95rem;
-    color: #444;
 }
 
 .conclusion-list li:before {
     content: "•";
     position: absolute;
     left: 0;
-    color: #666;
+    color: var(--berkeley-gold);
 }
 
+/* Metrics styling */
 .metric {
+    color: var(--berkeley-blue);
     font-weight: 600;
-    color: #2c5282;
 }
 
 .progression {
     font-family: monospace;
-    background: #f7fafc;
+    background: rgba(0, 50, 98, 0.05);
     padding: 2px 4px;
     border-radius: 3px;
     font-size: 0.9em;
-    color: #4a5568;
+    color: var(--berkeley-blue);
 }
 
 .highlight {
     font-weight: 600;
-    color: #2c5282;
-    background: #ebf4ff;
+    color: var(--berkeley-blue);
+    background: rgba(253, 181, 21, 0.1);
     padding: 2px 4px;
     border-radius: 3px;
+}
+
+/* Phase indicators */
+.phase-indicator {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.phase-adjustment { 
+    background: rgba(253, 181, 21, 0.2);
+    color: var(--berkeley-blue);
+}
+
+.phase-transition { 
+    background: rgba(0, 50, 98, 0.1);
+    color: var(--berkeley-blue);
+}
+
+.phase-stabilization { 
+    background: rgba(221, 213, 199, 0.3);
+    color: var(--berkeley-blue);
+}
+
+.phase-mastery { 
+    background: rgba(0, 50, 98, 0.15);
+    color: var(--berkeley-blue);
 }
