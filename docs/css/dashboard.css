@@ -1,42 +1,27 @@
-/* Dashboard container styles - added top margin */
+/* Dashboard container styles */
 .dashboard-container {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 10px;
-    margin: 80px auto 20px auto; /* Increased top margin to accommodate header */
-    padding: 15px;
+    margin: 20px auto;
+    padding: 15px; /* Reduced padding */
     max-width: 1000px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styles to ensure it stays above content */
-header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    position: fixed; /* Fixed position */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; /* Ensure header stays on top */
-    height: 60px; /* Fixed height for header */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-/* Rest of your existing styles... */
+/* Chart container styles - significantly reduced height */
 .chart-container {
-    height: 250px;
-    margin: 5px 0;
+    height: 250px; /* Reduced from 300px */
+    margin: 5px 0; /* Reduced from 10px */
     position: relative;
 }
 
+/* Card styles - reduced margins and padding */
 .card {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 10px; /* Reduced from 15px */
+    padding: 10px; /* Reduced from 15px */
 }
 
 .card-header {
