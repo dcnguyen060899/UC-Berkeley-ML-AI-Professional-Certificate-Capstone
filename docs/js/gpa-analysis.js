@@ -38,7 +38,7 @@ const commonOptions = {
     }
 };
 
-// GPA Chart
+// GPA Chart configuration with enhanced tooltip
 const gpaCtx = document.getElementById('gpaChart').getContext('2d');
 new Chart(gpaCtx, {
     type: 'line',
@@ -61,7 +61,9 @@ new Chart(gpaCtx, {
             borderColor: 'rgb(136, 132, 216)',
             backgroundColor: 'rgba(136, 132, 216, 0.1)',
             tension: 0.3,
-            borderWidth: 2
+            borderWidth: 2,
+            phase: ['Adjustment', 'Adjustment', 'Adjustment', 'Transition', 'Transition', 
+                   'Stabilization', 'Stabilization', 'Stabilization', 'Mastery', 'Mastery']
         },
         {
             label: 'Overall Trend',
@@ -115,7 +117,18 @@ new Chart(gpaCtx, {
             tooltip: {
                 mode: 'index',
                 intersect: false,
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#000',
+                bodyColor: '#666',
+                borderColor: '#ddd',
+                borderWidth: 1,
+                padding: 10,
                 callbacks: {
+                    title: function(tooltipItems) {
+                        const index = tooltipItems[0].dataIndex;
+                        const phase = tooltipItems[0].dataset.phase?.[index] || '';
+                        return `${tooltipItems[0].label}\nPhase: ${phase}`;
+                    },
                     label: function(context) {
                         let label = context.dataset.label || '';
                         if (label) {
