@@ -38,7 +38,7 @@ const commonOptions = {
     }
 };
 
-// GPA Chart configuration with enhanced tooltip
+// GPA Chart configuration with reordered datasets
 const gpaCtx = document.getElementById('gpaChart').getContext('2d');
 new Chart(gpaCtx, {
     type: 'line',
@@ -55,16 +55,8 @@ new Chart(gpaCtx, {
             "2022 Summer", 
             "2022 Fall"
         ],
-        datasets: [{
-            label: 'Actual GPA',
-            data: [2.56, 2.97, 2.85, 2.68, 2.68, 2.86, 2.88, 2.87, 2.88, 2.94],
-            borderColor: 'rgb(136, 132, 216)',
-            backgroundColor: 'rgba(136, 132, 216, 0.1)',
-            tension: 0.3,
-            borderWidth: 2,
-            phase: ['Adjustment', 'Adjustment', 'Adjustment', 'Transition', 'Transition', 
-                   'Stabilization', 'Stabilization', 'Stabilization', 'Mastery', 'Mastery']
-        },
+        datasets: [
+        // Overall Trend first (bottom layer)
         {
             label: 'Overall Trend',
             data: [2.717, 2.739, 2.761, 2.784, 2.806, 2.828, 2.850, 2.873, 2.895, 2.917],
@@ -72,15 +64,30 @@ new Chart(gpaCtx, {
             backgroundColor: 'rgba(255, 115, 0, 0.1)',
             borderDash: [5, 5],
             tension: 0.3,
-            borderWidth: 2
+            borderWidth: 2,
+            order: 3  // Higher number = lower layer
         },
+        // Actual GPA second (middle layer)
+        {
+            label: 'Actual GPA',
+            data: [2.56, 2.97, 2.85, 2.68, 2.68, 2.86, 2.88, 2.87, 2.88, 2.94],
+            borderColor: 'rgb(136, 132, 216)',
+            backgroundColor: 'rgba(136, 132, 216, 0.1)',
+            tension: 0.3,
+            borderWidth: 2,
+            phase: ['Adjustment', 'Adjustment', 'Adjustment', 'Transition', 'Transition', 
+                   'Stabilization', 'Stabilization', 'Stabilization', 'Mastery', 'Mastery'],
+            order: 2  // Middle layer
+        },
+        // Later Terms last (top layer)
         {
             label: 'Later Terms (R² = 0.855)',
             data: [null, null, null, null, null, 2.86, 2.88, 2.87, 2.88, 2.94],
             borderColor: 'rgb(130, 202, 157)',
             backgroundColor: 'rgba(130, 202, 157, 0.1)',
             tension: 0.3,
-            borderWidth: 2
+            borderWidth: 2,
+            order: 1  // Lower number = top layer
         }]
     },
     options: {
