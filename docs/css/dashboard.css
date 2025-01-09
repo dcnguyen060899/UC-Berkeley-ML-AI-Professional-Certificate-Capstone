@@ -1,15 +1,24 @@
 /* Header spacing fix */
+/* Header styles */
 header {
-    position: relative;
-    z-index: 10;
-    margin-bottom: 80px; /* Add space below header */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 1000;
+    padding: 10px 20px;
+}
+
+body {
+    padding-top: 120px; /* Add padding to account for fixed header */
 }
 
 /* Dashboard container styles */
 .dashboard-container {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 10px;
-    margin: 100px auto 20px; /* Increased top margin */
+    margin: 20px auto; /* Reset margin */
     padding: 15px;
     max-width: 1000px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -17,14 +26,13 @@ header {
     z-index: 1;
 }
 
-/* Chart container styles */
+/* Rest of your existing styles remain the same */
 .chart-container {
     height: 250px;
     margin: 5px 0;
     position: relative;
 }
 
-/* Card styles */
 .card {
     background: white;
     border-radius: 8px;
@@ -137,16 +145,11 @@ canvas {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    body {
+        padding-top: 100px; /* Slightly less padding on mobile */
+    }
+    
     .dashboard-container {
-        margin: 80px 10px 20px;
-        padding: 10px;
-    }
-    
-    .chart-container {
-        height: 200px;
-    }
-    
-    .card-title {
-        font-size: 1rem;
+        margin: 10px;
     }
 }
