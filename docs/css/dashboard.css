@@ -1,35 +1,47 @@
-/* Dashboard container styles /
+/* Header adjustments to prevent overlap */
+header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 10px 20px;
+}
+
+/* Dashboard container styles - added top margin to clear header */
 .dashboard-container {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 10px;
-    margin: 20px auto;
-    padding: 15px; / Reduced padding */
+    margin: 100px auto 20px auto; /* Added top margin */
+    padding: 15px;
     max-width: 1000px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Chart container styles - significantly reduced height /
+/* Chart container styles */
 .chart-container {
-    height: 250px; / Reduced from 300px /
-    margin: 5px 0; / Reduced from 10px */
+    height: 250px;
+    margin: 5px 0;
     position: relative;
 }
 
-/* Card styles - reduced margins and padding /
+/* Card styles */
 .card {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 10px; / Reduced from 15px /
-    padding: 10px; / Reduced from 15px */
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .card-header {
-    margin-bottom: 5px; /* Reduced from 10px */
+    margin-bottom: 5px;
 }
 
 .card-title {
-    font-size: 1.1rem; /* Slightly smaller */
+    font-size: 1.1rem;
     font-weight: 600;
     color: #1a1a1a;
     margin: 0;
@@ -43,18 +55,18 @@ canvas {
     -ms-interpolation-mode: nearest-neighbor;
 }
 
-/* Analysis grid styles - tightened spacing /
+/* Analysis grid styles */
 .analysis-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px; / Reduced from 15px /
-    margin: 10px 0; / Reduced from 15px */
+    gap: 10px;
+    margin: 10px 0;
 }
 
 .analysis-box {
     background: #f8f9fa;
     border-radius: 6px;
-    padding: 10px; /* Reduced from 12px */
+    padding: 10px;
 }
 
 /* Conclusion section styles */
@@ -110,4 +122,34 @@ canvas {
     background: #ebf4ff;
     padding: 2px 4px;
     border-radius: 3px;
+}
+
+/* Phase indicator styles */
+.phase-indicator {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.phase-adjustment { background: #fff3cd; color: #856404; }
+.phase-transition { background: #cce5ff; color: #004085; }
+.phase-stabilization { background: #d4edda; color: #155724; }
+.phase-mastery { background: #e2d9f3; color: #492e74; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 80px 10px 20px 10px;
+        padding: 10px;
+    }
+    
+    .chart-container {
+        height: 200px;
+    }
+    
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
 }
