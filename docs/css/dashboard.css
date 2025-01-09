@@ -5,11 +5,11 @@
     --berkeley-gray: #DDD5C7;
 }
 
-/* Dashboard container styles */
+/* Dashboard container styles with proper header spacing */
 .dashboard-container {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 10px;
-    margin: 20px auto;
+    margin: 100px auto 20px; /* Increased top margin to 100px */
     padding: 15px;
     max-width: 1000px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -41,6 +41,11 @@
     height: 250px;
     margin: 5px 0;
     position: relative;
+}
+
+/* First card special spacing */
+.dashboard-container > .card:first-child {
+    margin-top: 10px; /* Add space for the first card */
 }
 
 /* Analysis grid styles */
