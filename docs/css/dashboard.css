@@ -1,0 +1,85 @@
+/* Dashboard container styles */
+.dashboard-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+/* Chart container styles */
+.chart-container {
+    height: 400px;
+    margin: 20px 0;
+}
+
+/* Card styles */
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.card-header {
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Analysis grid styles */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.analysis-box {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.analysis-box h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.analysis-box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.analysis-box li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* Tooltip styles */
+.custom-tooltip {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Phase indicator styles */
+.phase-indicator {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.phase-adjustment { background: #ffecb3; }
+.phase-transition { background: #b3e5fc; }
+.phase-stabilization { background: #c8e6c9; }
+.phase-mastery { background: #e1bee7; }
