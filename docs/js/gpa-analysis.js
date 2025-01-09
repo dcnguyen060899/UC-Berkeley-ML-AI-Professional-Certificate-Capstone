@@ -127,6 +127,49 @@ new Chart(gpaCtx, {
                         return label;
                     }
                 }
+            },
+            annotation: {
+                annotations: {
+                    transitionLine1: {
+                        type: 'line',
+                        xMin: 3,
+                        xMax: 3,
+                        borderColor: 'rgba(0, 0, 0, 0.3)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            content: 'Transition Phase',
+                            enabled: true,
+                            position: 'top'
+                        }
+                    },
+                    transitionLine2: {
+                        type: 'line',
+                        xMin: 5,
+                        xMax: 5,
+                        borderColor: 'rgba(0, 0, 0, 0.3)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            content: 'Stabilization Phase',
+                            enabled: true,
+                            position: 'top'
+                        }
+                    },
+                    transitionLine3: {
+                        type: 'line',
+                        xMin: 8,
+                        xMax: 8,
+                        borderColor: 'rgba(0, 0, 0, 0.3)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            content: 'Mastery Phase',
+                            enabled: true,
+                            position: 'top'
+                        }
+                    }
+                }
             }
         }
     }
