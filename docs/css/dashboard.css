@@ -56,3 +56,58 @@ canvas {
     border-radius: 6px;
     padding: 10px; /* Reduced from 12px */
 }
+
+/* Conclusion section styles */
+.card-content {
+    padding: 10px 15px;
+}
+
+.conclusion-text {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.conclusion-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.conclusion-list li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.4;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.conclusion-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #666;
+}
+
+.metric {
+    font-weight: 600;
+    color: #2c5282;
+}
+
+.progression {
+    font-family: monospace;
+    background: #f7fafc;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #4a5568;
+}
+
+.highlight {
+    font-weight: 600;
+    color: #2c5282;
+    background: #ebf4ff;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
