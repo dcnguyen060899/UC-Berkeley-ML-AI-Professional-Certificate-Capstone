@@ -3,126 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Growth Analysis</title>
-    
-    <!-- Updated dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.1.12/Recharts.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <title>Academic Growth Analysis - Duy Nguyen</title>
+    <link rel="stylesheet" href="css/portfolio.css">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .chart-container {
-            width: 100%;
-            height: 400px;
-            margin: 20px 0;
+        :root {
+            --primary-color: #003262;
+            --secondary-color: #FDB515;
+            --text-color: #333;
+            --background-color: #f5f5f5;
         }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .analysis-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .recharts-wrapper {
+            margin: 0 auto;
+        }
+
         .card {
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-content {
+            padding: 1rem;
         }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-6xl mx-auto">
-        <div class="card">
-            <h1 class="text-2xl font-bold">Academic Growth Analysis Dashboard</h1>
-            <p class="text-gray-600">Comprehensive analysis of academic performance</p>
-        </div>
-
-        <div class="card">
-            <h2 class="text-xl font-bold mb-4">Pattern Recognition: Academic Journey Phases</h2>
-            <div id="mainChart" class="chart-container"></div>
-        </div>
-
-        <div class="card">
-            <h2 class="text-xl font-bold mb-4">Phase-wise Performance Stability</h2>
-            <div id="volatilityChart" class="chart-container"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Statistical Insights -->
-            <div class="card">
-                <h3 class="text-lg font-bold mb-2">Statistical Insights</h3>
-                <ul class="space-y-2 text-sm">
-                    <li>Initial Period R² = 0.262 (High variability)</li>
-                    <li>Later Period R² = 0.855 (Strong linear fit)</li>
-                    <li>Overall positive growth trajectory</li>
-                    <li>Continuous reduction in grade volatility</li>
-                </ul>
+<body>
+    <header class="header">
+        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
+            <div class="logo">
+                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
             </div>
+        </a>
+        <nav>
+            <a href="index_portfolio.html">Portfolio</a>
+        </nav>
+    </header>
 
-            <!-- Academic Journey Phases -->
-            <div class="card">
-                <h3 class="text-lg font-bold mb-2">Academic Journey Phases</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><span class="font-semibold">Adjustment:</span> Initial university adaptation</li>
-                    <li><span class="font-semibold">Transition:</span> Development of study strategies</li>
-                    <li><span class="font-semibold">Stabilization:</span> Consistent performance</li>
-                    <li><span class="font-semibold">Mastery:</span> Sustained excellence</li>
-                </ul>
-            </div>
+    <div class="container">
+        <div class="analysis-container">
+            <div id="gpa-analysis-root"></div>
         </div>
     </div>
 
-    <script>
-        const { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } = Recharts;
+    <script type="text/babel">
+        const AcademicGrowthDashboard = () => {
+            const enhancedData = [
+                { term: "2019 Fall", actual: 2.56, predicted: 2.717, laterTrend: null, phase: "Adjustment" },
+                { term: "2020 Spring", actual: 2.97, predicted: 2.739, laterTrend: null, phase: "Adjustment" },
+                { term: "2020 Summer", actual: 2.85, predicted: 2.761, laterTrend: null, phase: "Adjustment" },
+                { term: "2020 Fall", actual: 2.68, predicted: 2.784, laterTrend: null, phase: "Transition" },
+                { term: "2021 Spring", actual: 2.68, predicted: 2.806, laterTrend: null, phase: "Transition" },
+                { term: "2021 Summer", actual: 2.86, predicted: 2.828, laterTrend: 2.86, phase: "Stabilization" },
+                { term: "2021 Fall", actual: 2.88, predicted: 2.850, laterTrend: 2.88, phase: "Stabilization" },
+                { term: "2022 Spring", actual: 2.87, predicted: 2.873, laterTrend: 2.87, phase: "Stabilization" },
+                { term: "2022 Summer", actual: 2.88, predicted: 2.895, laterTrend: 2.88, phase: "Mastery" },
+                { term: "2022 Fall", actual: 2.94, predicted: 2.917, laterTrend: 2.94, phase: "Mastery" }
+            ];
 
-        // Data
-        const enhancedData = [
-            { term: "2019 Fall", actual: 2.56, predicted: 2.717, laterTrend: null },
-            { term: "2020 Spring", actual: 2.97, predicted: 2.739, laterTrend: null },
-            { term: "2020 Summer", actual: 2.85, predicted: 2.761, laterTrend: null },
-            { term: "2020 Fall", actual: 2.68, predicted: 2.784, laterTrend: null },
-            { term: "2021 Spring", actual: 2.68, predicted: 2.806, laterTrend: null },
-            { term: "2021 Summer", actual: 2.86, predicted: 2.828, laterTrend: 2.86 },
-            { term: "2021 Fall", actual: 2.88, predicted: 2.850, laterTrend: 2.88 },
-            { term: "2022 Spring", actual: 2.87, predicted: 2.873, laterTrend: 2.87 },
-            { term: "2022 Summer", actual: 2.88, predicted: 2.895, laterTrend: 2.88 },
-            { term: "2022 Fall", actual: 2.94, predicted: 2.917, laterTrend: 2.94 }
-        ];
+            const volatilityData = [
+                { 
+                    period: "Adjustment",
+                    volatility: 0.48,
+                    avgGPA: 2.62
+                },
+                {
+                    period: "Transition",
+                    volatility: 0.31,
+                    avgGPA: 2.81
+                },
+                {
+                    period: "Stabilization",
+                    volatility: 0.15,
+                    avgGPA: 2.87
+                },
+                {
+                    period: "Mastery",
+                    volatility: 0.10,
+                    avgGPA: 2.91
+                }
+            ];
 
-        const volatilityData = [
-            { period: "Adjustment", volatility: 0.48, avgGPA: 2.62 },
-            { period: "Transition", volatility: 0.31, avgGPA: 2.81 },
-            { period: "Stabilization", volatility: 0.15, avgGPA: 2.87 },
-            { period: "Mastery", volatility: 0.10, avgGPA: 2.91 }
-        ];
+            const CustomTooltip = ({ active, payload, label }) => {
+                if (active && payload && payload.length) {
+                    return (
+                        <div className="bg-white p-4 border rounded shadow-lg">
+                            <p className="font-bold">{label}</p>
+                            <p className="text-purple-600">Actual GPA: {payload[0].value.toFixed(2)}</p>
+                            {payload[1] && <p className="text-orange-500">Predicted: {payload[1].value.toFixed(2)}</p>}
+                            {payload[2] && <p className="text-green-500">Later Trend: {payload[2].value?.toFixed(2) || 'N/A'}</p>}
+                            <p className="text-gray-600 mt-2">Phase: {enhancedData.find(d => d.term === label).phase}</p>
+                        </div>
+                    );
+                }
+                return null;
+            };
 
-        // Render Main Chart
+            const { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } = Recharts;
+
+            return (
+                <div className="space-y-6">
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="text-xl font-bold">Academic Growth Analysis Dashboard</h2>
+                        </div>
+                        <div className="card-content">
+                            <p className="text-sm text-gray-600 mb-4">
+                                Comprehensive analysis demonstrating academic growth pattern and phase-wise progression
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="text-xl font-bold">Pattern Recognition: Academic Journey Phases</h2>
+                        </div>
+                        <div className="card-content">
+                            <div style={{ height: "400px" }}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={enhancedData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis 
+                                            dataKey="term" 
+                                            angle={-45}
+                                            textAnchor="end"
+                                            height={60}
+                                        />
+                                        <YAxis 
+                                            domain={[2.5, 3]} 
+                                            label={{ value: 'GPA', angle: -90, position: 'insideLeft' }}
+                                        />
+                                        <Tooltip content={<CustomTooltip />} />
+                                        <Legend verticalAlign="top" height={36} />
+                                        
+                                        <ReferenceLine x="2020 Fall" stroke="#666" strokeDasharray="3 3" label={{ value: "Transition Phase", position: 'top' }} />
+                                        <ReferenceLine x="2021 Summer" stroke="#666" strokeDasharray="3 3" label={{ value: "Stabilization", position: 'top' }} />
+                                        
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="actual" 
+                                            stroke="#8884d8" 
+                                            name="Actual GPA"
+                                            strokeWidth={2}
+                                            dot={{ r: 4 }}
+                                        />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="predicted" 
+                                            stroke="#ff7300" 
+                                            name="Overall Trend"
+                                            strokeWidth={2}
+                                            strokeDasharray="5 5"
+                                        />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="laterTrend" 
+                                            stroke="#82ca9d" 
+                                            name="Later Terms (R² = 0.855)"
+                                            strokeWidth={3}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="text-xl font-bold">Phase-wise Performance Stability</h2>
+                        </div>
+                        <div className="card-content">
+                            <div style={{ height: "300px" }}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={volatilityData}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="period" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar dataKey="volatility" fill="#ff7c43" name="Grade Volatility" />
+                                        <Bar dataKey="avgGPA" fill="#82ca9d" name="Average GPA" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="text-xl font-bold">Academic Journey Analysis</h2>
+                        </div>
+                        <div className="card-content">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="bg-gray-50 p-4 rounded-lg">
+                                    <h3 className="font-bold text-lg mb-2">Statistical Insights</h3>
+                                    <ul className="space-y-2 text-sm">
+                                        <li>Initial Period R² = 0.262 (High variability)</li>
+                                        <li>Later Period R² = 0.855 (Strong linear fit)</li>
+                                        <li>Overall positive growth trajectory</li>
+                                        <li>Continuous reduction in grade volatility</li>
+                                    </ul>
+                                </div>
+                                <div className="bg-gray-50 p-4 rounded-lg">
+                                    <h3 className="font-bold text-lg mb-2">Academic Journey Phases</h3>
+                                    <ul className="space-y-2 text-sm">
+                                        <li><span className="font-semibold">Adjustment:</span> Initial university adaptation phase</li>
+                                        <li><span className="font-semibold">Transition:</span> Development of effective study strategies</li>
+                                        <li><span className="font-semibold">Stabilization:</span> Consistent academic performance</li>
+                                        <li><span className="font-semibold">Mastery:</span> Sustained academic excellence</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="text-xl font-bold">Analysis Conclusion</h2>
+                        </div>
+                        <div className="card-content">
+                            <p className="text-sm text-gray-600">
+                                The comprehensive analysis reveals a clear academic maturation process:
+                            </p>
+                            <ul className="list-disc ml-6 mt-2 space-y-2 text-sm text-gray-600">
+                                <li>Progressive improvement in average GPA across all phases (2.62 → 2.81 → 2.87 → 2.91)</li>
+                                <li>Significant reduction in grade volatility (0.48 → 0.31 → 0.15 → 0.10)</li>
+                                <li>Strong linear correlation in later terms (R² = 0.855) indicating academic maturity</li>
+                                <li>Clear phase transitions showing systematic academic development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         ReactDOM.render(
-            React.createElement(ResponsiveContainer, { width: '100%', height: 400 },
-                React.createElement(LineChart, { data: enhancedData, margin: { top: 20, right: 30, left: 20, bottom: 50 } },
-                    React.createElement(CartesianGrid, { strokeDasharray: '3 3' }),
-                    React.createElement(XAxis, { dataKey: 'term', angle: -45, textAnchor: 'end', height: 60 }),
-                    React.createElement(YAxis, { domain: [2.5, 3] }),
-                    React.createElement(Tooltip),
-                    React.createElement(Legend),
-                    React.createElement(Line, { type: 'monotone', dataKey: 'actual', stroke: '#8884d8', name: 'Actual GPA' }),
-                    React.createElement(Line, { type: 'monotone', dataKey: 'predicted', stroke: '#ff7300', name: 'Predicted' }),
-                    React.createElement(Line, { type: 'monotone', dataKey: 'laterTrend', stroke: '#82ca9d', name: 'Later Trend' })
-                )
-            ),
-            document.getElementById('mainChart')
-        );
-
-        // Render Volatility Chart
-        ReactDOM.render(
-            React.createElement(ResponsiveContainer, { width: '100%', height: 300 },
-                React.createElement(BarChart, { data: volatilityData, margin: { top: 20, right: 30, left: 20, bottom: 5 } },
-                    React.createElement(CartesianGrid, { strokeDasharray: '3 3' }),
-                    React.createElement(XAxis, { dataKey: 'period' }),
-                    React.createElement(YAxis),
-                    React.createElement(Tooltip),
-                    React.createElement(Legend),
-                    React.createElement(Bar, { dataKey: 'volatility', fill: '#ff7c43', name: 'Volatility' }),
-                    React.createElement(Bar, { dataKey: 'avgGPA', fill: '#82ca9d', name: 'Average GPA' })
-                )
-            ),
-            document.getElementById('volatilityChart')
+            <AcademicGrowthDashboard />,
+            document.getElementById('gpa-analysis-root')
         );
     </script>
 </body>
