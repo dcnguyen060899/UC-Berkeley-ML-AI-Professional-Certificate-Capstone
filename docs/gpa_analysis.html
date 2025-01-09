@@ -1,95 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Growth Dashboard - Duy Nguyen</title>
-    <link rel="stylesheet" href="css/portfolio.css">
-    <!-- External Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.1.12/Recharts.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Academic Growth Analysis Dashboard</title>
+  <!-- Link to your gradient & fade-in CSS -->
+  <link rel="stylesheet" href="css/portfolio.css" />
+
+  <!-- React & ReactDOM (UMD builds) -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+  <!-- Babel to compile JSX in the browser -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Recharts UMD -->
+  <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
 </head>
 <body>
-    <header>
-        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
-            <div class="logo">
-                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
-            </div>
-        </a>
-        <nav>
-            <a href="index_portfolio.html">Portfolio</a>
-        </nav>
-    </header>
+  <!-- HEADER -->
+  <header>
+    <a href="index_portfolio.html" class="logo-link">
+      <div class="logo">
+        <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo" />
+      </div>
+    </a>
+    <nav>
+      <a href="index_portfolio.html">Portfolio</a>
+    </nav>
+  </header>
 
-    <main>
-        <section id="project-overview">
-            <h2>Academic Growth Analysis Dashboard</h2>
-            <p>This dashboard visualizes academic growth across various phases using React and Recharts. It presents trends, stability metrics, and key performance insights.</p>
-        </section>
+  <!-- MAIN CONTENT (with fade-in) -->
+  <main class="fade-in" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+    <h1>Academic Growth Analysis Dashboard</h1>
+    <p>Comprehensive analysis demonstrating academic growth patterns and phase-wise progression.</p>
 
-        <section id="dashboard">
-            <h3>Interactive Dashboard</h3>
-            <div id="root" class="p-6"></div>
-        </section>
+    <!-- Chart container -->
+    <div id="chart-root" style="margin-top: 2rem;"></div>
+  </main>
 
-        <section id="benefits">
-            <h3>Benefits</h3>
-            <ul>
-                <li>Comprehensive academic performance tracking</li>
-                <li>Identification of critical transition phases</li>
-                <li>Visualization of long-term trends and stability</li>
-                <li>Enhanced decision-making for academic advisors</li>
-            </ul>
-        </section>
-    </main>
+  <!-- FOOTER -->
+  <footer style="text-align: center; padding: 1rem; margin-top: 2rem; background-color: rgba(0, 0, 0, 0.8); color: #fff;">
+    <p>&copy; 2025 UC Berkeley. All rights reserved.</p>
+    <p>
+      <a href="index_portfolio.html" style="color: #FFFFFF; text-decoration: none;">
+        Back to Portfolio
+      </a>
+    </p>
+  </footer>
 
-    <footer>
-        <p>&copy; 2025 UC Berkeley. All rights reserved.</p>
-        <p><a href="index_portfolio.html" style="color: #FFFFFF; text-decoration: none;">Back to Portfolio</a></p>
-    </footer>
+  <!-- BABEL SCRIPT for Recharts logic -->
+  <script type="text/babel">
+    const {
+      LineChart,
+      Line,
+      BarChart,
+      Bar,
+      XAxis,
+      YAxis,
+      CartesianGrid,
+      Tooltip,
+      Legend,
+      ResponsiveContainer,
+      ReferenceLine
+    } = window.Recharts;
 
-    <script type="text/babel">
-        const { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, ReferenceLine } = Recharts;
+    // SAMPLE DATA
+    const enhancedData = [
+      { term: "2019 Fall", actual: 2.56, predicted: 2.717, laterTrend: null, phase: "Adjustment" },
+      { term: "2020 Spring", actual: 2.97, predicted: 2.739, laterTrend: null, phase: "Adjustment" },
+      { term: "2020 Summer", actual: 2.85, predicted: 2.761, laterTrend: null, phase: "Adjustment" },
+      { term: "2020 Fall",  actual: 2.68, predicted: 2.784, laterTrend: null, phase: "Transition" },
+      { term: "2021 Spring", actual: 2.68, predicted: 2.806, laterTrend: null, phase: "Transition" },
+      { term: "2021 Summer", actual: 2.86, predicted: 2.828, laterTrend: 2.86, phase: "Stabilization" },
+      { term: "2021 Fall",   actual: 2.88, predicted: 2.850, laterTrend: 2.88, phase: "Stabilization" },
+      { term: "2022 Spring", actual: 2.87, predicted: 2.873, laterTrend: 2.87, phase: "Stabilization" },
+      { term: "2022 Summer", actual: 2.88, predicted: 2.895, laterTrend: 2.88, phase: "Mastery" },
+      { term: "2022 Fall",   actual: 2.94, predicted: 2.917, laterTrend: 2.94, phase: "Mastery" }
+    ];
 
-        const enhancedData = [
-            { term: "2019 Fall", actual: 2.56, predicted: 2.717, laterTrend: null, phase: "Adjustment" },
-            { term: "2020 Spring", actual: 2.97, predicted: 2.739, laterTrend: null, phase: "Adjustment" },
-            { term: "2020 Summer", actual: 2.85, predicted: 2.761, laterTrend: null, phase: "Adjustment" },
-            { term: "2020 Fall", actual: 2.68, predicted: 2.784, laterTrend: null, phase: "Transition" },
-            { term: "2021 Spring", actual: 2.68, predicted: 2.806, laterTrend: null, phase: "Transition" },
-            { term: "2021 Summer", actual: 2.86, predicted: 2.828, laterTrend: 2.86, phase: "Stabilization" },
-            { term: "2021 Fall", actual: 2.88, predicted: 2.850, laterTrend: 2.88, phase: "Stabilization" },
-            { term: "2022 Spring", actual: 2.87, predicted: 2.873, laterTrend: 2.87, phase: "Stabilization" },
-            { term: "2022 Summer", actual: 2.88, predicted: 2.895, laterTrend: 2.88, phase: "Mastery" },
-            { term: "2022 Fall", actual: 2.94, predicted: 2.917, laterTrend: 2.94, phase: "Mastery" }
-        ];
+    const volatilityData = [
+      { period: "Adjustment",  volatility: 0.48, avgGPA: 2.62 },
+      { period: "Transition",  volatility: 0.31, avgGPA: 2.81 },
+      { period: "Stabilization", volatility: 0.15, avgGPA: 2.87 },
+      { period: "Mastery",     volatility: 0.10, avgGPA: 2.91 }
+    ];
 
-        function AcademicGrowthDashboard() {
-            return (
-                <div className="space-y-6">
-                    <div className="p-4 border rounded shadow bg-white">
-                        <h2 className="text-lg font-bold mb-2">GPA Trend Analysis</h2>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={enhancedData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="term" angle={-45} textAnchor="end" height={60} />
-                                <YAxis domain={[2.5, 3]} label={{ value: 'GPA', angle: -90, position: 'insideLeft' }} />
-                                <Tooltip />
-                                <Legend />
-                                <ReferenceLine x="2020 Fall" stroke="#666" label="Transition Phase" />
-                                <ReferenceLine x="2021 Summer" stroke="#666" label="Stabilization" />
-                                <Line type="monotone" dataKey="actual" stroke="#8884d8" name="Actual GPA" />
-                                <Line type="monotone" dataKey="predicted" stroke="#82ca9d" name="Predicted GPA" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-            );
-        }
+    // OPTIONAL: Custom tooltip component
+    const CustomTooltip = ({ active, payload, label }) => {
+      if (active && payload && payload.length) {
+        const data = enhancedData.find(d => d.term === label);
+        return (
+          <div style={{ backgroundColor: '#fff', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
+            <p style={{ fontWeight: 'bold', marginBottom: '4px' }}>{label}</p>
+            <p style={{ color: '#8884d8' }}>Actual GPA: {payload[0].value.toFixed(2)}</p>
+            {payload[1] && <p style={{ color: '#ff7300' }}>Predicted: {payload[1].value.toFixed(2)}</p>}
+            {payload[2] && <p style={{ color: '#82ca9d' }}>Later Trend: {payload[2].value?.toFixed(2) || 'N/A'}</p>}
+            {data && <p style={{ marginTop: '6px', color: '#666' }}>Phase: {data.phase}</p>}
+          </div>
+        );
+      }
+      return null;
+    };
 
-        ReactDOM.render(<AcademicGrowthDashboard />, document.getElementById('root'));
-    </script>
+    // MAIN REACT COMPONENT
+    function AcademicGrowthDashboard() {
+      return (
+        <div style={{ display: 'grid', gap: '2rem' }}>
+          {/* LINE CHART */}
+          <div style={{ width: '100%', height: '400px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={enhancedData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="term" angle={-45} textAnchor="end" height={60} />
+                <YAxis domain={[2.5, 3]} label={{ value: 'GPA', angle: -90, position: 'insideLeft' }} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend verticalAlign="top" height={36} />
+                <ReferenceLine x="2020 Fall" stroke="#666" strokeDasharray="3 3" label={{ value: "Transition Phase", position: 'top' }} />
+                <ReferenceLine x="2021 Summer" stroke="#666" strokeDasharray="3 3" label={{ value: "Stabilization", position: 'top' }} />
+
+                <Line type="monotone" dataKey="actual" stroke="#8884d8" name="Actual GPA" strokeWidth={2} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="predicted" stroke="#ff7300" name="Overall Trend" strokeWidth={2} strokeDasharray="5 5" />
+                <Line type="monotone" dataKey="laterTrend" stroke="#82ca9d" name="Later Terms (R² = 0.855)" strokeWidth={3} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* BAR CHART */}
+          <div style={{ width: '100%', height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={volatilityData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="period" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="volatility" fill="#ff7c43" name="Grade Volatility" />
+                <Bar dataKey="avgGPA" fill="#82ca9d" name="Average GPA" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+
+    // RENDER to #chart-root
+    ReactDOM.render(<AcademicGrowthDashboard />, document.getElementById('chart-root'));
+  </script>
 </body>
 </html>
