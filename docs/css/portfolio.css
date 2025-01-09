@@ -321,30 +321,3 @@ bottom: 0;
     }
 }
 
-# gpa_analysis:
-/* portfolio.css */
-
-/* 1) Gradient background (or use an image) */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(to bottom, #f0f4fc, #dce8f7);
-  transition: background 0.3s ease-in-out;
-}
-
-/* 2) Simple fade-in animation */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
