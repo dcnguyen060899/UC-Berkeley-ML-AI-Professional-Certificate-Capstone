@@ -1,3 +1,9 @@
+// Import and register the annotation plugin
+import Chart from 'chart.js/auto';
+import annotationPlugin from 'chartjs-plugin-annotation';
+
+Chart.register(annotationPlugin);
+
 // Common options for both charts
 const commonOptions = {
     responsive: true,
@@ -125,6 +131,42 @@ new Chart(gpaCtx, {
                             label += context.parsed.y.toFixed(2);
                         }
                         return label;
+                    }
+                }
+            },
+            annotation: {
+                annotations: {
+                    transitionLine: {
+                        type: 'line',
+                        xMin: 3,
+                        xMax: 3,
+                        borderColor: '#666',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            content: 'Transition Phase',
+                            position: 'top',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    stabilizationLine: {
+                        type: 'line',
+                        xMin: 5,
+                        xMax: 5,
+                        borderColor: '#666',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            content: 'Stabilization',
+                            position: 'top',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            font: {
+                                size: 12
+                            }
+                        }
                     }
                 }
             }
