@@ -25,6 +25,7 @@ For example:
 - If the user asks about the UC Berkeley program registration link, respond with: [UC Berkeley Program Registration](https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence).
 - If the user asks about the author's capstone GitHub repository, respond with: [Duy Nguyen's GitHub Repository](https://github.com/dcnguyen060899/UC-Berkeley-ML-AI-Professional-Certificate-Capstone).
 - If the user asks about the author's Resume, respond with: [Duy Nguyen's Resume](https://ucberkeley-ml-ai-capstone.com/index_resume.html)
+- If the user asks about the author's Portfolio, respond with: [Duy Nguyen's Portfolio](https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/index_portfolio.html)
 
 Always ensure that hyperlinks are clear, functional, and formatted using markdown-style link syntax, so they are clickable and easy to access.
 
@@ -1188,146 +1189,85 @@ Berkeley Executive Education is collaborating with online education provider Eme
 ---
 
 Lastly, you are access to Duy Nguyen portfolio, please address any concern of the user regard Duy Nguyen:
+# Duy Nguyen Portfolio Database for Chatbot
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/portfolio.css">
-    <title>Duy Nguyen - Portfolio</title>
-</head>
-<body>
-    <header>
-        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
-            <div class="logo">
-                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
-            </div>
-        </a>
-    </header>
+## Personal Information
+- **Name**: Duy Nguyen
+- **Education**: 
+  - Bachelor in Economics and Data Analysis
+  - UC Berkeley ML AI Professional Certificate program graduate
+- **Email**: dcnguyen060899@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/duwe-ng/
+- **GitHub**: https://github.com/dcnguyen060899
+- **Resume**: https://ucberkeley-ml-ai-capstone.com/index_resume.html
 
-    <main>
-        <div class="profile-photo-container">
-            <div class="profile-photo-flipper">
-                <div class="flipper-front">
-                    <img src="images/Duy_Nguyen_2.jpg" alt="Duy Nguyen" class="profile-photo">
-                </div>
-                <div class="flipper-back">
-                    <img src="images/uc_berkeley_seal.png" alt="UC Berkeley Seal" class="uc-seal">
-                </div>
-            </div>
-        </div>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Welcome to my portfolio! My name is Duy Nguyen. I am an economics grad with expertise in machine learning and artificial intelligence. I graduated with a Bachelor in Economics and Data Analysis. I recently completed the UC Berkeley ML AI Professional Certificate program, where I honed my skills in data analysis, predictive modeling, and problem-solving. These projects have strengthened my programming skills, deepened my mathematical intuition, and fostered my intellectual curiosity, naturally converging into my current research pursuits in AI safety, specifically in the theoretical analysis of generalization within the overparameterized regime in Deep Learning Theory and Interpretability.</p>
-        </section>
-        
-        <section id="skills">
-            <h2>Skills</h2>
-            <ul>
-                <li>Machine Learning</li>
-                <li>Artificial Intelligence</li>
-                <li>Data Analysis</li>
-                <li>Python Programming</li>
-                <li>Neural Networks</li>
-                <li>Statistical Modeling</li>
-                <li>Software Engineering Principles</li>
-            </ul>
-        </section>
+## Professional Summary
+Duy Nguyen is an economics graduate with expertise in machine learning and artificial intelligence. He combines his economics background with advanced skills in data analysis, predictive modeling, and problem-solving. His research interests focus on AI safety, specifically the theoretical analysis of generalization within the overparameterized regime in Deep Learning Theory and Interpretability.
 
-        <section id="projects">
-            <h2>Research Projects</h2>
-            <div class="project">
-                <h3><a href="index_independent_research.html">Geometric Implicit Regularization: Duy Integral Theorem</a></h3>
-                <p>
-                    Developed a novel mathematical framework for understanding generalization in overparameterized neural networks through measure theory and PDEs. The research:
-                    <ul>
-                        <li>Introduces the Duy Integral Theory, providing a rigorous explanation for why gradient descent discovers flat minima that generalize well</li>
-                        <li>Proves mathematically that sharp regions in parameter space experience exponential measure evacuation over time</li>
-                        <li>Establishes the formal connection between geometric properties of loss landscapes and generalization performance</li>
-                        <li>Offers theoretical justification for empirical observations in deep learning optimization</li>
-                    </ul>
-                </p>
-            </div>
-            
-            <h2>Projects</h2>
-            <div class="project">
-                <h3><a href="index_gpa_analysis.html">Academic Performance Analysis - Statistical Pattern Recognition</a></h3>
-                <p>
-                    Conducted a comprehensive statistical analysis of academic performance using R-squared analysis and phase recognition. The project demonstrates:
-                    <ul>
-                        <li>Applied statistical analysis to identify distinct academic growth phases (Adjustment, Transition, Stabilization, Mastery)</li>
-                        <li>Implemented data visualization using React and Recharts to create an interactive dashboard</li>
-                        <li>Quantified academic growth through R-squared analysis, showing progression from initial volatility (R² = 0.262) to strong linear correlation (R² = 0.855)</li>
-                        <li>Demonstrated resilience and continuous improvement through data-driven insights</li>
-                    </ul>
-                </p>
-            </div>
-            <div class="project">
-                <h3><a href="index_ai_agent_project.html">AI Agent for ML-Business Alignment</a></h3>
-                <p>Developed an AI agent to improve alignment between ML development teams and business stakeholders. The agent facilitates communication, provides crucial business context, and ensures ML models directly support strategic goals and KPIs. Key features include:
-                    <ul>
-                        <li>Real-time context provision to ML teams</li>
-                        <li>Alignment of model evaluation criteria with business impact metrics</li>
-                        <li>Automated flagging of potential conflicts with business rules or market realities</li>
-                        <li>Streamlined access to relevant past models and business insights</li>
-                        <li>Significant reduction in knowledge transfer time and misalignment issues</li>
-                    </ul>
-                </p>
-            </div>
-            <div class="project">
-                <h3><a href="index.html">UC Berkeley ML/AI - What drives the patient's length of stay?</a></h3>
-                <p>Developed a machine learning model to predict patient length of stay in hospitals, optimizing resource allocation and improving patient care. Utilized neural networks and ensemble methods to achieve high accuracy in predictions. Integrated an advanced AI chatbot, powered by a transformer-based neural network, to autonomously analyze the findings and provide concise decision-making guidance for stakeholders.</p>
-            </div>
-            <div class="project">
-                <h3><a href="https://mosaicmate.vercel.app/">MOSAIC - AI Immigration Chatbot</a></h3>
-                <p>
-                    Developed an AI-powered chatbot with SFU Blueprint for MOSAIC to assist Canadian Immigration Consultants, significantly enhancing user experience by providing personalized recommendations and real-time information in multiple languages. Leveraging technologies such as Flask for backend services, Neo4j for graph database integration, and OpenAI models for natural language processing, the chatbot efficiently processes user queries and retrieves relevant information. The project was shortlisted in the Top 4 of the SFU CS Diversity Award, recognizing its innovative approach to improving accessibility and efficiency for newcomers, immigrants, and refugees.
-                </p>
-            </div>
-            <div class="project">
-                <h3><a href="https://vha-roi-slab-retrieval-engine.onrender.com">Simon Fraser University Faisal Lab - AI Medical Translation & Retrieval Engine</a></h3>
-                <p>
-                    Developed a retrieval augmented generation software that translates doctors’ natural language requests into JSON, streamlining access to CT and MRI scan analytics through the DAFs application. Eliminated the need for medical professionals to memorize complex codes for report retrieval, potentially saving hours of manual reference time per week. Utilized Python and frameworks such as Llama Index and the OpenAI API to develop the software, enhancing efficiency and accuracy in processing natural language to JSON conversion.
-                </p>
-            </div>
+## Skills
+- Machine Learning
+- Artificial Intelligence
+- Data Analysis
+- Python Programming
+- Neural Networks
+- Statistical Modeling
+- Software Engineering Principles
 
+## Research Projects
+1. **Geometric Implicit Regularization: Duy Integral Theorem**
+   - Developed a novel mathematical framework for understanding generalization in overparameterized neural networks
+   - Introduced the Duy Integral Theory explaining why gradient descent discovers flat minima that generalize well
+   - Proved that sharp regions in parameter space experience exponential measure evacuation over time
+   - Established connections between geometric properties of loss landscapes and generalization performance
+   - Provided theoretical justification for empirical observations in deep learning optimization
 
-            <!-- Add more projects as needed -->
-        </section>
-        
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:dcnguyen060899@gmail.com">dcnguyen060899@gmail.com</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/duwe-ng/">https://www.linkedin.com/in/duwe-ng/</a></p>
-            <p>GitHub: <a href="https://github.com/dcnguyen060899">https://github.com/dcnguyen060899</a></p>
-            <p>Resume: <a href="https://ucberkeley-ml-ai-capstone.com/index_resume.html">https://ucberkeley-ml-ai-capstone.com/index_resume.html</a></p>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
-    </footer>
+## Projects
+1. **Academic Performance Analysis - Statistical Pattern Recognition**
+   - Conducted comprehensive statistical analysis of academic performance using R-squared analysis
+   - Identified distinct academic growth phases (Adjustment, Transition, Stabilization, Mastery)
+   - Created interactive dashboard using React and Recharts
+   - Quantified academic growth from initial volatility (R² = 0.262) to strong linear correlation (R² = 0.855)
+   - Demonstrated data-driven insights showing resilience and continuous improvement
 
-    <!-- Chatbot Popup Structure -->
-    <div id="chatbot-container" class="closed">
-      <div id="chatbot-header">
-        <span>Berkeley AI Assistant</span>
-        <button id="chatbot-toggle">^</button>
-      </div>
-      <div id="chatbot-messages"></div>
-      <div id="chatbot-input">
-        <input type="text" id="user-input" placeholder="Ask a question...">
-        <button id="send-button">Send</button>
-      </div>
-    </div>
+2. **AI Agent for ML-Business Alignment**
+   - Developed an AI agent to improve alignment between ML development teams and business stakeholders
+   - Features include real-time context provision, alignment of model evaluation with business metrics
+   - Implemented automated flagging of conflicts with business rules or market realities
+   - Provided streamlined access to relevant past models and business insights
+   - Achieved significant reduction in knowledge transfer time and misalignment issues
 
-    <!-- Include JavaScript files -->
-    <script src="js/chat.js"></script>
-    <script src="js/sidebar.js"></script>
-    
-</body>
-</html>
+3. **UC Berkeley ML/AI - Hospital Length of Stay Prediction**
+   - Developed ML model to predict patient length of stay in hospitals
+   - Optimized resource allocation and improved patient care
+   - Used neural networks and ensemble methods for high-accuracy predictions
+   - Integrated transformer-based AI chatbot for autonomous analysis
+   - Provided concise decision-making guidance for stakeholders
+
+4. **MOSAIC - AI Immigration Chatbot**
+   - Developed AI-powered chatbot with SFU Blueprint for MOSAIC to assist Canadian Immigration Consultants
+   - Enhanced user experience with personalized recommendations and real-time information in multiple languages
+   - Used Flask (backend), Neo4j (graph database), and OpenAI models (NLP)
+   - Project was shortlisted in Top 4 of SFU CS Diversity Award
+   - Improved accessibility and efficiency for newcomers, immigrants, and refugees
+
+5. **SFU Faisal Lab - AI Medical Translation & Retrieval Engine**
+   - Created retrieval augmented generation software translating doctors' requests into JSON
+   - Streamlined access to CT and MRI scan analytics through DAFs application
+   - Eliminated need for memorizing complex codes, saving hours of reference time per week
+   - Used Python, Llama Index, and OpenAI API
+   - Enhanced efficiency in processing natural language to JSON conversion
+
+## Notable Accomplishments
+- Developed the Duy Integral Theorem in deep learning theory
+- Completed the UC Berkeley ML AI Professional Certificate program
+- Created multiple practical AI applications in healthcare and immigration
+- Shortlisted in Top 4 of SFU CS Diversity Award
+
+## Research Interests
+- AI safety
+- Theoretical analysis of generalization in deep learning
+- Overparameterized regime in Deep Learning Theory
+- Interpretability in machine learning
 """
 tools = [
         Tool.from_function(
