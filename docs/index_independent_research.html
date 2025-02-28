@@ -158,342 +158,337 @@
             
             <p>I've created an animated visualization that shows the continuous flow of measure from t=0 to t=∞, directly demonstrating the key concepts from the Duy Integral Theory paper.</p>
             
-            <!-- Rest of your explanation text -->
+            <p>Features of the Visualization:</p>
+            <ul>
+                <li><strong>Continuous Animation:</strong>
+                    <ul>
+                        <li>Smoothly animates the measure flow from initial uniform distribution to final concentration</li>
+                        <li>Time counter shows the progression from t=0 to t=10 (representing t=∞)</li>
+                        <li>The animation cycles a few times for continuous observation</li>
+                    </ul>
+                </li>
+                <li><strong>Realistic Measure Flow Dynamics:</strong>
+                    <ul>
+                        <li>Points near the sharp minimum evacuate more quickly (as predicted by the theory)</li>
+                        <li>The animation shows gradual color transition (white → red/blue) based on region</li>
+                        <li>Both position and color evolve to highlight the measure concentration process</li>
+                    </ul>
+                </li>
+                <li><strong>Clear Geometric Features:</strong>
+                    <ul>
+                        <li>Distinct red sphere marking the sharp minimum</li>
+                        <li>Distinct blue sphere marking the flat minimum</li>
+                        <li>Detailed surface with wireframe showing the loss landscape</li>
+                    </ul>
+                </li>
+            </ul>
             
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-            <script>
-                const scene = new THREE.Scene();
-                scene.background = new THREE.Color(0x000000);
-                const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true });
-                
-                const container = document.getElementById('canvas-container');
-                renderer.setSize(container.clientWidth, container.clientHeight);
-                container.appendChild(renderer.domElement);
-        
-                // Time display element
-                const timeDisplay = document.getElementById('time-display');
-        
-                // IMPROVED LIGHTING - increased intensity
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Increased from 0.6
-                scene.add(ambientLight);
-                
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2); // Increased from 0.8
-                directionalLight.position.set(1, 2, 1);
-                scene.add(directionalLight);
-                
-                const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.0); // Increased from 0.6
-                directionalLight2.position.set(-1, 1, -1);
-                scene.add(directionalLight2);
-        
-                // Create loss landscape surface
-                const size = 10;
-                const resolution = 80;
-                
-                // Loss function with distinct sharp and flat minima
-                function calculateLoss(x, z) {
-                    // Sharp minimum at (-2.5, -2.5)
-                    const sharpMin = 1.5 * Math.exp(-((x+2.5)**2 + (z+2.5)**2) * 3);
-                    
-                    // Flat minimum at (2.5, 2.5)
-                    const flatMin = Math.exp(-((x-2.5)**2 + (z-2.5)**2) * 0.5);
-                    
-                    return 1 - Math.max(sharpMin, flatMin);
-                }
-        
-                // Create surface with better visibility
-                function createSurface() {
-                    const geometry = new THREE.PlaneGeometry(size, size, resolution, resolution);
-                    
-                    // Deform surface based on loss
-                    const positions = geometry.attributes.position.array;
-                    for(let i = 0; i < positions.length; i += 3) {
-                        const x = positions[i];
-                        const z = positions[i + 2];
-                        positions[i + 1] = calculateLoss(x, z) * 1.5;
-                    }
-                    
-                    // IMPROVED VISIBILITY - less transparency, brighter color
-                    const material = new THREE.MeshPhongMaterial({
-                        color: 0xcccccc, // Brighter from 0xaaaaaa
-                        transparent: true,
-                        opacity: 0.8, // More opaque from 0.7
-                        side: THREE.DoubleSide,
-                        wireframe: false,
-                        flatShading: true
-                    });
-                    
-                    const surface = new THREE.Mesh(geometry, material);
-                    
-                    // Add wireframe with better visibility
-                    const wireframe = new THREE.LineSegments(
-                        new THREE.WireframeGeometry(geometry),
-                        new THREE.LineBasicMaterial({ color: 0x555555, linewidth: 2 }) // Brighter lines
-                    );
-                    
-                    surface.add(wireframe);
-                    scene.add(surface);
-                    
-                    return surface;
-                }
-                
-                const surface = createSurface();
-        
-                // Create points that will animate over time
-                const numPoints = 5000;
-                const geometry = new THREE.BufferGeometry();
-                const positions = new Float32Array(numPoints * 3);
-                const colors = new Float32Array(numPoints * 3);
-                const initialPositions = new Float32Array(numPoints * 3);
-                const targetPositions = new Float32Array(numPoints * 3);
-                
-                // Initialize initial and target positions
-                for(let i = 0; i < positions.length; i += 3) {
-                    // Initial positions (t=0): uniform distribution
-                    initialPositions[i] = (Math.random() - 0.5) * size;
-                    initialPositions[i + 2] = (Math.random() - 0.5) * size; 
-                    initialPositions[i + 1] = calculateLoss(initialPositions[i], initialPositions[i + 2]) * 1.5 + 0.1;
-                    
-                    // Target positions (t=∞): concentrated in flat minimum
-                    const angle = Math.random() * Math.PI * 2;
-                    const radius = Math.random() * 3;
-                    
-                    if(Math.random() < 0.95) {
-                        // 95% of points in flat region
-                        targetPositions[i] = 2.5 + radius * Math.cos(angle) * 0.7;
-                        targetPositions[i + 2] = 2.5 + radius * Math.sin(angle) * 0.7;
-                    } else {
-                        // 5% random elsewhere
-                        targetPositions[i] = (Math.random() - 0.5) * size;
-                        targetPositions[i + 2] = (Math.random() - 0.5) * size;
-                    }
-                    
-                    targetPositions[i + 1] = calculateLoss(targetPositions[i], targetPositions[i + 2]) * 1.5 + 0.1;
-                    
-                    // Start with initial positions
-                    positions[i] = initialPositions[i];
-                    positions[i + 1] = initialPositions[i + 1];
-                    positions[i + 2] = initialPositions[i + 2];
-                    
-                    // Initial color: white
-                    colors[i] = 1;     // R
-                    colors[i + 1] = 1; // G
-                    colors[i + 2] = 1; // B
-                }
-                
-                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-                
-                // INCREASED POINT SIZE for better visibility
-                const material = new THREE.PointsMaterial({
-                    size: 0.3, // Increased from 0.15
-                    vertexColors: true,
-                    transparent: true,
-                    opacity: 1.0 // Full opacity
-                });
-                
-                const points = new THREE.Points(geometry, material);
-                scene.add(points);
-        
-                // Create LARGER visible markers for the minima
-                function createSphereMarker(x, y, z, color, size) {
-                    const geometry = new THREE.SphereGeometry(size, 16, 16);
-                    const material = new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.9 }); // More opaque
-                    const sphere = new THREE.Mesh(geometry, material);
-                    sphere.position.set(x, y, z);
-                    scene.add(sphere);
-                    return sphere;
-                }
-                
-                // LARGER markers at minima
-                const sharpMinima = createSphereMarker(-2.5, calculateLoss(-2.5, -2.5) * 1.5, -2.5, 0xff0000, 0.6); // Bigger from 0.4
-                const flatMinima = createSphereMarker(2.5, calculateLoss(2.5, 2.5) * 1.5, 2.5, 0x0000ff, 0.6); // Bigger from 0.4
-                
-                // Create larger text labels with better contrast
-                function createTextSprite(text, fontSize, backgroundColor) {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 1024;
-                    canvas.height = 512;
-                    const context = canvas.getContext('2d');
-                    
-                    // More opaque background for better readability
-                    if (backgroundColor) {
-                        context.fillStyle = backgroundColor;
-                        context.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                    
-                    context.font = `Bold ${fontSize || 60}px Arial`;
-                    context.fillStyle = 'white';
-                    context.textAlign = 'center';
-                    context.textBaseline = 'middle';
-                    context.fillText(text, canvas.width/2, canvas.height/2);
-                    
-                    const texture = new THREE.CanvasTexture(canvas);
-                    const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
-                    const sprite = new THREE.Sprite(material);
-                    sprite.scale.set(3, 1.5, 1); // LARGER text (was 2, 1, 1)
-                    return sprite;
-                }
-        
-                // Add large, visible labels
-                const sharpLabel = createTextSprite("Sharp Minimum", 60, "rgba(128,0,0,0.8)"); // Larger text
-                sharpLabel.position.set(-2.5, 2.0, -2.5); // Higher position
-                scene.add(sharpLabel);
-                
-                const flatLabel = createTextSprite("Flat Minimum", 60, "rgba(0,0,128,0.8)"); // Larger text
-                flatLabel.position.set(2.5, 2.0, 2.5); // Higher position
-                scene.add(flatLabel);
-        
-                // Add an infobox explaining the Duy Integral Theory
-                const infoLabel = createTextSprite("Duy Integral Theory: Measure flows from sharp to flat regions", 48, "rgba(0,0,0,0.9)");
-                infoLabel.position.set(0, 4, -5);
-                scene.add(infoLabel);
-        
-                // CLOSER camera for better viewing
-                camera.position.set(10, 7, 10); // Closer from (15, 10, 15)
-                camera.lookAt(0, 0, 0);
-        
-                // Animation parameters
-                let animationTime = 0;
-                const animationDuration = 300; // Frames for full animation
-                let isAnimating = true;
-                let animationComplete = false;
-                let cycleCount = 0;
-                const totalCycles = 4;
-        
-                function animate() {
-                    requestAnimationFrame(animate);
-                    
-                    // Rotation for camera (slower for better visibility)
-                    const cameraTime = Date.now() * 0.0001;
-                    camera.position.x = 10 * Math.cos(cameraTime * 0.2); // Slower rotation, closer radius
-                    camera.position.z = 10 * Math.sin(cameraTime * 0.2);
-                    camera.lookAt(0, 0, 0);
-                    
-                    // Update point positions and colors based on animation time
-                    if (isAnimating) {
-                        animationTime++;
-                        
-                        // Normalized progress (0 to 1)
-                        let progress = animationTime / animationDuration;
-                        if (progress >= 1) {
-                            if (cycleCount < totalCycles - 1) {
-                                // Reset for next cycle
-                                animationTime = 0;
-                                cycleCount++;
-                            } else {
-                                // Hold at final state
-                                progress = 1;
-                                animationComplete = true;
-                            }
-                        }
-                        
-                        // Update time display
-                        timeDisplay.textContent = `Time: t = ${progress.toFixed(2) * 10}`;
-                        
-                        // Custom easing for more realistic flow
-                        // Slower at start, faster in middle, slower at end
-                        const easedProgress = progress < 0.5 ? 
-                            2 * progress * progress : 
-                            1 - Math.pow(-2 * progress + 2, 2) / 2;
-                        
-                        const positions = points.geometry.attributes.position.array;
-                        const colors = points.geometry.attributes.color.array;
-                        
-                        for(let i = 0; i < positions.length; i += 3) {
-                            // For points initially near sharp minimum, have them leave earlier
-                            const isNearSharp = Math.sqrt((initialPositions[i]+2.5)**2 + (initialPositions[i+2]+2.5)**2) < 2;
-                            let pointProgress = isNearSharp ? 
-                                Math.min(1, easedProgress * 1.5) : // Points near sharp region move faster
-                                easedProgress;
-                            
-                            // If completing animation, force all to target
-                            if (animationComplete) {
-                                pointProgress = 1;
-                            }
-                            
-                            // Intermediate positions
-                            positions[i] = initialPositions[i] + (targetPositions[i] - initialPositions[i]) * pointProgress;
-                            positions[i + 2] = initialPositions[i + 2] + (targetPositions[i + 2] - initialPositions[i + 2]) * pointProgress;
-                            
-                            // Update height to stay on surface
-                            positions[i + 1] = calculateLoss(positions[i], positions[i + 2]) * 1.5 + 0.1;
-                            
-                            // Update color based on position (red for sharp, blue for flat)
-                            const distToSharp = Math.sqrt((positions[i]+2.5)**2 + (positions[i+2]+2.5)**2);
-                            const distToFlat = Math.sqrt((positions[i]-2.5)**2 + (positions[i+2]-2.5)**2);
-                            
-                            if (distToSharp < distToFlat) {
-                                // MORE VIBRANT COLORS - Near sharp minimum: white → red
-                                colors[i] = 1; // R
-                                colors[i + 1] = Math.max(0, 1 - pointProgress * 1.5); // G - more contrast
-                                colors[i + 2] = Math.max(0, 1 - pointProgress * 1.5); // B - more contrast
-                            } else {
-                                // MORE VIBRANT COLORS - Near flat minimum: white → blue
-                                colors[i] = Math.max(0, 1 - pointProgress * 1.5); // R - more contrast
-                                colors[i + 1] = Math.max(0, 1 - pointProgress * 1.5); // G - more contrast
-                                colors[i + 2] = 1; // B
-                            }
-                        }
-                        
-                        points.geometry.attributes.position.needsUpdate = true;
-                        points.geometry.attributes.color.needsUpdate = true;
-                        
-                        // Reset if animation complete and we've done all cycles
-                        if (animationComplete && cycleCount >= totalCycles - 1) {
-                            animationTime = 0;
-                            cycleCount = 0;
-                            animationComplete = false;
-                        }
-                    }
-                    
-                    // Update label orientations
-                    sharpLabel.quaternion.copy(camera.quaternion);
-                    flatLabel.quaternion.copy(camera.quaternion);
-                    infoLabel.quaternion.copy(camera.quaternion);
-                    
-                    renderer.render(scene, camera);
-                }
-        
-                animate();
-        
-                // Handle window resize
-                window.addEventListener('resize', () => {
-                    const width = container.clientWidth;
-                    const height = container.clientHeight;
-                    camera.aspect = width / height;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(width, height);
-                });
-            </script>
+            <p>The animation directly demonstrates how gradient descent naturally favors flat regions through the effect of geometry on measure flow. You can observe how initially the measure (points) is distributed uniformly, but over time the measure in sharp regions is exponentially suppressed while flat regions retain their measure, precisely as the Duy Integral Theorem predicts.</p>
             
-            <style>
-                #canvas-container {
-                    width: 100%;
-                    height: 500px;
-                    overflow: hidden;
-                    background: #000;
-                    margin: 20px 0;
-                    position: relative;
-                }
-                canvas {
-                    width: 100%;
-                    height: 100%;
-                }
-                #time-display {
-                    position: absolute;
-                    top: 10px;
-                    left: 10px;
-                    color: white;
-                    font-family: Arial, sans-serif;
-                    font-size: 24px; /* Bigger font */
-                    background-color: rgba(0,0,0,0.8);
-                    padding: 8px 15px;
-                    border-radius: 5px;
-                    font-weight: bold; /* Bolder text */
-                }
-            </style>
+            <p>This visual representation helps explain why seemingly counterintuitive practices like early stopping and small batch training can improve generalization—they align with the natural flow of measure toward flat, generalizing regions of the parameter space.</p>
         </section>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+            const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            
+            // Grab container AFTER DOM is loaded
+            const container = document.getElementById('canvas-container');
+            container.appendChild(renderer.domElement);
+        
+            // Time display element
+            const timeDisplay = document.getElementById('time-display');
+        
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 2, 1);
+            scene.add(directionalLight);
+            
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight2.position.set(-1, 1, -1);
+            scene.add(directionalLight2);
+        
+            // Loss function with distinct sharp and flat minima
+            function calculateLoss(x, z) {
+                const sharpMin = 1.5 * Math.exp(-((x+2.5)**2 + (z+2.5)**2) * 3);
+                const flatMin = Math.exp(-((x-2.5)**2 + (z-2.5)**2) * 0.5);
+                return 1 - Math.max(sharpMin, flatMin);
+            }
+        
+            // Create loss landscape surface
+            const size = 10;
+            const resolution = 80;
+        
+            function createSurface() {
+                const geometry = new THREE.PlaneGeometry(size, size, resolution, resolution);
+                const positions = geometry.attributes.position.array;
+                for(let i = 0; i < positions.length; i += 3) {
+                    const x = positions[i];
+                    const z = positions[i + 2];
+                    positions[i + 1] = calculateLoss(x, z) * 1.5;
+                }
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0xaaaaaa,
+                    transparent: true,
+                    opacity: 0.7,
+                    side: THREE.DoubleSide,
+                    wireframe: false,
+                    flatShading: true
+                });
+                const surface = new THREE.Mesh(geometry, material);
+                
+                // Add wireframe
+                const wireframe = new THREE.LineSegments(
+                    new THREE.WireframeGeometry(geometry),
+                    new THREE.LineBasicMaterial({ color: 0x444444, linewidth: 1 })
+                );
+                surface.add(wireframe);
+                scene.add(surface);
+                return surface;
+            }
+            const surface = createSurface();
+        
+            // Create points
+            const numPoints = 5000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(numPoints * 3);
+            const colors = new Float32Array(numPoints * 3);
+            const initialPositions = new Float32Array(numPoints * 3);
+            const targetPositions = new Float32Array(numPoints * 3);
+            
+            for(let i = 0; i < positions.length; i += 3) {
+                // Initial positions (t=0)
+                initialPositions[i] = (Math.random() - 0.5) * size;
+                initialPositions[i + 2] = (Math.random() - 0.5) * size;
+                initialPositions[i + 1] = calculateLoss(initialPositions[i], initialPositions[i + 2]) * 1.5 + 0.1;
+                
+                // Target positions (t=∞)
+                const angle = Math.random() * Math.PI * 2;
+                const radius = Math.random() * 3;
+                if(Math.random() < 0.95) {
+                    // 95% in flat region
+                    targetPositions[i] = 2.5 + radius * Math.cos(angle) * 0.7;
+                    targetPositions[i + 2] = 2.5 + radius * Math.sin(angle) * 0.7;
+                } else {
+                    // 5% random
+                    targetPositions[i] = (Math.random() - 0.5) * size;
+                    targetPositions[i + 2] = (Math.random() - 0.5) * size;
+                }
+                targetPositions[i + 1] = calculateLoss(targetPositions[i], targetPositions[i + 2]) * 1.5 + 0.1;
+                
+                // Start with initial positions
+                positions[i] = initialPositions[i];
+                positions[i + 1] = initialPositions[i + 1];
+                positions[i + 2] = initialPositions[i + 2];
+                
+                // Initial color: white
+                colors[i] = 1;     // R
+                colors[i + 1] = 1; // G
+                colors[i + 2] = 1; // B
+            }
+            
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const pointMaterial = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9
+            });
+            const points = new THREE.Points(geometry, pointMaterial);
+            scene.add(points);
+        
+            // Create sphere markers
+            function createSphereMarker(x, y, z, color, s) {
+                const sphereGeom = new THREE.SphereGeometry(s, 16, 16);
+                const sphereMat = new THREE.MeshPhongMaterial({ color, transparent: true, opacity: 0.7 });
+                const sphere = new THREE.Mesh(sphereGeom, sphereMat);
+                sphere.position.set(x, y, z);
+                scene.add(sphere);
+                return sphere;
+            }
+            const sharpMinima = createSphereMarker(-2.5, calculateLoss(-2.5, -2.5)*1.5, -2.5, 0xff0000, 0.4);
+            const flatMinima  = createSphereMarker(2.5,  calculateLoss(2.5, 2.5)*1.5,   2.5,  0x0000ff, 0.4);
+        
+            // Create text sprites
+            function createTextSprite(text, fontSize, bgColor) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1024;
+                canvas.height = 512;
+                const ctx = canvas.getContext('2d');
+                
+                if (bgColor) {
+                    ctx.fillStyle = bgColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                ctx.font = `Bold ${fontSize || 60}px Arial`;
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+                
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+                const sprite = new THREE.Sprite(material);
+                sprite.scale.set(2, 1, 1);
+                return sprite;
+            }
+        
+            const sharpLabel = createTextSprite("Sharp Minimum", 48, "rgba(128,0,0,0.7)");
+            sharpLabel.position.set(-2.5, 1.2, -2.5);
+            scene.add(sharpLabel);
+            
+            const flatLabel = createTextSprite("Flat Minimum", 48, "rgba(0,0,128,0.7)");
+            flatLabel.position.set(2.5, 1.2, 2.5);
+            scene.add(flatLabel);
+        
+            const infoLabel = createTextSprite("Duy Integral Theory: Measure flows from sharp to flat regions", 36, "rgba(0,0,0,0.7)");
+            infoLabel.position.set(0, 2, -5);
+            scene.add(infoLabel);
+        
+            // Camera setup
+            camera.position.set(15, 10, 15);
+            camera.lookAt(0, 0, 0);
+        
+            // Animation parameters
+            let animationTime = 0;
+            const animationDuration = 300; // frames
+            let isAnimating = true;
+            let animationComplete = false;
+            let cycleCount = 0;
+            const totalCycles = 4;
+        
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate camera
+                const cameraTime = Date.now() * 0.0001;
+                camera.position.x = 15 * Math.cos(cameraTime * 0.3);
+                camera.position.z = 15 * Math.sin(cameraTime * 0.3);
+                camera.lookAt(0, 0, 0);
+                
+                if (isAnimating) {
+                    animationTime++;
+                    let progress = animationTime / animationDuration;
+                    if (progress >= 1) {
+                        if (cycleCount < totalCycles - 1) {
+                            animationTime = 0;
+                            cycleCount++;
+                        } else {
+                            progress = 1;
+                            animationComplete = true;
+                        }
+                    }
+                    
+                    // Show time in [0..10]
+                    timeDisplay.textContent = `Time: t = ${(progress * 10).toFixed(2)}`;
+                    
+                    // Easing
+                    const easedProgress = progress < 0.5 
+                        ? 2 * progress * progress
+                        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                    
+                    const pos = points.geometry.attributes.position.array;
+                    const col = points.geometry.attributes.color.array;
+                    
+                    for(let i = 0; i < pos.length; i += 3) {
+                        const isNearSharp = Math.sqrt((initialPositions[i]+2.5)**2 + (initialPositions[i+2]+2.5)**2) < 2;
+                        let pointProgress = isNearSharp ? Math.min(1, easedProgress * 1.5) : easedProgress;
+                        if (animationComplete) {
+                            pointProgress = 1;
+                        }
+                        
+                        pos[i]     = initialPositions[i]     + (targetPositions[i]     - initialPositions[i])     * pointProgress;
+                        pos[i + 2] = initialPositions[i + 2] + (targetPositions[i + 2] - initialPositions[i + 2]) * pointProgress;
+                        pos[i + 1] = calculateLoss(pos[i], pos[i + 2]) * 1.5 + 0.1;
+                        
+                        const distToSharp = Math.sqrt((pos[i]+2.5)**2 + (pos[i+2]+2.5)**2);
+                        const distToFlat  = Math.sqrt((pos[i]-2.5)**2 + (pos[i+2]-2.5)**2);
+                        
+                        if (distToSharp < distToFlat) {
+                            // White → Red
+                            col[i]     = 1;
+                            col[i + 1] = 1 - pointProgress;
+                            col[i + 2] = 1 - pointProgress;
+                        } else {
+                            // White → Blue
+                            col[i]     = 1 - pointProgress;
+                            col[i + 1] = 1 - pointProgress;
+                            col[i + 2] = 1;
+                        }
+                    }
+                    
+                    points.geometry.attributes.position.needsUpdate = true;
+                    points.geometry.attributes.color.needsUpdate = true;
+                    
+                    if (animationComplete && cycleCount >= totalCycles - 1) {
+                        animationTime = 0;
+                        cycleCount = 0;
+                        animationComplete = false;
+                    }
+                }
+                
+                // Keep text sprites facing camera
+                sharpLabel.quaternion.copy(camera.quaternion);
+                flatLabel.quaternion.copy(camera.quaternion);
+                infoLabel.quaternion.copy(camera.quaternion);
+                
+                renderer.render(scene, camera);
+            }
+        
+            // Handle window resize
+            function onWindowResize() {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            }
+            window.addEventListener('resize', onWindowResize);
+            
+            // Force an initial resize to ensure correct sizing
+            onWindowResize();
+        
+            // Start animation
+            animate();
+        });
+        </script>
+        
+        <style>
+            #canvas-container {
+                width: 100%;
+                height: 500px;
+                overflow: hidden;
+                background: #000;
+                margin: 20px 0;
+                position: relative;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+            #time-display {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                color: white;
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                background-color: rgba(0,0,0,0.7);
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+        </style>
+
 
         <section id="implications" class="implications">
             <h2>6. Implications and Applications</h2>
