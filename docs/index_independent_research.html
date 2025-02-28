@@ -8,87 +8,6 @@
     <link rel="stylesheet" href="css/research.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        /* Enhanced styles */
-        .research-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .paper-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-        .theorem-block, .lemma-content {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-left: 4px solid #2c3e50;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-        .equation {
-            padding: 15px;
-            overflow-x: auto;
-        }
-        .visualization {
-            margin: 30px 0;
-            text-align: center;
-        }
-        .interactive-note {
-            font-style: italic;
-            color: #666;
-            text-align: center;
-        }
-        .section-nav {
-            position: sticky;
-            top: 20px;
-            float: right;
-            width: 220px;
-            background: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-left: 20px;
-            font-size: 0.9em;
-        }
-        .section-nav ul {
-            list-style-type: none;
-            padding-left: 15px;
-        }
-        .section-nav li {
-            margin-bottom: 8px;
-        }
-        .section-nav a {
-            text-decoration: none;
-            color: #2c3e50;
-        }
-        .section-nav a:hover {
-            text-decoration: underline;
-        }
-        .geometric-examples {
-            display: flex;
-            justify-content: space-between;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .geometric-example {
-            flex-basis: 48%;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 4px;
-        }
-        @media (max-width: 768px) {
-            .section-nav {
-                display: none;
-            }
-            .geometric-example {
-                flex-basis: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -103,22 +22,6 @@
     </header>
 
     <div class="research-container">
-        <!-- Navigation sidebar -->
-        <div class="section-nav">
-            <h4>Contents</h4>
-            <ul>
-                <li><a href="#abstract">Abstract</a></li>
-                <li><a href="#theorem-statement">Theorem Statement</a></li>
-                <li><a href="#main-theorem">Main Theorem</a></li>
-                <li><a href="#key-lemmas">Key Lemmas</a></li>
-                <li><a href="#geometric-intuition">Geometric Intuition</a></li>
-                <li><a href="#visualization">Visualizations</a></li>
-                <li><a href="#implications">Implications</a></li>
-                <li><a href="#conclusion">Conclusion</a></li>
-                <li><a href="#references">References</a></li>
-            </ul>
-        </div>
-
         <div class="paper-header">
             <h1>Geometric Implicit Regularization: Duy Integral Theorem</h1>
             <div class="paper-meta">
@@ -240,30 +143,18 @@
             
             <p>As gradient flow progresses, measure evacuation from sharply curved regions occurs exponentially fast—mirroring how probability mass concentrates on low energy states in statistical physics. The theorem proves that this evacuation isn't just a heuristic—it's a mathematical necessity embedded in the differential geometry of gradient flow.</p>
             
-            <div class="geometric-examples">
-                <div class="geometric-example">
-                    <h4>Sharp Minima vs. Flat Minima</h4>
-                    <p>The key insight is that while sharp minima may achieve lower training loss, flat minima tend to generalize better. The theorem shows this isn't coincidental but mathematically inevitable under gradient flow dynamics. Sharp regions lose measure exponentially fast, while flat regions maintain it.</p>
-                </div>
-                <div class="geometric-example">
-                    <h4>Emergence of Geometry</h4>
-                    <p>The theorem doesn't assume any preferred geometry in the parameter space. Instead, the importance of flat regions <em>emerges</em> naturally from the PDE that governs measure flow under gradient descent. This highlights how the implicit geometric bias is a fundamental property of the optimization process itself.</p>
-                </div>
-            </div>
+            <p>The key insight is that generalization in neural networks emerges naturally from this geometric flow property, without requiring explicit regularization. The "implicit bias" toward flat minima is formalized in the measure-theoretic framework, yielding a rigorous mathematical explanation for empirically observed phenomena like the ability of overparameterized networks to resist overfitting.</p>
             
-            <p>The "implicit bias" toward flat minima is formalized in the measure-theoretic framework, yielding a rigorous mathematical explanation for empirically observed phenomena like the ability of overparameterized networks to resist overfitting.</p>
+            <p>What makes this framework particularly powerful is that it doesn't assume geometric properties from the outset. Instead, the preference for flat regions over sharp ones emerges naturally from the mathematics. This provides a principled explanation for why certain neural network configurations generalize better than others, grounded in the fundamental properties of measure evolution under gradient flow.</p>
         </section>
 
-        <section id="visualization" class="visualization">
-            <h2>5. Measure Flow Visualization</h2>
+        <section id="visualizations" class="visualization">
+            <h2>5. Visualizations</h2>
+            <p>Consider a simple loss landscape with both sharp and flat minima. As training progresses, the measure (representing the parameter distribution) initially dispersed across the parameter space gradually concentrates on flat regions while evacuating sharp regions.</p>
             
-            <div class="interactive-note">
-                <p>[Interactive visualization showing measure flow from sharp to flat regions would appear here in the final implementation]</p>
-                
-                <p>The visualization would demonstrate how measure initially distributed throughout parameter space gradually concentrates in flat regions while evacuating from sharp regions as t → ∞.</p>
-            </div>
+            <p>The key visualization would show how measure flows over time according to the continuity equation. By t = 0, measure is evenly distributed. By intermediate time t = T, sharp regions already show significant measure reduction. By t = ∞, measure has completely evacuated from sharp regions and concentrated entirely on flat submanifolds.</p>
             
-            <p>This visual representation illustrates how the theoretical properties from the Duy Integral Theorem manifest in practice. As training progresses, the measure flows according to the continuity equation, resulting in concentration on flat submanifolds that promote better generalization.</p>
+            <p>This visual representation helps explain why seemingly counterintuitive practices like early stopping and small batch training can improve generalization—they align with the natural flow of measure toward flat, generalizing regions of the parameter space.</p>
         </section>
 
         <section id="implications" class="implications">
@@ -271,11 +162,10 @@
             <p>The Duy Integral Theorem has several important implications for deep learning theory and practice:</p>
             
             <ul>
-                <li><strong>Stochastic vs. Deterministic Gradient Descent:</strong> It explains why stochastic gradient descent (SGD) outperforms deterministic gradient descent in many settings, as the stochasticity helps explore the geometric structure of flat manifolds.</li>
-                <li><strong>Batch Size Effects:</strong> It provides theoretical justification for why large batch training can perform worse than small batch training, as large batches may impede the natural flow of measure through the parameter space.</li>
-                <li><strong>Novel Optimization Strategies:</strong> It suggests new optimization strategies that directly leverage geometric properties of the parameter space, potentially enabling faster convergence to generalizing solutions.</li>
-                <li><strong>Theoretical Bridge:</strong> It bridges the gap between the empirical success of overparameterized models and theoretical understanding of generalization, addressing a fundamental paradox in machine learning theory.</li>
-                <li><strong>Architectural Insights:</strong> The theorem provides guidance for network architecture design by suggesting structures that facilitate the formation of flat regions in the loss landscape.</li>
+                <li>It explains why stochastic gradient descent (SGD) outperforms deterministic gradient descent in many settings, as the stochasticity helps explore the geometric structure of flat manifolds.</li>
+                <li>It provides theoretical justification for why large batch training can perform worse than small batch training, as large batches may impede the natural flow of measure through the parameter space.</li>
+                <li>It suggests new optimization strategies that directly leverage geometric properties of the parameter space, potentially enabling faster convergence to generalizing solutions.</li>
+                <li>It bridges the gap between the empirical success of overparameterized models and theoretical understanding of generalization, addressing a fundamental paradox in machine learning theory.</li>
             </ul>
         </section>
         
@@ -283,7 +173,7 @@
             <h2>7. Conclusion and Future Work</h2>
             <p>The Duy Integral Theorem brings a rigorous geometric and measure-theoretic perspective to understanding neural network optimization. By formulating gradient flow as a measure evolution process, it provides a solid mathematical foundation for explaining how neural networks naturally favor generalizing solutions despite their vast parameter spaces.</p>
             
-            <p>This research demonstrates that the geometry of neural network optimization isn't imposed extrinsically but emerges naturally from the underlying mathematical principles. The preference for flat minima isn't an assumption but a consequence derived from first principles of how measures evolve under gradient flow.</p>
+            <p>This framework demonstrates that geometric properties of neural network training aren't imposed artificially but emerge naturally from the underlying mathematical principles governing gradient flow. The preference for flat minima isn't an assumed property but rather a derived consequence of how measures evolve in the parameter space.</p>
             
             <p>Future work includes extending the theory to stochastic gradient methods, developing practical algorithms that leverage these geometric insights, and exploring connections to other theoretical frameworks such as information geometry and optimal transport theory.</p>
         </section>
