@@ -321,3 +321,146 @@ bottom: 0;
     }
 }
 
+/* chatbot.css */
+:root {
+  --berkeley-blue: #003262;
+  --berkeley-gold: #FDB515;
+  --berkeley-gray: #DDD5C7;
+  --sidebar-width: 250px;
+  --header-height: 80px;
+}
+
+
+#chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border: 2px solid var(--berkeley-blue);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#chatbot-container.closed {
+  height: 50px;
+}
+
+#chatbot-header {
+  background-color: var(--berkeley-blue);
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#chatbot-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#chatbot-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+#chatbot-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid var(--berkeley-gray);
+  background-color: #f5f5f5;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#user-input {
+  flex-grow: 1;
+  padding: 5px;
+  border: 1px solid var(--berkeley-gray);
+  border-radius: 5px;
+}
+
+#send-button {
+  background-color: var(--berkeley-gold);
+  color: var(--berkeley-blue);
+  border: none;
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#user-input, #send-button {
+  background-color: lightblue; /* Temporary background color for debugging */
+  color: black; /* Ensure text is visible */
+}
+
+/* side bar */
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: calc(-1 * var(--sidebar-width));
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background-color: var(--berkeley-blue);
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 999;
+    padding-bottom: 60px;
+}
+
+.sidebar nav {
+    padding: 20px;
+}
+
+.sidebar nav a {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--berkeley-gray);
+}
+
+.sidebar nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+main.sidebar-open {
+    margin-left: var(--sidebar-width);
+}
+
+.sidebar-icon {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--berkeley-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.sidebar-icon svg {
+    width: 24px;
+    height: 24px;
+}
