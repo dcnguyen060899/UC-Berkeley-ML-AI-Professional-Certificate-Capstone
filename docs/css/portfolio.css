@@ -409,7 +409,7 @@ bottom: 0;
 }
 
 /* side bar */
-.sidebar {
+/* .sidebar {
     position: fixed;
     top: var(--header-height);
     left: calc(-1 * var(--sidebar-width));
@@ -464,3 +464,4 @@ main.sidebar-open {
     width: 24px;
     height: 24px;
 }
+ */
