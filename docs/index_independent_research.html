@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duy Integral Theorem - Mathematical Research</title>
+    <link rel="stylesheet" href="css/portfolio.css">
+    <link rel="stylesheet" href="css/research.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
+            <div class="logo">
+                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
+            </div>
+        </a>
+        <nav>
+            <a href="index_portfolio.html">Portfolio</a>
+        </nav>
+    </header>
+
+    <div class="research-container">
+        <div class="paper-header">
+            <h1>Geometric Implicit Regularization: Duy Integral Theorem</h1>
+            <div class="paper-meta">
+                <p class="author">Duy Nguyen, B.A. (Economics)</p>
+                <p class="affiliation">Working Paper - Independent Research</p>
+                <p class="date">February 2025</p>
+            </div>
+            <div class="paper-links">
+                <a href="https://drive.google.com/file/d/1K0lywYnA6MddzZtKFpsYuPjmBQva0apj/view?usp=sharing" class="download-button" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Full Paper (PDF)
+                </a>
+                <p class="citation">Nguyen, D. (2025). Geometric Implicit Regularization: Duy Integral Theorem. <em>Working Paper</em>.</p>
+            </div>
+        </div>
+
+        <section class="abstract">
+            <h2>Abstract</h2>
+            <p>Deep neural networks, particularly in overparameterized regimes, exhibit remarkable learning and generalization capabilities that defy classical intuition. A leading hypothesis is that gradient-based training dynamics implicitly favor wide, flat minima in the loss landscape—regions often correlated with robust, well-generalizing solutions. However, translating this heuristic into a rigorous, unifying mathematical framework has proven challenging. <strong>Duy Integral Theory</strong> seeks to address this gap by treating the parameter space of a neural network as a continuum endowed with a time-evolving measure that flows under gradient descent. By defining an integral over submanifolds of "equivalent expressivity," this theory captures how measure concentrates on flat, generalizing regions while exponentially suppressing sharper, overfitting directions. In essence, Duy Integral Theory offers a measure-theoretic and PDE-based explanation for why overparameterized networks, despite their large dimensionality, converge to solutions that generalize effectively. This paper details the core ideas, the formal PDE framework, and the technical lemmas ensuring the existence and uniqueness of these measure evolutions. Our results illuminate the deeper geometric–measure-theoretic principles underlying deep learning's success and serve as a foundation for further theoretical and practical advances.</p>
+        </section>
+
+        <section class="theorem-statement">
+            <h2>1. Duy Integral Theorem: Statement</h2>
+            <div class="theorem-block">
+                <p>Let \(\mathcal{M}\subseteq \mathbb{R}^n\) be the parameter space of a (potentially overparameterized) neural network, equipped with a smooth loss function \(\mathcal{L}:\mathcal{M}\to\mathbb{R}\). Suppose \(\{P_i\}_{i\in I}\) is a partition of \(\mathcal{M}\) into submanifolds corresponding to equivalence classes of "similar expressivity." For each \(t\ge0\), let \(\mu_t\) be the time-evolving measure over \(\mathcal{M}\) determined by the gradient-flow continuity equation</p>
+
+                <div class="equation">
+                    \[ \begin{cases}
+                    \displaystyle
+                    \frac{\partial \mu_t}{\partial t}
+                    \;+\;
+                    \nabla_w \cdot 
+                    \Bigl(\mu_t\bigl(-\nabla_w\mathcal{L}(w)\bigr)\Bigr)
+                    \;=\;0,
+                    \\[6pt]
+                    \mu_{t=0} \;=\;\mu_0,
+                    \end{cases} \]
+                </div>
+
+                <p>for some initial measure \(\mu_0\). Define the <strong>Duy Integral</strong> of a "neural-approximable" function \(f:\mathcal{M}\to\mathbb{R}\) as</p>
+
+                <div class="equation">
+                    \[ \int^D f
+                    \;:=\;
+                    \lim_{t\to\infty}
+                    \;\lim_{n,L\to\infty}
+                    \sum_{i\in I}
+                    f(w_i)\;\mu_t(P_i), \]
+                </div>
+
+                <p>where \(w_i\in P_i\) is a chosen representative and \(\mu_t(P_i)\) is the measure of submanifold \(P_i\) at time \(t\).</p>
+            </div>
+        </section>
+
+        <section class="main-theorem">
+            <h2>2. Main Theorem</h2>
+            <div class="theorem-block">
+                <p><strong>Theorem (Duy Integral Theorem).</strong> Under suitable smoothness and regularity assumptions, the following holds:</p>
+                <ol>
+                    <li><strong>(Existence and uniqueness of \(\mu_t\))</strong> There is a unique measure solution \(\{\mu_t\}_{t\ge0}\) of the continuity equation.</li>
+                    <li><strong>(Exponential suppression of sharp submanifolds)</strong> If a submanifold \(P_i\) exhibits strictly positive curvature (in the Hessian sense) along relevant directions, then \(\mu_t(P_i)\) decays exponentially to \(0\) as \(t\to\infty\).</li>
+                    <li><strong>(Dominance of flat submanifolds)</strong> Submanifolds \(P_i\) with negligible or zero curvature retain non-vanishing measure.</li>
+                    <li><strong>(Limit of the Duy Integral)</strong> Consequently, the Duy Integral \(\int^D f\) is determined entirely by contributions from those "flat" submanifolds, explaining why gradient descent in overparameterized neural networks converges to broad, generalizing solutions.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="key-lemmas">
+            <h2>3. Key Mathematical Lemmas</h2>
+            
+            <div class="lemma">
+                <h3>Lemma A.1 (Manifold Setup and Smoothness)</h3>
+                <div class="lemma-content">
+                    <p>Let \(\mathcal{M}\subseteq \mathbb{R}^n\) be an open subset or a smooth manifold (possibly with boundary). Suppose \(\mathcal{L}\in C^2(\mathcal{M})\) is a twice continuously differentiable function. Then for any compact subset \(K\subset\mathcal{M}\), there exists a Lipschitz constant \(L_K>0\) such that</p>
+                    <div class="equation">
+                        \[ \|\nabla_w \mathcal{L}(w_1) - \nabla_w \mathcal{L}(w_2)\|
+                        \;\leq\;
+                        L_K\|w_1 - w_2\|,
+                        \quad
+                        \forall w_1,w_2 \in K. \]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lemma">
+                <h3>Lemma B.1 (Existence of Measure Solutions)</h3>
+                <div class="lemma-content">
+                    <p>Let \(v(w)=-\nabla_w \mathcal{L}(w)\) be locally Lipschitz on \(\mathcal{M}\). Consider the continuity equation</p>
+                    <div class="equation">
+                        \[ \frac{\partial \mu_t}{\partial t} \;+\; \nabla_w\cdot\bigl(\mu_t\,v(w)\bigr) = 0,
+                        \quad
+                        \mu_{t=0} = \mu_0. \]
+                    </div>
+                    <p>Then there exists a unique solution \(\mu_t\) in the sense of measures (or distributions), for \(t\ge0\), given by</p>
+                    <div class="equation">
+                        \[ \mu_t = (\Phi_t)_*\mu_0 \]
+                    </div>
+                    <p>where \(\Phi_t\) is the flow map of the ODE \(\tfrac{dw}{dt}=v(w)\).</p>
+                </div>
+            </div>
+
+            <div class="lemma">
+                <h3>Proposition D.2 (Exponential Suppression of Sharp Submanifolds)</h3>
+                <div class="lemma-content">
+                    <p>Suppose submanifold \(P_i\) has \(\alpha_i>0\). Then there is a constant \(c_i>0\) such that</p>
+                    <div class="equation">
+                        \[ \mu_t(P_i) 
+                        \;\le\;
+                        \mu_0(P_i)\;\exp(-\,c_i\,t). \]
+                    </div>
+                    <p>Consequently, \(\lim_{t\to\infty}\mu_t(P_i)=0\).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="geometric-intuition">
+            <h2>4. Geometric Intuition</h2>
+            <p>The Duy Integral Theory provides a rigorous explanation for how gradient descent naturally discovers flat minima in the loss landscape. In high-dimensional parameter spaces, the model parameters are more accurately viewed as "flowing measures" rather than point particles following fixed paths.</p>
+            
+            <p>As gradient flow progresses, measure evacuation from sharply curved regions occurs exponentially fast—mirroring how probability mass concentrates on low energy states in statistical physics. The theorem proves that this evacuation isn't just a heuristic—it's a mathematical necessity embedded in the differential geometry of gradient flow.</p>
+            
+            <p>The key insight is that generalization in neural networks emerges naturally from this geometric flow property, without requiring explicit regularization. The "implicit bias" toward flat minima is formalized in the measure-theoretic framework, yielding a rigorous mathematical explanation for empirically observed phenomena like the ability of overparameterized networks to resist overfitting.</p>
+        </section>
+
+        <section class="implications">
+            <h2>5. Implications and Applications</h2>
+            <p>The Duy Integral Theorem has several important implications for deep learning theory and practice:</p>
+            
+            <ul>
+                <li>It explains why stochastic gradient descent (SGD) outperforms deterministic gradient descent in many settings, as the stochasticity helps explore the geometric structure of flat manifolds.</li>
+                <li>It provides theoretical justification for why large batch training can perform worse than small batch training, as large batches may impede the natural flow of measure through the parameter space.</li>
+                <li>It suggests new optimization strategies that directly leverage geometric properties of the parameter space, potentially enabling faster convergence to generalizing solutions.</li>
+                <li>It bridges the gap between the empirical success of overparameterized models and theoretical understanding of generalization, addressing a fundamental paradox in machine learning theory.</li>
+            </ul>
+        </section>
+        
+        <section class="conclusion">
+            <h2>6. Conclusion and Future Work</h2>
+            <p>The Duy Integral Theorem brings a rigorous geometric and measure-theoretic perspective to understanding neural network optimization. By formulating gradient flow as a measure evolution process, it provides a solid mathematical foundation for explaining how neural networks naturally favor generalizing solutions despite their vast parameter spaces.</p>
+            
+            <p>Future work includes extending the theory to stochastic gradient methods, developing practical algorithms that leverage these geometric insights, and exploring connections to other theoretical frameworks such as information geometry and optimal transport theory.</p>
+        </section>
+
+        <section class="references">
+            <h2>References</h2>
+            <div class="reference-list">
+                <p class="reference">Nguyen, D. (2025). Geometric Implicit Regularization: Duy Integral Theorem. <em>Working Paper</em>. [<a href="https://drive.google.com/file/d/1K0lywYnA6MddzZtKFpsYuPjmBQva0apj/view?usp=sharing" target="_blank">PDF Link</a>]</p>
+                <p class="reference">Ambrosio, L., Gigli, N., Savaré, G. (2008). <em>Gradient Flows</em>. Birkhäuser.</p>
+                <p class="reference">Keskar, N.S., Mudigere, D., Nocedal, J., Smelyanskiy, M., Tang, P.T.P. (2017). <em>On Large-Batch Training for Deep Learning: Generalization Gap and Sharp Minima</em>. ICLR.</p>
+                <p class="reference">Dinh, L., Pascanu, R., Bengio, S., Bengio, Y. (2017). <em>Sharp Minima Can Generalize for Deep Nets</em>. ICML.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 UC Berkeley. All rights reserved.</p>
+        <a href="index_portfolio.html">Back to Portfolio</a>
+    </footer>
+</body>
+</html>
