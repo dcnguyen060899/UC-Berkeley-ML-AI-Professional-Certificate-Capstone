@@ -158,34 +158,7 @@
             
             <p>I've created an animated visualization that shows the continuous flow of measure from t=0 to t=∞, directly demonstrating the key concepts from the Duy Integral Theory paper.</p>
             
-            <p>Features of the Visualization:</p>
-            <ul>
-                <li><strong>Continuous Animation:</strong>
-                    <ul>
-                        <li>Smoothly animates the measure flow from initial uniform distribution to final concentration</li>
-                        <li>Time counter shows the progression from t=0 to t=10 (representing t=∞)</li>
-                        <li>The animation cycles a few times for continuous observation</li>
-                    </ul>
-                </li>
-                <li><strong>Realistic Measure Flow Dynamics:</strong>
-                    <ul>
-                        <li>Points near the sharp minimum evacuate more quickly (as predicted by the theory)</li>
-                        <li>The animation shows gradual color transition (white → red/blue) based on region</li>
-                        <li>Both position and color evolve to highlight the measure concentration process</li>
-                    </ul>
-                </li>
-                <li><strong>Clear Geometric Features:</strong>
-                    <ul>
-                        <li>Distinct red sphere marking the sharp minimum</li>
-                        <li>Distinct blue sphere marking the flat minimum</li>
-                        <li>Detailed surface with wireframe showing the loss landscape</li>
-                    </ul>
-                </li>
-            </ul>
-            
-            <p>The animation directly demonstrates how gradient descent naturally favors flat regions through the effect of geometry on measure flow. You can observe how initially the measure (points) is distributed uniformly, but over time the measure in sharp regions is exponentially suppressed while flat regions retain their measure, precisely as the Duy Integral Theorem predicts.</p>
-            
-            <p>This visual representation helps explain why seemingly counterintuitive practices like early stopping and small batch training can improve generalization—they align with the natural flow of measure toward flat, generalizing regions of the parameter space.</p>
+            <!-- Rest of your explanation text -->
             
             <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
             <script>
@@ -201,15 +174,15 @@
                 // Time display element
                 const timeDisplay = document.getElementById('time-display');
         
-                // Add lights for better visibility
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                // IMPROVED LIGHTING - increased intensity
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Increased from 0.6
                 scene.add(ambientLight);
                 
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2); // Increased from 0.8
                 directionalLight.position.set(1, 2, 1);
                 scene.add(directionalLight);
                 
-                const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.6);
+                const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.0); // Increased from 0.6
                 directionalLight2.position.set(-1, 1, -1);
                 scene.add(directionalLight2);
         
@@ -228,7 +201,7 @@
                     return 1 - Math.max(sharpMin, flatMin);
                 }
         
-                // Create surface for better visibility
+                // Create surface with better visibility
                 function createSurface() {
                     const geometry = new THREE.PlaneGeometry(size, size, resolution, resolution);
                     
@@ -240,11 +213,11 @@
                         positions[i + 1] = calculateLoss(x, z) * 1.5;
                     }
                     
-                    // Create material with transparency
+                    // IMPROVED VISIBILITY - less transparency, brighter color
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0xaaaaaa,
+                        color: 0xcccccc, // Brighter from 0xaaaaaa
                         transparent: true,
-                        opacity: 0.7,
+                        opacity: 0.8, // More opaque from 0.7
                         side: THREE.DoubleSide,
                         wireframe: false,
                         flatShading: true
@@ -252,10 +225,10 @@
                     
                     const surface = new THREE.Mesh(geometry, material);
                     
-                    // Add wireframe for better visibility
+                    // Add wireframe with better visibility
                     const wireframe = new THREE.LineSegments(
                         new THREE.WireframeGeometry(geometry),
-                        new THREE.LineBasicMaterial({ color: 0x444444, linewidth: 1 })
+                        new THREE.LineBasicMaterial({ color: 0x555555, linewidth: 2 }) // Brighter lines
                     );
                     
                     surface.add(wireframe);
@@ -311,38 +284,39 @@
                 geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
                 geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
                 
+                // INCREASED POINT SIZE for better visibility
                 const material = new THREE.PointsMaterial({
-                    size: 0.15,
+                    size: 0.3, // Increased from 0.15
                     vertexColors: true,
                     transparent: true,
-                    opacity: 0.9
+                    opacity: 1.0 // Full opacity
                 });
                 
                 const points = new THREE.Points(geometry, material);
                 scene.add(points);
         
-                // Create visible markers for the minima
+                // Create LARGER visible markers for the minima
                 function createSphereMarker(x, y, z, color, size) {
                     const geometry = new THREE.SphereGeometry(size, 16, 16);
-                    const material = new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.7 });
+                    const material = new THREE.MeshPhongMaterial({ color: color, transparent: true, opacity: 0.9 }); // More opaque
                     const sphere = new THREE.Mesh(geometry, material);
                     sphere.position.set(x, y, z);
                     scene.add(sphere);
                     return sphere;
                 }
                 
-                // Add clear markers at minima
-                const sharpMinima = createSphereMarker(-2.5, calculateLoss(-2.5, -2.5) * 1.5, -2.5, 0xff0000, 0.4);
-                const flatMinima = createSphereMarker(2.5, calculateLoss(2.5, 2.5) * 1.5, 2.5, 0x0000ff, 0.4);
+                // LARGER markers at minima
+                const sharpMinima = createSphereMarker(-2.5, calculateLoss(-2.5, -2.5) * 1.5, -2.5, 0xff0000, 0.6); // Bigger from 0.4
+                const flatMinima = createSphereMarker(2.5, calculateLoss(2.5, 2.5) * 1.5, 2.5, 0x0000ff, 0.6); // Bigger from 0.4
                 
-                // Create large, clear text labels
+                // Create larger text labels with better contrast
                 function createTextSprite(text, fontSize, backgroundColor) {
                     const canvas = document.createElement('canvas');
                     canvas.width = 1024;
                     canvas.height = 512;
                     const context = canvas.getContext('2d');
                     
-                    // Optional background for better readability
+                    // More opaque background for better readability
                     if (backgroundColor) {
                         context.fillStyle = backgroundColor;
                         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -357,26 +331,26 @@
                     const texture = new THREE.CanvasTexture(canvas);
                     const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
                     const sprite = new THREE.Sprite(material);
-                    sprite.scale.set(2, 1, 1);
+                    sprite.scale.set(3, 1.5, 1); // LARGER text (was 2, 1, 1)
                     return sprite;
                 }
         
                 // Add large, visible labels
-                const sharpLabel = createTextSprite("Sharp Minimum", 48, "rgba(128,0,0,0.7)");
-                sharpLabel.position.set(-2.5, 1.2, -2.5);
+                const sharpLabel = createTextSprite("Sharp Minimum", 60, "rgba(128,0,0,0.8)"); // Larger text
+                sharpLabel.position.set(-2.5, 2.0, -2.5); // Higher position
                 scene.add(sharpLabel);
                 
-                const flatLabel = createTextSprite("Flat Minimum", 48, "rgba(0,0,128,0.7)");
-                flatLabel.position.set(2.5, 1.2, 2.5);
+                const flatLabel = createTextSprite("Flat Minimum", 60, "rgba(0,0,128,0.8)"); // Larger text
+                flatLabel.position.set(2.5, 2.0, 2.5); // Higher position
                 scene.add(flatLabel);
         
                 // Add an infobox explaining the Duy Integral Theory
-                const infoLabel = createTextSprite("Duy Integral Theory: Measure flows from sharp to flat regions", 36, "rgba(0,0,0,0.7)");
-                infoLabel.position.set(0, 2, -5);
+                const infoLabel = createTextSprite("Duy Integral Theory: Measure flows from sharp to flat regions", 48, "rgba(0,0,0,0.9)");
+                infoLabel.position.set(0, 4, -5);
                 scene.add(infoLabel);
         
-                // Setup camera for better viewing
-                camera.position.set(15, 10, 15);
+                // CLOSER camera for better viewing
+                camera.position.set(10, 7, 10); // Closer from (15, 10, 15)
                 camera.lookAt(0, 0, 0);
         
                 // Animation parameters
@@ -390,10 +364,10 @@
                 function animate() {
                     requestAnimationFrame(animate);
                     
-                    // Rotation for camera
+                    // Rotation for camera (slower for better visibility)
                     const cameraTime = Date.now() * 0.0001;
-                    camera.position.x = 15 * Math.cos(cameraTime * 0.3);
-                    camera.position.z = 15 * Math.sin(cameraTime * 0.3);
+                    camera.position.x = 10 * Math.cos(cameraTime * 0.2); // Slower rotation, closer radius
+                    camera.position.z = 10 * Math.sin(cameraTime * 0.2);
                     camera.lookAt(0, 0, 0);
                     
                     // Update point positions and colors based on animation time
@@ -450,14 +424,14 @@
                             const distToFlat = Math.sqrt((positions[i]-2.5)**2 + (positions[i+2]-2.5)**2);
                             
                             if (distToSharp < distToFlat) {
-                                // Near sharp minimum: white → red
+                                // MORE VIBRANT COLORS - Near sharp minimum: white → red
                                 colors[i] = 1; // R
-                                colors[i + 1] = 1 - pointProgress; // G
-                                colors[i + 2] = 1 - pointProgress; // B
+                                colors[i + 1] = Math.max(0, 1 - pointProgress * 1.5); // G - more contrast
+                                colors[i + 2] = Math.max(0, 1 - pointProgress * 1.5); // B - more contrast
                             } else {
-                                // Near flat minimum: white → blue
-                                colors[i] = 1 - pointProgress; // R
-                                colors[i + 1] = 1 - pointProgress; // G
+                                // MORE VIBRANT COLORS - Near flat minimum: white → blue
+                                colors[i] = Math.max(0, 1 - pointProgress * 1.5); // R - more contrast
+                                colors[i + 1] = Math.max(0, 1 - pointProgress * 1.5); // G - more contrast
                                 colors[i + 2] = 1; // B
                             }
                         }
@@ -512,10 +486,11 @@
                     left: 10px;
                     color: white;
                     font-family: Arial, sans-serif;
-                    font-size: 20px;
-                    background-color: rgba(0,0,0,0.7);
-                    padding: 5px 10px;
+                    font-size: 24px; /* Bigger font */
+                    background-color: rgba(0,0,0,0.8);
+                    padding: 8px 15px;
                     border-radius: 5px;
+                    font-weight: bold; /* Bolder text */
                 }
             </style>
         </section>
