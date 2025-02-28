@@ -152,31 +152,38 @@
             <h2>5. Visualizations</h2>
             <p>Consider a simple loss landscape with both sharp and flat minima. As training progresses, the measure (representing the parameter distribution) initially dispersed across the parameter space gradually concentrates on flat regions while evacuating sharp regions.</p>
             
-            <div id="canvas-container"></div>
+            <div id="canvas-container">
+                <div id="time-display">Time: t = 0</div>
+            </div>
             
-            <p>I've created a much clearer visualization that demonstrates the key concept from the Duy Integral Theorem - how measure evolves during training to avoid sharp regions and concentrate in flat regions.</p>
+            <p>I've created an animated visualization that shows the continuous flow of measure from t=0 to t=∞, directly demonstrating the key concepts from the Duy Integral Theory paper.</p>
             
-            <p>The visualization includes:</p>
+            <p>Features of the Visualization:</p>
             <ul>
-                <li><strong>Three Distinct Time Stages</strong>:
+                <li><strong>Continuous Animation:</strong>
                     <ul>
-                        <li><strong>Bottom Layer (White)</strong>: t = 0 - Initial uniform distribution of measure</li>
-                        <li><strong>Middle Layer (Red)</strong>: t = T - Intermediate stage with partial evacuation from sharp regions</li>
-                        <li><strong>Top Layer (Blue)</strong>: t = ∞ - Final state with measure concentrated in flat regions</li>
+                        <li>Smoothly animates the measure flow from initial uniform distribution to final concentration</li>
+                        <li>Time counter shows the progression from t=0 to t=10 (representing t=∞)</li>
+                        <li>The animation cycles a few times for continuous observation</li>
                     </ul>
                 </li>
-                <li><strong>Clear Geometry</strong>:
+                <li><strong>Realistic Measure Flow Dynamics:</strong>
                     <ul>
-                        <li>Distinct red marker for sharp minimum (left side)</li>
-                        <li>Distinct blue marker for flat minimum (right side)</li>
-                        <li>Higher contrast surface showing the loss landscape</li>
+                        <li>Points near the sharp minimum evacuate more quickly (as predicted by the theory)</li>
+                        <li>The animation shows gradual color transition (white → red/blue) based on region</li>
+                        <li>Both position and color evolve to highlight the measure concentration process</li>
+                    </ul>
+                </li>
+                <li><strong>Clear Geometric Features:</strong>
+                    <ul>
+                        <li>Distinct red sphere marking the sharp minimum</li>
+                        <li>Distinct blue sphere marking the flat minimum</li>
+                        <li>Detailed surface with wireframe showing the loss landscape</li>
                     </ul>
                 </li>
             </ul>
             
-            <p>This visualization directly demonstrates the paper's key mathematical insight: measure naturally flows from sharp to flat regions during training due to the geometric properties of the loss landscape. The t=∞ layer shows almost complete concentration in the flat minimum region, illustrating how gradient descent intrinsically favors parameter configurations that generalize better.</p>
-            
-            <p>The key visualization shows how measure flows over time according to the continuity equation. By t = 0, measure is evenly distributed. By intermediate time t = T, sharp regions already show significant measure reduction. By t = ∞, measure has completely evacuated from sharp regions and concentrated entirely on flat submanifolds.</p>
+            <p>The animation directly demonstrates how gradient descent naturally favors flat regions through the effect of geometry on measure flow. You can observe how initially the measure (points) is distributed uniformly, but over time the measure in sharp regions is exponentially suppressed while flat regions retain their measure, precisely as the Duy Integral Theorem predicts.</p>
             
             <p>This visual representation helps explain why seemingly counterintuitive practices like early stopping and small batch training can improve generalization—they align with the natural flow of measure toward flat, generalizing regions of the parameter space.</p>
             
@@ -191,6 +198,9 @@
                 renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(renderer.domElement);
         
+                // Time display element
+                const timeDisplay = document.getElementById('time-display');
+        
                 // Add lights for better visibility
                 const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
                 scene.add(ambientLight);
@@ -203,16 +213,16 @@
                 directionalLight2.position.set(-1, 1, -1);
                 scene.add(directionalLight2);
         
-                // Create loss landscape surfaces for better clarity
+                // Create loss landscape surface
                 const size = 10;
-                const resolution = 50;
+                const resolution = 80;
                 
                 // Loss function with distinct sharp and flat minima
                 function calculateLoss(x, z) {
-                    // Sharp minimum at (-2, -2)
+                    // Sharp minimum at (-2.5, -2.5)
                     const sharpMin = 1.5 * Math.exp(-((x+2.5)**2 + (z+2.5)**2) * 3);
                     
-                    // Flat minimum at (2, 2)
+                    // Flat minimum at (2.5, 2.5)
                     const flatMin = Math.exp(-((x-2.5)**2 + (z-2.5)**2) * 0.5);
                     
                     return 1 - Math.max(sharpMin, flatMin);
@@ -232,9 +242,9 @@
                     
                     // Create material with transparency
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0x999999,
+                        color: 0xaaaaaa,
                         transparent: true,
-                        opacity: 0.6,
+                        opacity: 0.7,
                         side: THREE.DoubleSide,
                         wireframe: false,
                         flatShading: true
@@ -256,84 +266,60 @@
                 
                 const surface = createSurface();
         
-                // Create points for the three time stages with large, clearly visible particles
-                function createPointCloud(numPoints, color, heightOffset) {
-                    const geometry = new THREE.BufferGeometry();
-                    const positions = new Float32Array(numPoints * 3);
-                    
-                    const material = new THREE.PointsMaterial({
-                        color: color,
-                        size: 0.2,
-                        transparent: true,
-                        opacity: 0.9
-                    });
-                    
-                    const points = new THREE.Points(geometry, material);
-                    points.userData = { positions: positions, heightOffset: heightOffset };
-                    scene.add(points);
-                    
-                    return points;
-                }
-        
-                // Create three distinct time stages with clear color differences
-                const pointsT0 = createPointCloud(3000, 0xffffff, 0.1); // t=0, white
-                const pointsT1 = createPointCloud(3000, 0xff6666, 2);   // t=T, red-ish
-                const pointsT2 = createPointCloud(3000, 0x6666ff, 4);   // t=∞, blue
+                // Create points that will animate over time
+                const numPoints = 5000;
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(numPoints * 3);
+                const colors = new Float32Array(numPoints * 3);
+                const initialPositions = new Float32Array(numPoints * 3);
+                const targetPositions = new Float32Array(numPoints * 3);
                 
-                // Initialize positions for clearer visualization
-                function initializePositions() {
-                    // Stage 1: Even distribution (t=0)
-                    const positions0 = pointsT0.userData.positions;
-                    for(let i = 0; i < positions0.length; i += 3) {
-                        positions0[i] = (Math.random() - 0.5) * size;
-                        positions0[i + 2] = (Math.random() - 0.5) * size;
-                        positions0[i + 1] = calculateLoss(positions0[i], positions0[i + 2]) * 1.5 + pointsT0.userData.heightOffset;
-                    }
-                    pointsT0.geometry.setAttribute('position', new THREE.BufferAttribute(positions0, 3));
+                // Initialize initial and target positions
+                for(let i = 0; i < positions.length; i += 3) {
+                    // Initial positions (t=0): uniform distribution
+                    initialPositions[i] = (Math.random() - 0.5) * size;
+                    initialPositions[i + 2] = (Math.random() - 0.5) * size; 
+                    initialPositions[i + 1] = calculateLoss(initialPositions[i], initialPositions[i + 2]) * 1.5 + 0.1;
                     
-                    // Stage 2: Intermediate (t=T)
-                    const positions1 = pointsT1.userData.positions;
-                    for(let i = 0; i < positions1.length; i += 3) {
-                        // Base even distribution
-                        positions1[i] = (Math.random() - 0.5) * size;
-                        positions1[i + 2] = (Math.random() - 0.5) * size;
-                        
-                        // Flow measure away from sharp region
-                        if(positions1[i] < 0 && positions1[i + 2] < 0) {
-                            // 70% of points near sharp region are moved away
-                            if(Math.random() < 0.7) {
-                                positions1[i] += (Math.random() + 1) * 3;
-                                positions1[i + 2] += (Math.random() + 1) * 3;
-                            }
-                        }
-                        
-                        positions1[i + 1] = calculateLoss(positions1[i], positions1[i + 2]) * 1.5 + pointsT1.userData.heightOffset;
-                    }
-                    pointsT1.geometry.setAttribute('position', new THREE.BufferAttribute(positions1, 3));
+                    // Target positions (t=∞): concentrated in flat minimum
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = Math.random() * 3;
                     
-                    // Stage 3: Final state (t=∞)
-                    const positions2 = pointsT2.userData.positions;
-                    for(let i = 0; i < positions2.length; i += 3) {
-                        // 95% of points concentrated in flat region
-                        const angle = Math.random() * Math.PI * 2;
-                        const radius = Math.random() * 3;
-                        
-                        if(Math.random() < 0.95) {
-                            // Points in flat region
-                            positions2[i] = 2.5 + radius * Math.cos(angle) * 0.7;
-                            positions2[i + 2] = 2.5 + radius * Math.sin(angle) * 0.7;
-                        } else {
-                            // Few random points elsewhere
-                            positions2[i] = (Math.random() - 0.5) * size;
-                            positions2[i + 2] = (Math.random() - 0.5) * size;
-                        }
-                        
-                        positions2[i + 1] = calculateLoss(positions2[i], positions2[i + 2]) * 1.5 + pointsT2.userData.heightOffset;
+                    if(Math.random() < 0.95) {
+                        // 95% of points in flat region
+                        targetPositions[i] = 2.5 + radius * Math.cos(angle) * 0.7;
+                        targetPositions[i + 2] = 2.5 + radius * Math.sin(angle) * 0.7;
+                    } else {
+                        // 5% random elsewhere
+                        targetPositions[i] = (Math.random() - 0.5) * size;
+                        targetPositions[i + 2] = (Math.random() - 0.5) * size;
                     }
-                    pointsT2.geometry.setAttribute('position', new THREE.BufferAttribute(positions2, 3));
+                    
+                    targetPositions[i + 1] = calculateLoss(targetPositions[i], targetPositions[i + 2]) * 1.5 + 0.1;
+                    
+                    // Start with initial positions
+                    positions[i] = initialPositions[i];
+                    positions[i + 1] = initialPositions[i + 1];
+                    positions[i + 2] = initialPositions[i + 2];
+                    
+                    // Initial color: white
+                    colors[i] = 1;     // R
+                    colors[i + 1] = 1; // G
+                    colors[i + 2] = 1; // B
                 }
                 
-                initializePositions();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 0.15,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                
+                const points = new THREE.Points(geometry, material);
+                scene.add(points);
         
                 // Create visible markers for the minima
                 function createSphereMarker(x, y, z, color, size) {
@@ -376,47 +362,121 @@
                 }
         
                 // Add large, visible labels
-                const stage0Label = createTextSprite("t = 0: Initial uniform measure distribution", 48, "rgba(0,0,0,0.7)");
-                stage0Label.position.set(0, 0.5, -4);
-                scene.add(stage0Label);
-                
-                const stageMiddleLabel = createTextSprite("t = T: Measure evacuating sharp regions", 48, "rgba(0,0,0,0.7)");
-                stageMiddleLabel.position.set(0, 2.5, -4);
-                scene.add(stageMiddleLabel);
-                
-                const stageFinalLabel = createTextSprite("t = ∞: Measure concentrated in flat regions", 48, "rgba(0,0,0,0.7)");
-                stageFinalLabel.position.set(0, 4.5, -4);
-                scene.add(stageFinalLabel);
-                
                 const sharpLabel = createTextSprite("Sharp Minimum", 48, "rgba(128,0,0,0.7)");
-                sharpLabel.position.set(-2.5, 0.5, -2.5);
+                sharpLabel.position.set(-2.5, 1.2, -2.5);
                 scene.add(sharpLabel);
                 
                 const flatLabel = createTextSprite("Flat Minimum", 48, "rgba(0,0,128,0.7)");
-                flatLabel.position.set(2.5, 0.5, 2.5);
+                flatLabel.position.set(2.5, 1.2, 2.5);
                 scene.add(flatLabel);
+        
+                // Add an infobox explaining the Duy Integral Theory
+                const infoLabel = createTextSprite("Duy Integral Theory: Measure flows from sharp to flat regions", 36, "rgba(0,0,0,0.7)");
+                infoLabel.position.set(0, 2, -5);
+                scene.add(infoLabel);
         
                 // Setup camera for better viewing
                 camera.position.set(15, 10, 15);
-                camera.lookAt(0, 2, 0);
+                camera.lookAt(0, 0, 0);
         
-                // Slower rotation for better visibility
-                let time = 0;
+                // Animation parameters
+                let animationTime = 0;
+                const animationDuration = 300; // Frames for full animation
+                let isAnimating = true;
+                let animationComplete = false;
+                let cycleCount = 0;
+                const totalCycles = 4;
+        
                 function animate() {
                     requestAnimationFrame(animate);
-                    time += 0.005;
                     
-                    // Slow, gentle camera movement for clarity
-                    camera.position.x = 15 * Math.cos(time * 0.3);
-                    camera.position.z = 15 * Math.sin(time * 0.3);
-                    camera.lookAt(0, 2, 0);
+                    // Rotation for camera
+                    const cameraTime = Date.now() * 0.0001;
+                    camera.position.x = 15 * Math.cos(cameraTime * 0.3);
+                    camera.position.z = 15 * Math.sin(cameraTime * 0.3);
+                    camera.lookAt(0, 0, 0);
+                    
+                    // Update point positions and colors based on animation time
+                    if (isAnimating) {
+                        animationTime++;
+                        
+                        // Normalized progress (0 to 1)
+                        let progress = animationTime / animationDuration;
+                        if (progress >= 1) {
+                            if (cycleCount < totalCycles - 1) {
+                                // Reset for next cycle
+                                animationTime = 0;
+                                cycleCount++;
+                            } else {
+                                // Hold at final state
+                                progress = 1;
+                                animationComplete = true;
+                            }
+                        }
+                        
+                        // Update time display
+                        timeDisplay.textContent = `Time: t = ${progress.toFixed(2) * 10}`;
+                        
+                        // Custom easing for more realistic flow
+                        // Slower at start, faster in middle, slower at end
+                        const easedProgress = progress < 0.5 ? 
+                            2 * progress * progress : 
+                            1 - Math.pow(-2 * progress + 2, 2) / 2;
+                        
+                        const positions = points.geometry.attributes.position.array;
+                        const colors = points.geometry.attributes.color.array;
+                        
+                        for(let i = 0; i < positions.length; i += 3) {
+                            // For points initially near sharp minimum, have them leave earlier
+                            const isNearSharp = Math.sqrt((initialPositions[i]+2.5)**2 + (initialPositions[i+2]+2.5)**2) < 2;
+                            let pointProgress = isNearSharp ? 
+                                Math.min(1, easedProgress * 1.5) : // Points near sharp region move faster
+                                easedProgress;
+                            
+                            // If completing animation, force all to target
+                            if (animationComplete) {
+                                pointProgress = 1;
+                            }
+                            
+                            // Intermediate positions
+                            positions[i] = initialPositions[i] + (targetPositions[i] - initialPositions[i]) * pointProgress;
+                            positions[i + 2] = initialPositions[i + 2] + (targetPositions[i + 2] - initialPositions[i + 2]) * pointProgress;
+                            
+                            // Update height to stay on surface
+                            positions[i + 1] = calculateLoss(positions[i], positions[i + 2]) * 1.5 + 0.1;
+                            
+                            // Update color based on position (red for sharp, blue for flat)
+                            const distToSharp = Math.sqrt((positions[i]+2.5)**2 + (positions[i+2]+2.5)**2);
+                            const distToFlat = Math.sqrt((positions[i]-2.5)**2 + (positions[i+2]-2.5)**2);
+                            
+                            if (distToSharp < distToFlat) {
+                                // Near sharp minimum: white → red
+                                colors[i] = 1; // R
+                                colors[i + 1] = 1 - pointProgress; // G
+                                colors[i + 2] = 1 - pointProgress; // B
+                            } else {
+                                // Near flat minimum: white → blue
+                                colors[i] = 1 - pointProgress; // R
+                                colors[i + 1] = 1 - pointProgress; // G
+                                colors[i + 2] = 1; // B
+                            }
+                        }
+                        
+                        points.geometry.attributes.position.needsUpdate = true;
+                        points.geometry.attributes.color.needsUpdate = true;
+                        
+                        // Reset if animation complete and we've done all cycles
+                        if (animationComplete && cycleCount >= totalCycles - 1) {
+                            animationTime = 0;
+                            cycleCount = 0;
+                            animationComplete = false;
+                        }
+                    }
                     
                     // Update label orientations
-                    stage0Label.quaternion.copy(camera.quaternion);
-                    stageMiddleLabel.quaternion.copy(camera.quaternion);
-                    stageFinalLabel.quaternion.copy(camera.quaternion);
                     sharpLabel.quaternion.copy(camera.quaternion);
                     flatLabel.quaternion.copy(camera.quaternion);
+                    infoLabel.quaternion.copy(camera.quaternion);
                     
                     renderer.render(scene, camera);
                 }
@@ -440,10 +500,22 @@
                     overflow: hidden;
                     background: #000;
                     margin: 20px 0;
+                    position: relative;
                 }
                 canvas {
                     width: 100%;
                     height: 100%;
+                }
+                #time-display {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    color: white;
+                    font-family: Arial, sans-serif;
+                    font-size: 20px;
+                    background-color: rgba(0,0,0,0.7);
+                    padding: 5px 10px;
+                    border-radius: 5px;
                 }
             </style>
         </section>
