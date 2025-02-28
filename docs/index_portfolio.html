@@ -117,5 +117,23 @@
     <footer>
         <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
     </footer>
+
+    <!-- Chatbot Popup Structure -->
+    <div id="chatbot-container" class="closed">
+      <div id="chatbot-header">
+        <span>Berkeley AI Assistant</span>
+        <button id="chatbot-toggle">^</button>
+      </div>
+      <div id="chatbot-messages"></div>
+      <div id="chatbot-input">
+        <input type="text" id="user-input" placeholder="Ask a question...">
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+
+    <!-- Include JavaScript files -->
+    <script src="js/chat.js"></script>
+    <script src="js/sidebar.js"></script>
+    
 </body>
 </html>
