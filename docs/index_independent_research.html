@@ -319,48 +319,59 @@
             const flatMinima  = createSphereMarker(2.5,  calculateLoss(2.5, 2.5)*1.5,   2.5,  0x0000ff, 0.4);
         
             // Create text sprites
-            function createTextSprite(text, fontSize, backgroundColor) {
-                // Larger canvas for higher resolution
+            function createTextSprite(text, fontSize, bgColor) {
+                // 1) Larger canvas for higher resolution
                 const canvas = document.createElement('canvas');
-                canvas.width = 2048;
-                canvas.height = 1024;
+                canvas.width = 4096;
+                canvas.height = 2048;
                 const context = canvas.getContext('2d');
                 
-                // Optional background
-                if (backgroundColor) {
-                    context.fillStyle = backgroundColor;
+                // 2) Optional solid or semi-transparent background
+                //    (Set bgColor = "rgba(0,0,0,0.7)" for dark see-through background.)
+                if (bgColor) {
+                    context.fillStyle = bgColor;
                     context.fillRect(0, 0, canvas.width, canvas.height);
                 }
                 
-                // Bigger font size
-                context.font = `Bold ${fontSize || 90}px Arial`;
+                // 3) Larger font and stroke
+                //    - Increase lineWidth for a thicker stroke outline
+                const fSize = fontSize || 150;
+                context.font = `Bold ${fSize}px Arial`;
                 context.textAlign = 'center';
                 context.textBaseline = 'middle';
-                
-                // Add a thick stroke in black
-                context.lineWidth = 8;
+            
+                // Stroke in black (helps text pop against background)
+                context.lineWidth = 12;
                 context.strokeStyle = 'black';
                 context.strokeText(text, canvas.width / 2, canvas.height / 2);
-                
+            
                 // Fill text in white
                 context.fillStyle = 'white';
                 context.fillText(text, canvas.width / 2, canvas.height / 2);
                 
-                // Create a texture from the canvas
+                // 4) Create a texture from the canvas
                 const texture = new THREE.CanvasTexture(canvas);
                 const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+            
+                // 5) Disable depth testing so label draws on top
+                material.depthTest = false;
+            
+                // 6) Create sprite and set high renderOrder to ensure it’s drawn last
                 const sprite = new THREE.Sprite(material);
-                
-                // Increase sprite scale so it’s easily readable
-                sprite.scale.set(5, 2.5, 1);
-                
+                sprite.renderOrder = 999;  // Large number so it’s rendered on top
+            
+                // 7) Scale the sprite so it appears big in the scene
+                sprite.scale.set(12, 6, 1); // Increase if still too small
+            
                 return sprite;
             }
 
+
         
-            const sharpLabel = createTextSprite("Sharp Minimum", 48, "rgba(128,0,0,0.7)");
-            sharpLabel.position.set(-2.5, 1.2, -2.5);
+            const sharpLabel = createTextSprite("Sharp Minimum", 150, "rgba(0,0,0,0.7)");
+            sharpLabel.position.set(-2.5, 3, -2.5); // y=3 instead of 1.2
             scene.add(sharpLabel);
+
             
             const flatLabel = createTextSprite("Flat Minimum", 48, "rgba(0,0,128,0.7)");
             flatLabel.position.set(2.5, 1.2, 2.5);
