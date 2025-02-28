@@ -319,29 +319,44 @@
             const flatMinima  = createSphereMarker(2.5,  calculateLoss(2.5, 2.5)*1.5,   2.5,  0x0000ff, 0.4);
         
             // Create text sprites
-            function createTextSprite(text, fontSize, bgColor) {
+            function createTextSprite(text, fontSize, backgroundColor) {
+                // Larger canvas for higher resolution
                 const canvas = document.createElement('canvas');
-                canvas.width = 1024;
-                canvas.height = 512;
-                const ctx = canvas.getContext('2d');
+                canvas.width = 2048;
+                canvas.height = 1024;
+                const context = canvas.getContext('2d');
                 
-                if (bgColor) {
-                    ctx.fillStyle = bgColor;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                // Optional background
+                if (backgroundColor) {
+                    context.fillStyle = backgroundColor;
+                    context.fillRect(0, 0, canvas.width, canvas.height);
                 }
                 
-                ctx.font = `Bold ${fontSize || 60}px Arial`;
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+                // Bigger font size
+                context.font = `Bold ${fontSize || 90}px Arial`;
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
                 
+                // Add a thick stroke in black
+                context.lineWidth = 8;
+                context.strokeStyle = 'black';
+                context.strokeText(text, canvas.width / 2, canvas.height / 2);
+                
+                // Fill text in white
+                context.fillStyle = 'white';
+                context.fillText(text, canvas.width / 2, canvas.height / 2);
+                
+                // Create a texture from the canvas
                 const texture = new THREE.CanvasTexture(canvas);
                 const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
                 const sprite = new THREE.Sprite(material);
-                sprite.scale.set(2, 1, 1);
+                
+                // Increase sprite scale so it’s easily readable
+                sprite.scale.set(5, 2.5, 1);
+                
                 return sprite;
             }
+
         
             const sharpLabel = createTextSprite("Sharp Minimum", 48, "rgba(128,0,0,0.7)");
             sharpLabel.position.set(-2.5, 1.2, -2.5);
