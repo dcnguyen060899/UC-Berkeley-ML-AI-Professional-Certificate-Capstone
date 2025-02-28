@@ -23,7 +23,7 @@ When the user asks for a link or mentions a resource that can be accessed online
 
 For example:
 - If the user asks about the UC Berkeley program registration link, respond with: [UC Berkeley Program Registration](https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence).
-- If the user asks about the author's capstone GitHub repository, respond with: [Duy Nguyen's GitHub Repository](https://github.com/dcnguyen060899/UC-Berkeley-ML-AI-Professional-Certificate-Capstone).
+- If the user asks about the author's capstone GitHub repository, respond with: [Duy Nguyen's GitHub Repository](https://github.com/dcnguyen060899/UC-Berkeley-ML-AI-Professional-Certificate-Capstone) or [Duy Nguyen's Capstone](https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/)
 - If the user asks about the author's Resume, respond with: [Duy Nguyen's Resume](https://ucberkeley-ml-ai-capstone.com/index_resume.html)
 - If the user asks about the author's Portfolio, respond with: [Duy Nguyen's Portfolio](https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/index_portfolio.html)
 
