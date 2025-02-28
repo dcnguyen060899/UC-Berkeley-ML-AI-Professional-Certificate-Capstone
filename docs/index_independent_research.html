@@ -320,49 +320,46 @@
         
             // Create text sprites
             function createTextSprite(text, fontSize, bgColor) {
-                // 1) Larger canvas for higher resolution
+                // Smaller canvas for a more compact label
                 const canvas = document.createElement('canvas');
-                canvas.width = 4096;
-                canvas.height = 2048;
+                canvas.width = 1024;
+                canvas.height = 512;
                 const context = canvas.getContext('2d');
                 
-                // 2) Optional solid or semi-transparent background
-                //    (Set bgColor = "rgba(0,0,0,0.7)" for dark see-through background.)
+                // Partially transparent background
+                // e.g. "rgba(0,0,0,0.4)" => 40% opaque black
                 if (bgColor) {
                     context.fillStyle = bgColor;
                     context.fillRect(0, 0, canvas.width, canvas.height);
                 }
                 
-                // 3) Larger font and stroke
-                //    - Increase lineWidth for a thicker stroke outline
-                const fSize = fontSize || 150;
+                // Moderate font size
+                const fSize = fontSize || 60;
                 context.font = `Bold ${fSize}px Arial`;
                 context.textAlign = 'center';
                 context.textBaseline = 'middle';
             
-                // Stroke in black (helps text pop against background)
-                context.lineWidth = 12;
+                // Black stroke behind text for better contrast
+                context.lineWidth = 6;
                 context.strokeStyle = 'black';
                 context.strokeText(text, canvas.width / 2, canvas.height / 2);
             
-                // Fill text in white
+                // White fill
                 context.fillStyle = 'white';
                 context.fillText(text, canvas.width / 2, canvas.height / 2);
                 
-                // 4) Create a texture from the canvas
+                // Create texture
                 const texture = new THREE.CanvasTexture(canvas);
                 const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
-            
-                // 5) Disable depth testing so label draws on top
+                
+                // Optional: draw on top (no depth test) & high renderOrder
                 material.depthTest = false;
-            
-                // 6) Create sprite and set high renderOrder to ensure it’s drawn last
                 const sprite = new THREE.Sprite(material);
-                sprite.renderOrder = 999;  // Large number so it’s rendered on top
-            
-                // 7) Scale the sprite so it appears big in the scene
-                sprite.scale.set(12, 6, 1); // Increase if still too small
-            
+                sprite.renderOrder = 999; 
+                
+                // Smaller scale so it doesn't dominate the scene
+                sprite.scale.set(3, 1.5, 1);
+                
                 return sprite;
             }
 
