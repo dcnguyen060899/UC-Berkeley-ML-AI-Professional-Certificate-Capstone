@@ -438,10 +438,11 @@ function clearChallenge() {
 function submitChallenge() {
     const userSolution = challengeEditor.value;
     
+    // Show loading state
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    // Use the backend API to evaluate the solution
+    // Call the API for evaluation
     fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -454,56 +455,34 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-        challengeSubmitted = true;
+        challengeFeedback.classList.remove('hidden');
         
         if (typeof data.feedback === 'string') {
             challengeFeedbackText.textContent = data.feedback;
         } else {
-            let feedbackText = `Your solution has been evaluated. Score: ${data.score}/100\n\n${data.feedback}`;
-            
-            // If there are improvement suggestions, display them
-            if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-                feedbackText += "\n\nSuggestions for improvement:\n" + 
-                    data.improvement_suggestions.join("\n- ");
-            }
-            
-            challengeFeedbackText.textContent = feedbackText;
+            challengeFeedbackText.textContent = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
         }
         
-        // Show the solution if their score is low or they're missing key elements
-        if (!data.score || data.score < 70) {
+        // Show example solution if score is below threshold
+        if (data.score < 70) {
             solutionSection.classList.remove('hidden');
+        } else {
+            solutionSection.classList.add('hidden');
         }
+        
+        // Show improvement suggestions if any
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            let suggestionsText = "\n\nSuggestions for improvement:\n• " + 
+                data.improvement_suggestions.join("\n• ");
+            
+            challengeFeedbackText.textContent += suggestionsText;
+        }
+        
+        challengeSubmitted = true;
     })
     .catch(error => {
         console.error('Error:', error);
-        
-        // Fallback to client-side evaluation if API call fails
-        challengeSubmitted = true;
-        
-        // Check for key elements
-        const keyElements = [
-            "fuzzySubtree", 
-            "maxDifferences", 
-            "isSameTree", 
-            "let differences = 0",
-            "differences++",
-            "differences <= maxDifferences"
-        ];
-        
-        const missingElements = keyElements.filter(element => 
-            !userSolution.includes(element)
-        );
-        
-        if (missingElements.length === 0) {
-            challengeFeedbackText.textContent = "Great job! Your solution includes all the key elements for a fuzzy matching algorithm. The approach to track differences and allow for a maximum number of mismatches is correct.";
-        } else if (missingElements.length <= 2) {
-            challengeFeedbackText.textContent = `Your solution is on the right track, but is missing some key elements: ${missingElements.join(", ")}. Try implementing these concepts to complete the fuzzy matching algorithm.`;
-        } else {
-            challengeFeedbackText.textContent = "Your solution is missing several key elements needed for fuzzy matching. Remember that you need to track the number of value differences and allow matching when differences are below the threshold.";
-        }
-        
-        solutionSection.classList.remove('hidden');
+        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
 }
 
