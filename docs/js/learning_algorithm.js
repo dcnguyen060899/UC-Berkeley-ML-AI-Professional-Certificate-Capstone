@@ -435,12 +435,37 @@ function clearChallenge() {
     challengeSubmitted = false;
 }
 
-// Function to submit the challenge solution
 function submitChallenge() {
     const userSolution = challengeEditor.value;
     challengeSubmitted = true;
     
-    // Send to backend for AI evaluation
+    // Check for key elements
+    const keyElements = [
+        "fuzzySubtree", 
+        "maxDifferences", 
+        "isSameTree", 
+        "let differences = 0",
+        "differences++",
+        "differences <= maxDifferences"
+    ];
+    
+    const missingElements = keyElements.filter(element => 
+        !userSolution.includes(element)
+    );
+    
+    challengeFeedback.classList.remove('hidden');
+    
+    if (missingElements.length === 0) {
+        challengeFeedbackText.textContent = "Great job! Your solution includes all the key elements for a fuzzy matching algorithm. The approach to track differences and allow for a maximum number of mismatches is correct.";
+    } else if (missingElements.length <= 2) {
+        challengeFeedbackText.textContent = `Your solution is on the right track, but is missing some key elements: ${missingElements.join(", ")}. Try implementing these concepts to complete the fuzzy matching algorithm.`;
+    } else {
+        challengeFeedbackText.textContent = "Your solution is missing several key elements needed for fuzzy matching. Remember that you need to track the number of value differences and allow matching when differences are below the threshold.";
+    }
+    
+    solutionSection.classList.remove('hidden');
+    
+    // Replace the simple validation with API call
     fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -454,13 +479,36 @@ function submitChallenge() {
     .then(response => response.json())
     .then(data => {
         challengeFeedback.classList.remove('hidden');
-        challengeFeedbackText.textContent = data.feedback;
+        
+        if (typeof data.feedback === 'string') {
+            challengeFeedbackText.textContent = data.feedback;
+        } else {
+            challengeFeedbackText.textContent = "Your solution has been evaluated. Score: " + data.score + "/100";
+            
+            // If there are improvement suggestions, display them
+            if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+                challengeFeedbackText.textContent += "\n\nSuggestions for improvement:\n" + 
+                    data.improvement_suggestions.join("\n");
+            }
+        }
+        
         solutionSection.classList.remove('hidden');
     })
     .catch(error => {
         console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
+
+// Utility functions
+function showFeedback(message, duration = 0) {
+    feedbackMessage.classList.remove('hidden');
+    feedbackText.textContent = message;
+    
+    if (duration > 0) {
+        setTimeout(() => {
+            feedbackMessage.classList.add('hidden');
+        }, duration);
+    }
 }
 
 // Update UI based on current state
