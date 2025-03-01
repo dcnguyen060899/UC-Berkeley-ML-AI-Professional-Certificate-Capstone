@@ -442,7 +442,9 @@ function submitChallenge() {
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    // Call the API for evaluation
+    console.log("Sending evaluation request for:", userSolution.substring(0, 100) + "...");
+    
+    // Call the API for evaluation - make sure the URL is correct!
     fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -453,31 +455,20 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => response.json())
-    .then(data => {
-        challengeFeedback.classList.remove('hidden');
-        
-        // Display the text response directly
-        if (data.response) {
-            challengeFeedbackText.textContent = data.response;
-            
-            // Show example solution if the feedback seems negative
-            if (data.response.toLowerCase().includes("improve") || 
-                data.response.toLowerCase().includes("missing") ||
-                data.response.toLowerCase().includes("error")) {
-                solutionSection.classList.remove('hidden');
-            } else {
-                solutionSection.classList.add('hidden');
-            }
-        } else {
-            challengeFeedbackText.textContent = "No feedback received. Please try again.";
+    .then(response => {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
         }
-        
-        challengeSubmitted = true;
+        return response.json();
+    })
+    .then(data => {
+        console.log("Received data:", data);
+        // Rest of your code...
     })
     .catch(error => {
-        console.error('Error:', error);
-        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+        console.error('Error details:', error);
+        challengeFeedbackText.textContent = `Error: ${error.message}. Please try again.`;
     });
 }
 
