@@ -7,7 +7,7 @@ from chatservice import ChatService
 import time
 
 load_dotenv()
-app = Flask(__name__, static_folder='../../docs', static_url_path='/')
+app = Flask(__name__, static_folder='../../docs', static_url_path='/static')
 CORS(app)  # Initialize CORS with the Flask app
 
 
