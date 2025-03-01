@@ -434,15 +434,22 @@ function clearChallenge() {
     solutionSection.classList.add('hidden');
     challengeSubmitted = false;
 }
-
 function submitChallenge() {
     const userSolution = challengeEditor.value;
     challengeSubmitted = true;
     
-    // Check if we're on GitHub Pages
-    const isGitHubPages = window.location.hostname === 'ucberkeley-ml-ai-capstone.com';
+    // Show thinking animation
+    const thinkingAnimation = document.getElementById('thinking-animation');
+    const challengeFeedbackText = document.getElementById('challenge-feedback-text');
     
-    // Set the API URL based on the hosting environment
+    // Hide any previous feedback and show the thinking animation
+    challengeFeedback.classList.remove('hidden');
+    challengeFeedbackText.textContent = '';
+    thinkingAnimation.classList.remove('hidden');
+    solutionSection.classList.add('hidden');
+    
+    // Make API call to evaluate solution
+    const isGitHubPages = window.location.hostname === 'ucberkeley-ml-ai-capstone.com';
     const apiUrl = isGitHubPages 
         ? 'https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/evaluate-challenge'
         : '/evaluate-challenge';
@@ -459,14 +466,35 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-        challengeFeedback.classList.remove('hidden');
-        challengeFeedbackText.textContent = data.response || "No feedback received";
-        solutionSection.classList.remove('hidden');
+        // Hide thinking animation
+        thinkingAnimation.classList.add('hidden');
+        
+        // Check if we received a structured response or just plain text
+        if (data.response) {
+            // If it's the simple response format from your modifications
+            let jsonData;
+            try {
+                // Try to parse if it's a JSON string
+                jsonData = JSON.parse(data.response);
+            } catch (e) {
+                // If not valid JSON, just use the text
+                challengeFeedbackText.textContent = data.response;
+                solutionSection.classList.remove('hidden');
+                return;
+            }
+            
+            // If we successfully parsed JSON
+            formatFeedback(jsonData);
+        } else {
+            // If it's already structured data (your original format)
+            formatFeedback(data);
+        }
     })
     .catch(error => {
+        // Hide thinking animation and show error
+        thinkingAnimation.classList.add('hidden');
         console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
-        challengeFeedback.classList.remove('hidden');
     });
 }
 
