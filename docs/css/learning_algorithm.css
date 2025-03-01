@@ -523,3 +523,29 @@ footer {
         font-size: 1.2em;
     }
 }
+
+/* Enhanced feedback styling */
+.challenge-feedback {
+    margin: 15px 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid var(--berkeley-blue);
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+#challenge-feedback-text {
+    white-space: pre-line;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.solution-section {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--berkeley-gray);
+}
+
+.solution-section h4 {
+    color: var(--berkeley-blue);
+    margin-bottom: 10px;
+}
