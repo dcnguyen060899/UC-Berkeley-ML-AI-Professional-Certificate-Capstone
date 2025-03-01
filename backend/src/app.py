@@ -37,7 +37,46 @@ base_qa = {
     
     "What were the main challenges you faced during this project?": "The main challenges included dealing with imbalanced data, ensuring model generalization across different hospital types and regions, and accurately predicting outcomes for less common cases. Hyperparameter tuning and feature engineering were also critical to improving model performance."
 }
-
+@app.route("/evaluate-challenge", methods=["POST"])
+def evaluate_challenge():
+    data = request.get_json()
+    user_solution = data.get("code", "")
+    challenge_type = data.get("challenge_type", "")
+    
+    # Construct a prompt for the AI to evaluate the solution
+    evaluation_prompt = f"""
+    Evaluate this solution for the {challenge_type} algorithm challenge:
+    
+    ```javascript
+    {user_solution}
+    ```
+    
+    Check for:
+    1. Correctness - Does it implement the required algorithm properly?
+    2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
+    3. Edge cases - Does it handle null/empty inputs and other edge cases?
+    4. Code quality - Is the code well-structured and efficient?
+    
+    Return a JSON with: score (0-100), feedback (detailed explanation), and improvement_suggestions (list).
+    """
+    
+    # Use your existing chat service to get an evaluation
+    response_content = chat_service.get_response(evaluation_prompt)
+    
+    # Try to parse as JSON, fall back to text if not valid JSON
+    try:
+        # If the response is already JSON, return it directly
+        import json
+        evaluation = json.loads(response_content)
+        return jsonify(evaluation)
+    except:
+        # If response isn't valid JSON, wrap it in a simple structure
+        return jsonify({
+            "score": 0,  # Default score
+            "feedback": response_content,
+            "improvement_suggestions": []
+        })
+        
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
