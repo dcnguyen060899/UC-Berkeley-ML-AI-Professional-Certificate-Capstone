@@ -469,24 +469,24 @@ function submitChallenge() {
         // Hide thinking animation
         thinkingAnimation.classList.add('hidden');
         
-        // Check if we received a structured response or just plain text
+        // Direct string response - might be markdown
+        if (typeof data === 'string') {
+            formatFeedback(data);
+            return;
+        }
+        
+        // Simple response format
         if (data.response) {
-            // If it's the simple response format from your modifications
-            let jsonData;
             try {
                 // Try to parse if it's a JSON string
-                jsonData = JSON.parse(data.response);
+                const jsonData = JSON.parse(data.response);
+                formatFeedback(jsonData);
             } catch (e) {
-                // If not valid JSON, just use the text
-                challengeFeedbackText.textContent = data.response;
-                solutionSection.classList.remove('hidden');
-                return;
+                // Not JSON - might be markdown
+                formatFeedback(data.response);
             }
-            
-            // If we successfully parsed JSON
-            formatFeedback(jsonData);
         } else {
-            // If it's already structured data (your original format)
+            // Already structured data
             formatFeedback(data);
         }
     })
@@ -500,13 +500,25 @@ function submitChallenge() {
 
 // Helper function to format the feedback nicely
 function formatFeedback(data) {
-    // Create a formatted feedback text
-    let feedbackText = '';
+    // Create container for formatted feedback
+    const feedbackContainer = document.createElement('div');
+    feedbackContainer.className = 'formatted-feedback';
+    
+    // Check if response is markdown text
+    if (typeof data === 'string' && (data.includes('**') || data.includes('###'))) {
+        // Render markdown directly
+        feedbackContainer.innerHTML = renderMarkdown(data);
+        challengeFeedbackText.innerHTML = '';
+        challengeFeedbackText.appendChild(feedbackContainer);
+        return;
+    }
     
     // Add overall score if available
     if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
         const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
-        feedbackText += `🎯 Overall Score: ${score}/100\n\n`;
+        const scoreHeader = document.createElement('h3');
+        scoreHeader.textContent = `🎯 Overall Score: ${score}/100`;
+        feedbackContainer.appendChild(scoreHeader);
     }
     
     // Format each category
@@ -514,45 +526,84 @@ function formatFeedback(data) {
     
     categories.forEach(category => {
         if (data[category]) {
-            feedbackText += `✅ ${category}:\n`;
+            const categoryHeader = document.createElement('h4');
+            categoryHeader.textContent = `✅ ${category}:`;
+            feedbackContainer.appendChild(categoryHeader);
+            
+            const categoryContent = document.createElement('div');
+            categoryContent.className = 'category-content';
             
             if (typeof data[category] === 'object') {
                 // If it's an object with Score and Feedback
                 if (data[category].Score) {
-                    feedbackText += `   Score: ${data[category].Score}/100\n`;
+                    const scoreText = document.createElement('p');
+                    scoreText.innerHTML = `<strong>Score:</strong> ${data[category].Score}/100`;
+                    categoryContent.appendChild(scoreText);
                 }
                 if (data[category].Feedback) {
-                    feedbackText += `   ${data[category].Feedback}\n`;
+                    const feedbackText = document.createElement('p');
+                    feedbackText.innerHTML = renderMarkdown(data[category].Feedback);
+                    categoryContent.appendChild(feedbackText);
                 }
             } else {
                 // If it's just a string
-                feedbackText += `   ${data[category]}\n`;
+                const feedbackText = document.createElement('p');
+                feedbackText.innerHTML = renderMarkdown(data[category]);
+                categoryContent.appendChild(feedbackText);
             }
-            feedbackText += '\n';
+            
+            feedbackContainer.appendChild(categoryContent);
         }
     });
     
     // Add suggestions
     if (data.Suggestions || data.suggestions) {
         const suggestions = data.Suggestions || data.suggestions;
-        feedbackText += `💡 Improvement Suggestions:\n`;
+        const suggestionsHeader = document.createElement('h4');
+        suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
+        feedbackContainer.appendChild(suggestionsHeader);
+        
+        const suggestionsList = document.createElement('ul');
+        
         if (Array.isArray(suggestions)) {
-            suggestions.forEach((suggestion, index) => {
-                feedbackText += `   ${index + 1}. ${suggestion}\n`;
+            suggestions.forEach((suggestion) => {
+                const item = document.createElement('li');
+                item.innerHTML = renderMarkdown(suggestion);
+                suggestionsList.appendChild(item);
             });
         } else {
-            feedbackText += `   ${suggestions}\n`;
+            const item = document.createElement('li');
+            item.innerHTML = renderMarkdown(suggestions);
+            suggestionsList.appendChild(item);
         }
+        
+        feedbackContainer.appendChild(suggestionsList);
     }
     
-    // Use the formatted text
-    challengeFeedbackText.textContent = feedbackText;
-    
-    // Style the text for better readability
-    challengeFeedbackText.style.whiteSpace = 'pre-line';
-    challengeFeedbackText.style.lineHeight = '1.5';
+    // Clear and add the formatted content
+    challengeFeedbackText.innerHTML = '';
+    challengeFeedbackText.appendChild(feedbackContainer);
     
     solutionSection.classList.remove('hidden');
+}
+
+// Helper function to render basic markdown
+function renderMarkdown(text) {
+    if (!text) return '';
+    
+    // Convert headers (###)
+    text = text.replace(/###\s+(.*?)(?=\n|$)/g, '<h3>$1</h3>');
+    
+    // Convert bold (**text**)
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Convert italic (*text*)
+    text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Convert line breaks
+    text = text.replace(/\n/g, '<br>');
+    
+    return text;
 }
 
 // Utility functions
