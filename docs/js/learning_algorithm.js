@@ -443,8 +443,12 @@ function submitChallenge() {
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    // Call the API for evaluation
-    fetch('/evaluate-challenge', {
+    // Disable the button while processing
+    submitChallengeBtn.disabled = true;
+    submitChallengeBtn.textContent = "Processing...";
+    
+    // Call the API with timeout
+    const fetchPromise = fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -453,38 +457,55 @@ function submitChallenge() {
             code: userSolution,
             challenge_type: 'fuzzySubtree'
         }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        challengeFeedback.classList.remove('hidden');
-        
-        if (typeof data.feedback === 'string') {
-            challengeFeedbackText.textContent = data.feedback;
-        } else {
-            challengeFeedbackText.textContent = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
-        }
-        
-        // Show example solution if score is below threshold
-        if (data.score < 70) {
-            solutionSection.classList.remove('hidden');
-        } else {
-            solutionSection.classList.add('hidden');
-        }
-        
-        // Show improvement suggestions if any
-        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-            let suggestionsText = "\n\nSuggestions for improvement:\n• " + 
-                data.improvement_suggestions.join("\n• ");
-            
-            challengeFeedbackText.textContent += suggestionsText;
-        }
-        
-        challengeSubmitted = true;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
+    
+    // Set a timeout of 15 seconds
+    const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out')), 15000)
+    );
+    
+    // Race between fetch and timeout
+    Promise.race([fetchPromise, timeoutPromise])
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            challengeFeedback.classList.remove('hidden');
+            
+            // Display feedback with a score if available
+            if (data.score !== undefined) {
+                challengeFeedbackText.textContent = `Score: ${data.score}/100\n\n${data.feedback}`;
+            } else {
+                challengeFeedbackText.textContent = data.feedback || "Your solution has been evaluated.";
+            }
+            
+            // Show example solution for scores under 70
+            if (data.score < 70 || !data.score) {
+                solutionSection.classList.remove('hidden');
+            } else {
+                solutionSection.classList.add('hidden');
+            }
+            
+            // Re-enable the button
+            submitChallengeBtn.disabled = false;
+            submitChallengeBtn.textContent = "Submit Solution";
+            
+            challengeSubmitted = true;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            challengeFeedbackText.textContent = `Error: ${error.message || 'Unable to evaluate solution. Please try again.'}`;
+            
+            // Fallback to static evaluation
+            solutionSection.classList.remove('hidden');
+            
+            // Re-enable the button
+            submitChallengeBtn.disabled = false;
+            submitChallengeBtn.textContent = "Submit Solution";
+        });
 }
 
 // Update UI based on current state
