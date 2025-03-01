@@ -67,10 +67,10 @@ def api_check():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
         
-@app.route("/api/evaluate-challenge", methods=["POST"])
+@app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
     try:
-        print(">>> /evaluate-challenge called")
+        print(">>> /api/evaluate-challenge called")
         data = request.get_json()
         if not data:
             print("No JSON received.")
@@ -110,6 +110,7 @@ def evaluate_challenge():
         }}
         """
 
+        # Get response from the chat service (LLM API)
         response_content = chat_service.get_response(evaluation_prompt)
         print("Raw response from chat_service:", response_content)
 
@@ -136,6 +137,16 @@ def evaluate_challenge():
             "feedback": f"Server error occurred: {str(e)}",
             "improvement_suggestions": []
         }), 500
-        
+
+@app.route("/test-evaluation", methods=["POST"])
+def test_evaluation():
+    data = request.get_json()
+    code_length = len(data.get("code", ""))
+    return jsonify({
+        "score": 75,
+        "feedback": f"This is a test evaluation for code of length {code_length}.",
+        "improvement_suggestions": ["Test suggestion 1", "Test suggestion 2"]
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
