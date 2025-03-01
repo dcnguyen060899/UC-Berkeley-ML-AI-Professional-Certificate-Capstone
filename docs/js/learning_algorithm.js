@@ -467,7 +467,6 @@ function submitChallenge() {
     
     // Optional: Send to backend for more sophisticated evaluation
     // This would be implemented if you have a backend service
-    /*
     fetch('/api/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -486,7 +485,6 @@ function submitChallenge() {
         console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
-    */
 }
 
 // Utility functions
