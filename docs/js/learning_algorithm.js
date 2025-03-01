@@ -467,7 +467,7 @@ function submitChallenge() {
     
     // Optional: Send to backend for more sophisticated evaluation
     // This would be implemented if you have a backend service
-    fetch('/api/evaluate-challenge', {
+    fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -477,13 +477,36 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
-        challengeFeedbackText.textContent = data.evaluation;
+        challengeFeedback.classList.remove('hidden');
+        
+        let feedbackText = '';
+        
+        if (data.score !== undefined) {
+            feedbackText = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
+        } else {
+            feedbackText = data.feedback || "Your solution has been evaluated.";
+        }
+        
+        // If there are improvement suggestions, display them
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            feedbackText += "\n\nSuggestions for improvement:\n- " + 
+                data.improvement_suggestions.join("\n- ");
+        }
+        
+        challengeFeedbackText.textContent = feedbackText;
+        solutionSection.classList.remove('hidden');
     })
     .catch(error => {
         console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+        challengeFeedback.classList.remove('hidden');
     });
 }
 
