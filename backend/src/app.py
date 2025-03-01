@@ -67,7 +67,7 @@ def api_check():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
         
-@app.route("/evaluate-challenge", methods=["POST"])
+@app.route("/evaluate-challenge", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 def evaluate_challenge():
     try:
         data = request.get_json()
@@ -124,5 +124,9 @@ def evaluate_challenge():
             "improvement_suggestions": []
         })
 
+@app.route("/eval2", methods=["POST"])
+def eval2():
+    return jsonify({"status": "success"})
+    
 if __name__ == "__main__":
     app.run(debug=True)
