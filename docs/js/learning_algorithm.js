@@ -435,62 +435,67 @@ function clearChallenge() {
     challengeSubmitted = false;
 }
 
-function submitChallenge() {
-    const userSolution = challengeEditor.value;
-    
-    if (!userSolution || userSolution.trim() === '') {
+// Function to submit the challenge solution
+    function submitChallenge() {
+        const userSolution = challengeEditor.value;
+        
+        if (!userSolution || userSolution.trim() === '') {
+            challengeFeedback.classList.remove('hidden');
+            challengeFeedbackText.textContent = "Please enter a solution before submitting.";
+            return;
+        }
+        
+        // Show loading state
         challengeFeedback.classList.remove('hidden');
-        challengeFeedbackText.textContent = "Please enter a solution before submitting.";
-        return;
+        challengeFeedbackText.textContent = "Evaluating your solution...";
+        
+        // Make the API call to evaluate the solution
+        fetch('/evaluate-challenge', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: userSolution, challenge_type: 'fuzzySubtree' }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Process and display the evaluation data
+            if (data.feedback) {
+                let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
+                if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+                    formattedFeedback += "\n\nSuggestions for improvement:";
+                    data.improvement_suggestions.forEach(suggestion => {
+                        formattedFeedback += `\n• ${suggestion}`;
+                    });
+                }
+                // Replace newlines with HTML breaks for proper formatting
+                challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
+            } else {
+                challengeFeedbackText.textContent = "Received response but no feedback was provided.";
+            }
+            
+            // Show the solution section if the score is low (or score is not provided)
+            if (!data.score || data.score < 70) {
+                solutionSection.classList.remove('hidden');
+            } else {
+                solutionSection.classList.add('hidden');
+            }
+            
+            challengeSubmitted = true;
+        })
+        .catch(error => {
+            console.error('Error details:', error);
+            challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check the console for details.`;
+            solutionSection.classList.remove('hidden');
+        });
     }
     
-    // Show loading state
-    challengeFeedback.classList.remove('hidden');
-    challengeFeedbackText.textContent = "Evaluating your solution...";
-    
-    // Use a fully qualified URL if necessary. For example, if your Flask app is running on port 5000:
-    // const apiUrl = 'http://127.0.0.1:5000/evaluate-challenge';
-    // Otherwise, if you're serving the HTML from Flask, '/evaluate-challenge' is fine.
-    fetch('/api/evaluate-challenge', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            code: userSolution,
-            challenge_type: 'fuzzySubtree'
-        }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Server responded with status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        challengeFeedback.classList.remove('hidden');
-        let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
-        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-            formattedFeedback += "\n\nSuggestions for improvement:";
-            data.improvement_suggestions.forEach(suggestion => {
-                formattedFeedback += `\n• ${suggestion}`;
-            });
-        }
-        challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
-        
-        if (!data.score || data.score < 70) {
-            solutionSection.classList.remove('hidden');
-        } else {
-            solutionSection.classList.add('hidden');
-        }
-        
-        challengeSubmitted = true;
-    })
-    .catch(error => {
-        console.error('Error details:', error);
-        challengeFeedback.classList.remove('hidden');
-        challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check the console for details and try again.`;
-        solutionSection.classList.remove('hidden');
-    });
-}
+    // Attach the submitChallenge function to the submit button
+    submitButton.addEventListener('click', submitChallenge);
+});
 
 // Update UI based on current state
 function updateUI() {
