@@ -477,30 +477,10 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         challengeFeedback.classList.remove('hidden');
-        
-        let feedbackText = '';
-        
-        if (data.score !== undefined) {
-            feedbackText = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
-        } else {
-            feedbackText = data.feedback || "Your solution has been evaluated.";
-        }
-        
-        // If there are improvement suggestions, display them
-        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-            feedbackText += "\n\nSuggestions for improvement:\n- " + 
-                data.improvement_suggestions.join("\n- ");
-        }
-        
-        challengeFeedbackText.textContent = feedbackText;
+        challengeFeedbackText.textContent = data.response || "No feedback received";
         solutionSection.classList.remove('hidden');
     })
     .catch(error => {
