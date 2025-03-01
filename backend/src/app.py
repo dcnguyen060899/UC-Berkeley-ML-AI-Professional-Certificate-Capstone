@@ -71,6 +71,13 @@ def evaluate_challenge():
     except Exception as e:
         print(f"Error in evaluate_challenge: {str(e)}")
         return jsonify({"response": f"Error evaluating solution: {str(e)}"})
+
+@app.route("/test-endpoint", methods=["GET", "POST"])
+def test_endpoint():
+    if request.method == "GET":
+        return jsonify({"message": "GET request successful"})
+    elif request.method == "POST":
+        return jsonify({"message": "POST request successful", "data_received": request.get_json()})
         
 @app.route("/")
 def index():
