@@ -453,45 +453,31 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log("Received evaluation:", data); // For debugging
-        
         challengeFeedback.classList.remove('hidden');
-        let feedbackText = "";
         
-        if (data.score !== undefined) {
-            feedbackText += `Score: ${data.score}/100\n\n`;
-        }
-        
-        if (data.feedback) {
-            feedbackText += data.feedback;
-        }
-        
-        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-            feedbackText += "\n\nSuggestions for improvement:\n• " + 
-                data.improvement_suggestions.join("\n• ");
-        }
-        
-        challengeFeedbackText.textContent = feedbackText || "Your solution was evaluated.";
-        
-        // Show example solution for lower scores
-        if (!data.score || data.score < 70) {
-            solutionSection.classList.remove('hidden');
+        // Display the text response directly
+        if (data.response) {
+            challengeFeedbackText.textContent = data.response;
+            
+            // Show example solution if the feedback seems negative
+            if (data.response.toLowerCase().includes("improve") || 
+                data.response.toLowerCase().includes("missing") ||
+                data.response.toLowerCase().includes("error")) {
+                solutionSection.classList.remove('hidden');
+            } else {
+                solutionSection.classList.add('hidden');
+            }
         } else {
-            solutionSection.classList.add('hidden');
+            challengeFeedbackText.textContent = "No feedback received. Please try again.";
         }
         
         challengeSubmitted = true;
     })
     .catch(error => {
         console.error('Error:', error);
-        challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check browser console and try again.`;
+        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
 }
 
