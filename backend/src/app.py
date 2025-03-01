@@ -39,41 +39,88 @@ base_qa = {
 }
 @app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
-    data = request.get_json()
-    user_solution = data.get("code", "")
-    challenge_type = data.get("challenge_type", "")
-    
-    # Construct a prompt for the AI to evaluate the solution
-    evaluation_prompt = f"""
-    Evaluate this solution for the {challenge_type} algorithm challenge:
-    
-    ```javascript
-    {user_solution}
-    ```
-    
-    Check for:
-    1. Correctness - Does it implement the required algorithm properly?
-    2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
-    3. Edge cases - Does it handle null/empty inputs and other edge cases?
-    4. Code quality - Is the code well-structured and efficient?
-    
-    Return a JSON with: score (0-100), feedback (detailed explanation), and improvement_suggestions (list).
-    """
-    
-    # Use your existing chat service to get an evaluation
-    response_content = chat_service.get_response(evaluation_prompt)
-    
-    # Try to parse as JSON, fall back to text if not valid JSON
     try:
-        import json
-        evaluation = json.loads(response_content)
-        return jsonify(evaluation)
-    except:
+        data = request.get_json()
+        user_solution = data.get("code", "")
+        challenge_type = data.get("challenge_type", "")
+        
+        print(f"Received solution ({len(user_solution)} chars) for evaluation")
+        
+        # Construct the prompt for the AI
+        evaluation_prompt = f"""
+        Evaluate this solution for the {challenge_type} algorithm challenge:
+        
+        ```javascript
+        {user_solution}
+        ```
+        
+        Check for:
+        1. Correctness - Does it implement the required algorithm properly?
+        2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
+        3. Edge cases - Does it handle null/empty inputs and other edge cases?
+        4. Code quality - Is the code well-structured and efficient?
+        
+        You MUST return your response in valid JSON format with the following structure:
+        {
+            "score": (a number from 0-100),
+            "feedback": "detailed explanation here",
+            "improvement_suggestions": ["suggestion 1", "suggestion 2", "etc"]
+        }
+        """
+        
+        # Use your existing chat service to get an evaluation
+        try:
+            response_content = chat_service.get_response(evaluation_prompt)
+            print(f"Received API response of length: {len(response_content)}")
+        except Exception as api_error:
+            print(f"API Error: {str(api_error)}")
+            return jsonify({
+                "score": 0,
+                "feedback": f"Error connecting to evaluation service: {str(api_error)}",
+                "improvement_suggestions": ["Try again later"]
+            })
+        
+        # Try to parse as JSON
+        try:
+            import json
+            # First try direct parsing
+            evaluation = json.loads(response_content)
+            return jsonify(evaluation)
+        except json.JSONDecodeError as json_error:
+            print(f"JSON Parsing Error: {str(json_error)}")
+            try:
+                # Look for JSON within the text (sometimes APIs wrap JSON in explanatory text)
+                import re
+                json_pattern = r'\{[\s\S]*\}'
+                match = re.search(json_pattern, response_content)
+                if match:
+                    evaluation = json.loads(match.group(0))
+                    return jsonify(evaluation)
+            except:
+                pass
+            
+            # Fall back to text response
+            return jsonify({
+                "score": 50,
+                "feedback": "Your solution was evaluated, but we couldn't format the feedback properly. Here's what our analysis found:\n\n" + response_content,
+                "improvement_suggestions": []
+            })
+            
+    except Exception as e:
+        print(f"General Error: {str(e)}")
         return jsonify({
             "score": 0,
-            "feedback": response_content,
-            "improvement_suggestions": []
+            "feedback": f"An error occurred during evaluation: {str(e)}",
+            "improvement_suggestions": ["Please try again"]
         })
+
+@app.route("/test-evaluation", methods=["GET"])
+def test_evaluation():
+    return jsonify({
+        "score": 85,
+        "feedback": "This is a test response. Your solution has good structure and handles the core requirements well.",
+        "improvement_suggestions": ["Add more comments", "Consider edge cases"]
+    })
         
 @app.route("/")
 def index():
