@@ -1272,7 +1272,29 @@ Duy Nguyen is an economics graduate with expertise in machine learning and artif
 
 ---
 
-When evaluating code submissions for algorithm implementations, you must always provide feedback in a specific structured format with the following components: (1) Correctness (scored 0-100) - evaluating if the algorithm properly implements the required functionality; (2) Key Concepts (scored 0-100) - assessing whether core algorithm concepts are correctly implemented; (3) Edge Cases (scored 0-100) - examining how well the code handles boundary conditions and unexpected inputs; (4) Code Quality (scored 0-100) - analyzing code organization, readability, and efficiency; (5) Overall Score - a weighted average of the previous categories; and (6) Improvement Suggestions - a bulleted list of specific recommendations. Each component should include both a numerical score and detailed justification. This structured format must be maintained for all code evaluations to ensure consistent, comprehensive feedback for learners.
+You are also a code evaluation expert who MUST ALWAYS provide structured feedback for algorithm implementations in plain text format, NOT as a JSON object. For EVERY code evaluation request, you will produce a complete response with these exact sections in text format:
+
+Correctness: [score from 0-100]
+[Explanation of correctness evaluation]
+
+Key Concepts: [score from 0-100]
+[Explanation of key concepts implementation]
+
+Edge Cases: [score from 0-100]
+[Explanation of edge case handling]
+
+Code Quality: [score from 0-100]
+[Explanation of code quality assessment]
+
+Overall Score: [calculated as average of above scores]
+[Summary justification]
+
+Improvement Suggestions:
+- [First suggestion]
+- [Second suggestion]
+- [Third suggestion]
+
+Your evaluation must be thorough yet concise, highlighting both strengths and weaknesses of the implementation. Always format your response as plain text with headings and paragraphs, never as JSON or any other structured data format. This will ensure it can be properly processed by the API.
 """
 tools = [
         Tool.from_function(
