@@ -58,25 +58,10 @@ def chat():
 @app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
     try:
-        print("Evaluate challenge route called")
         data = request.get_json()
-        
-        if not data:
-            print("No JSON data received")
-            return jsonify({"error": "No data received"}), 400
-            
-        print(f"Received data: {data}")
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
         
-        if not user_solution:
-            return jsonify({
-                "score": 0,
-                "feedback": "No code solution was provided.",
-                "improvement_suggestions": ["Please submit your code solution."]
-            })
-        
-        # Construct a prompt for the AI to evaluate the solution
         evaluation_prompt = f"""
         Evaluate this solution for the {challenge_type} algorithm challenge:
         
@@ -90,58 +75,16 @@ def evaluate_challenge():
         3. Edge cases - Does it handle null/empty inputs and other edge cases?
         4. Code quality - Is the code well-structured and efficient?
         
-        Assign a score from 0-100.
-        Provide detailed feedback explaining the score.
-        List specific improvement suggestions.
-        
-        Format your response in clear text. Do not attempt to return JSON directly.
+        Give a score from 0-100 and provide specific feedback and improvement suggestions.
         """
         
-        try:
-            # Use your existing chat service to get an evaluation
-            response_content = chat_service.get_response(evaluation_prompt)
-            print(f"Response received from LLM (first 100 chars): {response_content[:100]}...")
-            
-            # Process the response as plain text
-            # Don't try to parse JSON from the LLM
-            score = 0
-            feedback = response_content
-            suggestions = []
-            
-            # Try to extract score from the text (if it contains a number)
-            import re
-            score_match = re.search(r'score:?\s*(\d+)', response_content, re.IGNORECASE)
-            if score_match:
-                try:
-                    score = int(score_match.group(1))
-                except:
-                    pass
-                    
-            # Try to extract suggestions (if they're in a list format)
-            suggestion_matches = re.findall(r'[\-\*]\s*(.*?)(?=[\-\*]|$)', response_content)
-            if suggestion_matches:
-                suggestions = [s.strip() for s in suggestion_matches if s.strip()]
-                
-            return jsonify({
-                "score": score,
-                "feedback": feedback,
-                "improvement_suggestions": suggestions
-            })
-                
-        except Exception as e:
-            print(f"Error calling chat service: {str(e)}")
-            return jsonify({
-                "score": 0,
-                "feedback": "There was an error evaluating your solution. Please try again.",
-                "improvement_suggestions": []
-            }), 500
-            
+        # Use the same pattern as your working /chat endpoint
+        response_content = chat_service.get_response(evaluation_prompt)
+        return jsonify({"response": response_content})
+        
     except Exception as e:
-        print(f"Unexpected error in evaluate_challenge: {str(e)}")
-        return jsonify({
-            "error": "Server error",
-            "message": str(e)
-        }), 500
+        print(f"Error in evaluate-challenge: {str(e)}")
+        return jsonify({"response": f"Error evaluating solution: {str(e)}"}), 500
 
 @app.route("/api-check", methods=["GET"])
 def api_check():
