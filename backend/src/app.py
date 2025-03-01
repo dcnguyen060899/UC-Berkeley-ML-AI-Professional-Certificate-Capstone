@@ -37,48 +37,7 @@ base_qa = {
     
     "What were the main challenges you faced during this project?": "The main challenges included dealing with imbalanced data, ensuring model generalization across different hospital types and regions, and accurately predicting outcomes for less common cases. Hyperparameter tuning and feature engineering were also critical to improving model performance."
 }
-@app.route("/evaluate-challenge", methods=["POST"])
-def evaluate_challenge():
-    try:
-        data = request.get_json()
-        user_solution = data.get("code", "")
-        challenge_type = data.get("challenge_type", "")
-        
-        # Construct a prompt that asks for specific feedback but doesn't require JSON formatting
-        evaluation_prompt = f"""
-        You are an expert code reviewer evaluating a solution for the {challenge_type} algorithm challenge.
-        
-        Here is the user's solution:
-        ```javascript
-        {user_solution}
-        ```
-        
-        Please provide a detailed evaluation covering:
-        1. SCORE: Give a numerical score from 0-100
-        2. FEEDBACK: Detailed explanation of the solution's strengths and weaknesses
-        3. SUGGESTIONS: Bullet points of specific ways to improve the solution
-        
-        Format your response in clear sections with the headings "Score", "Feedback", and "Suggestions for Improvement".
-        Be specific and technical in your feedback.
-        """
-        
-        # Simply get the response as text, similar to your chat endpoint
-        response_content = chat_service.get_response(evaluation_prompt)
-        
-        # Return it directly without trying to parse as JSON
-        return jsonify({"response": response_content})
-        
-    except Exception as e:
-        print(f"Error in evaluate_challenge: {str(e)}")
-        return jsonify({"response": f"Error evaluating solution: {str(e)}"})
 
-@app.route("/test-endpoint", methods=["GET", "POST"])
-def test_endpoint():
-    if request.method == "GET":
-        return jsonify({"message": "GET request successful"})
-    elif request.method == "POST":
-        return jsonify({"message": "POST request successful", "data_received": request.get_json()})
-        
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
@@ -108,6 +67,60 @@ def api_check():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
 
-
+@app.route("/evaluate-challenge", methods=["POST"])
+def evaluate_challenge():
+    try:
+        data = request.get_json()
+        user_solution = data.get("code", "")
+        challenge_type = data.get("challenge_type", "")
+        
+        # Construct a prompt for the AI to evaluate the solution
+        evaluation_prompt = f"""
+        Evaluate this JavaScript solution for the {challenge_type} algorithm challenge:
+        
+        ```javascript
+        {user_solution}
+        ```
+        
+        The challenge is to implement a modification of the isSubtree function that allows for a "fuzzy" match, 
+        where the subtree can differ by at most one node value from the pattern.
+        
+        Check for:
+        1. Correctness - Does it implement the required algorithm properly?
+        2. Key concepts - Does it handle tracking of differences and maximum differences correctly?
+        3. Edge cases - Does it handle null/empty inputs and other edge cases?
+        4. Code quality - Is the code well-structured and efficient?
+        
+        Return your evaluation as JSON with these fields:
+        - score (0-100): How well the solution meets the requirements
+        - feedback: Detailed explanation of strengths and weaknesses
+        - improvement_suggestions: List of specific ways to improve the code
+        """
+        
+        # Use your existing chat service to get an evaluation
+        response_content = chat_service.get_response(evaluation_prompt)
+        
+        # Try to parse as JSON, fall back to text if not valid JSON
+        try:
+            import json
+            evaluation = json.loads(response_content)
+            return jsonify(evaluation)
+        except:
+            # If the response isn't valid JSON, wrap it in a simple structure
+            return jsonify({
+                "score": 60,
+                "feedback": response_content,
+                "improvement_suggestions": ["Ensure you track the count of differences properly", 
+                                         "Make sure your recursive calls pass the differences parameter"]
+            })
+            
+    except Exception as e:
+        print(f"Error in evaluate_challenge: {str(e)}")
+        return jsonify({
+            "score": 0,
+            "feedback": f"Server error occurred: {str(e)}",
+            "improvement_suggestions": []
+        }), 500
+        
 if __name__ == "__main__":
     app.run(debug=True)
