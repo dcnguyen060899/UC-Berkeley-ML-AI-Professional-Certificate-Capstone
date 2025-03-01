@@ -3,394 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Subtree Algorithm Learning - UC Berkeley ML/AI</title>
+    <title>Interactive Subtree Algorithm Learning</title>
+    <link rel="stylesheet" href="learning_algorithm.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --berkeley-blue: #003262;
-            --berkeley-gold: #FDB515;
-            --berkeley-gray: #DDD5C7;
-            --light-gray: #f8f8f8;
-            --border-color: #e5e5e5;
-        }
-        
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        /* Header styling */
-        header {
-            background-color: white;
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .header-logos img {
-            height: 40px;
-        }
-        
-        .header-nav {
-            text-align: right;
-        }
-        
-        .header-nav a {
-            color: var(--berkeley-blue);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        
-        .header-nav a:hover {
-            text-decoration: underline;
-        }
-
-        /* Fix header logos display */
-        .header-logos {
-            display: flex;
-            align-items: center;
-        }
-        
-        .header-logos img:first-child {
-            height: 40px;
-            margin-right: 10px;
-            border-right: 1px solid #ccc;
-            padding-right: 10px;
-        }
-        
-        .header-logos img:last-child {
-            height: 35px;
-            margin-left: 10px;
-        }
-        
-        /* Fix mode tab active state */
-        .mode-tab.active {
-            background-color: var(--berkeley-gold);
-            color: white; /* Make sure text is white, not blue */
-        }
-        /* Main content container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .main-title {
-            color: var(--berkeley-gold);
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 2rem;
-        }
-        
-        .main-description {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        /* Interactive tool container */
-        .tool-container {
-            background-color: #f9f9f9;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        
-        /* Mode selection tabs */
-        .mode-tabs {
-            display: flex;
-            justify-content: center;
-            background-color: #f0f0f0;
-            padding: 10px;
-        }
-        
-        .mode-tab {
-            padding: 8px 16px;
-            border: none;
-            background-color: #e0e0e0;
-            margin: 0 5px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        .mode-tab.active {
-            background-color: var(--berkeley-gold);
-            color: white;
-        }
-        
-        /* Visualization section */
-        .visualization-section {
-            padding: 20px;
-        }
-        
-        .section-title {
-            color: var(--berkeley-gold);
-            margin-bottom: 15px;
-        }
-        
-        .trees-container {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            border: 1px solid var(--berkeley-gray);
-            border-radius: 6px;
-            padding: 15px;
-            min-height: 250px;
-            background-color: white;
-        }
-        
-        .tree {
-            text-align: center;
-        }
-        
-        .tree-title {
-            color: var(--berkeley-blue);
-            margin-bottom: 15px;
-        }
-        
-        /* Tree nodes and edges */
-        .node {
-            fill: white;
-            stroke: #444;
-            stroke-width: 1px;
-            cursor: pointer;
-            transition: fill 0.3s ease;
-        }
-        
-        .node.selected {
-            fill: #4caf50;
-        }
-        
-        .node.highlighted {
-            fill: var(--berkeley-gold);
-        }
-        
-        .edge {
-            stroke: #444;
-            stroke-width: 1px;
-        }
-        
-        /* Current step section */
-        .current-step {
-            background-color: white;
-            border: 1px solid var(--berkeley-gray);
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .step-title {
-            color: var(--berkeley-blue);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-            padding: 10px;
-        }
-        
-        .control-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 4px;
-            border: none;
-            background-color: #e0e0e0;
-            color: var(--berkeley-blue);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 3px;
-        }
-        
-        .control-btn:hover {
-            background-color: #d0d0d0;
-        }
-        
-        /* Hints and Feedback */
-        .hint-box {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff9c4;
-            border: 1px solid var(--berkeley-gold);
-            border-radius: 4px;
-        }
-        
-        .feedback-message {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #e3f2fd;
-            border: 1px solid var(--berkeley-blue);
-            border-radius: 4px;
-        }
-        
-        /* About this project section */
-        .about-section {
-            margin-bottom: 30px;
-        }
-        
-        .about-title {
-            color: var(--berkeley-blue);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .about-title span {
-            background-color: var(--berkeley-blue);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-left: 10px;
-            font-size: 0.8em;
-        }
-        
-        /* Code Section */
-        .code-section {
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .code-editor {
-            width: 100%;
-            height: 250px;
-            padding: 12px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            border: 1px solid var(--berkeley-gray);
-            border-radius: 4px;
-            background-color: #f8f9fa;
-            resize: vertical;
-            margin-bottom: 15px;
-        }
-        
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .template-btn {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            border: none;
-            background-color: var(--berkeley-gray);
-            color: var(--berkeley-blue);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin: 0 2px;
-        }
-        
-        .action-btn {
-            padding: 8px 16px;
-            border-radius: 4px;
-            border: none;
-            background-color: var(--berkeley-gray);
-            color: var(--berkeley-blue);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .action-btn.primary {
-            background-color: var(--berkeley-gold);
-            color: white;
-        }
-        
-        /* Challenge Section */
-        .challenge-section {
-            padding: 20px;
-            background-color: white;
-        }
-        
-        .solution-code {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            margin-top: 8px;
-            border: 1px solid var(--berkeley-gray);
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--berkeley-blue);
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 0.9em;
-        }
-        
-        /* Helper class */
-        .hidden {
-            display: none;
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .trees-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .tree {
-                margin-bottom: 20px;
-            }
-            
-            .header-logos img {
-                height: 30px;
-            }
-        }
-    </style>
 </head>
 <body>
+    <!-- Berkeley-styled Header -->
     <header>
-        <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link">
+        <div class="header-content">
             <div class="logo">
-                <img src="images/UC_Berkeley.png" alt="Berkeley Engineering and Haas logo">
+                <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link" target="_blank">
+                    <img src="https://brand.berkeley.edu/wp-content/uploads/berkeley-primary-lockup-wordmark.png" alt="UC Berkeley Logo">
+                </a>
             </div>
-        </a>
-        <nav>
-            <a href="index_portfolio.html">Portfolio</a>
-        </nav>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Documentation</a>
+                <a href="#">About</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
+    <main>
         <h1 class="main-title">Interactive Subtree Algorithm Learning</h1>
-        <p class="main-description">This interactive tool helps you understand the subtree matching algorithm through visualization, step-by-step explanation, and coding practice.</p>
         
-        <div class="tool-container">
-            <!-- Mode Selection -->
-            <div class="mode-tabs">
-                <button id="learn-mode" class="mode-tab active">Learn Mode</button>
-                <button id="practice-mode" class="mode-tab">Practice Mode</button>
-                <button id="challenge-mode" class="mode-tab">Challenge Mode</button>
-            </div>
-            
+        <!-- Mode Selection -->
+        <div class="mode-selection">
+            <button id="learn-mode" class="mode-btn active">Learn Mode</button>
+            <button id="practice-mode" class="mode-btn">Practice Mode</button>
+            <button id="challenge-mode" class="mode-btn">Challenge Mode</button>
+        </div>
+        
+        <div class="content-area">
+            <!-- Tree Visualization Area -->
             <div class="visualization-section">
-                <h2 class="section-title">Tree Visualization</h2>
+                <h2>Tree Visualization</h2>
                 
                 <div class="trees-container">
                     <!-- Main Tree -->
                     <div class="tree">
-                        <h3 class="tree-title">Main Tree</h3>
+                        <h3>Main Tree</h3>
                         <svg width="180" height="220" viewBox="0 0 180 220" id="main-tree-svg">
                             <!-- Node 1 -->
                             <circle id="node1" cx="90" cy="30" r="15" class="node" data-node-id="node1"></circle>
@@ -435,7 +87,7 @@
                     
                     <!-- Subtree -->
                     <div class="tree">
-                        <h3 class="tree-title">Subtree</h3>
+                        <h3>Subtree</h3>
                         <svg width="120" height="120" viewBox="0 0 120 120" id="subtree-svg">
                             <!-- Node 2 -->
                             <circle id="subRoot" cx="60" cy="30" r="15" class="node" data-node-id="subRoot"></circle>
@@ -458,9 +110,9 @@
                     </div>
                 </div>
                 
-                <!-- Current Step -->
-                <div class="current-step">
-                    <h3 class="step-title">Current Step</h3>
+                <!-- Explanation Box -->
+                <div class="explanation-box">
+                    <h3>Current Step</h3>
                     <p id="step-explanation">Start with isSubtree(root, subRoot) where root is node 1 and subRoot is node 2. We check if the entire trees are identical.</p>
                     
                     <div id="hint-box" class="hint-box hidden">
@@ -470,34 +122,41 @@
                 
                 <!-- Controls -->
                 <div class="controls">
-                    <button id="reset-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>
-                    <button id="prev-btn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
-                    <button id="play-btn" class="control-btn"><i class="fas fa-play"></i></button>
-                    <button id="next-btn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
-                    <button id="end-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>
-                    <button id="hint-btn" class="control-btn"><i class="fas fa-question-circle"></i></button>
-                    <button id="code-toggle-btn" class="control-btn"><i class="fas fa-code"></i></button>
+                    <div class="main-controls">
+                        <button id="reset-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>
+                        <button id="prev-btn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button id="play-btn" class="control-btn play-btn"><i class="fas fa-play"></i></button>
+                        <button id="next-btn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+                        <button id="end-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>
+                    </div>
+                    
+                    <div class="secondary-controls">
+                        <button id="hint-btn" class="control-btn"><i class="fas fa-question-circle"></i></button>
+                        <button id="code-toggle-btn" class="control-btn"><i class="fas fa-code"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
                 </div>
                 
                 <!-- Feedback Message -->
                 <div id="feedback-message" class="feedback-message hidden">
                     <p id="feedback-text"></p>
                 </div>
-                
-                <!-- Hidden progress bar for JavaScript control -->
-                <div style="display: none;">
-                    <div id="progress-bar" class="progress-bar"></div>
-                    <div id="code-progress-bar" class="progress-bar"></div>
-                </div>
             </div>
             
             <!-- Code Implementation Area (Hidden by Default) -->
             <div id="code-section" class="code-section hidden">
-                <h2 class="section-title">Algorithm Implementation</h2>
+                <h2>Algorithm Implementation</h2>
                 
                 <div class="code-header">
                     <div class="code-progress">
                         <div class="progress-text">Current Progress Level: <span id="code-progress-level">0</span> / 3</div>
+                        <div class="progress-container mini">
+                            <div id="code-progress-bar" class="progress-bar"></div>
+                        </div>
                     </div>
                     
                     <div class="code-templates">
@@ -525,25 +184,26 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        
+        <!-- Challenge Mode Section (Hidden by Default) -->
+        <div id="challenge-section" class="challenge-section hidden">
+            <h2>Challenge: Implement a Variation</h2>
+            <p class="challenge-description">
+                Implement a modification of the isSubtree function that allows for a "fuzzy" match, 
+                where the subtree can differ by at most one node value from the pattern.
+            </p>
             
-            <!-- Challenge Mode Section (Hidden by Default) -->
-            <div id="challenge-section" class="challenge-section hidden">
-                <h2 class="section-title">Challenge: Implement a Variation</h2>
-                <p class="challenge-description">
-                    Implement a modification of the isSubtree function that allows for a "fuzzy" match, 
-                    where the subtree can differ by at most one node value from the pattern.
-                </p>
-                
-                <textarea id="challenge-editor" class="code-editor" placeholder="function fuzzySubtree(root, subRoot, maxDifferences = 1) {
+            <textarea id="challenge-editor" class="code-editor" placeholder="function fuzzySubtree(root, subRoot, maxDifferences = 1) {
   // Your implementation here
 }"></textarea>
+            
+            <div id="challenge-feedback" class="challenge-feedback hidden">
+                <p id="challenge-feedback-text"></p>
                 
-                <div id="challenge-feedback" class="feedback-message hidden">
-                    <p id="challenge-feedback-text"></p>
-                    
-                    <div id="solution-section" class="solution-section hidden">
-                        <h4>Example Solution:</h4>
-                        <pre class="solution-code" id="solution-code">function fuzzySubtree(root, subRoot, maxDifferences = 1) {
+                <div id="solution-section" class="solution-section hidden">
+                    <h4>Example Solution:</h4>
+                    <pre class="solution-code" id="solution-code">function fuzzySubtree(root, subRoot, maxDifferences = 1) {
   if (!subRoot) return true;
   if (!root) return false;
   
@@ -570,38 +230,24 @@ function fuzzySameTree(p, q, maxDifferences, differences = 0) {
   return fuzzySameTree(p.left, q.left, maxDifferences, differences) && 
          fuzzySameTree(p.right, q.right, maxDifferences, differences);
 }</pre>
-                    </div>
-                </div>
-                
-                <div class="challenge-actions">
-                    <button id="clear-challenge-btn" class="action-btn">Clear</button>
-                    <button id="submit-challenge-btn" class="action-btn primary">Submit Solution</button>
-                </div>
-                
-                <div id="challenge-hint" class="hint-box">
-                    <p><strong>Hint:</strong> You'll need to modify both functions. Create a 
-                    fuzzySameTree function that tracks the number of differing nodes and 
-                    allows matches when differences ≤ maxDifferences.</p>
                 </div>
             </div>
+            
+            <div class="challenge-actions">
+                <button id="clear-challenge-btn" class="action-btn">Clear</button>
+                <button id="submit-challenge-btn" class="action-btn primary">Submit Solution</button>
+            </div>
+            
+            <div id="challenge-hint" class="hint-box">
+                <p><strong>Hint:</strong> You'll need to modify both functions. Create a 
+                fuzzySameTree function that tracks the number of differing nodes and 
+                allows matches when differences ≤ maxDifferences.</p>
+            </div>
         </div>
-        
-        <!-- About this project section -->
-        <div class="about-section">
-            <h2 class="about-title">About This <span>Project</span></h2>
-            <p>
-                This interactive learning tool was developed as part of my personal project. 
-                It demonstrates the application of educational technology to teach complex algorithms through visualization and interaction.
-            </p>
-            <p>
-                The Subtree Algorithm is an important concept in computer science, particularly for comparing hierarchical structures 
-                like DOM trees, abstract syntax trees, and file systems.
-            </p>
-        </div>
-    </div>
-
+    </main>
+    
     <footer>
-        <p>© 2025 UC Berkeley ML/AI Professional Certificate Program</p>
+        <p>&copy; 2025 UC Berkeley ML/AI Professional Certificate Program</p>
     </footer>
     
     <script src="learning_algorithm.js"></script>
