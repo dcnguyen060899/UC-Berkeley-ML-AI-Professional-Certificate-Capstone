@@ -69,41 +69,38 @@ def api_check():
         
 @app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
-    data = request.get_json()
-    user_solution = data.get("code", "")
-    challenge_type = data.get("challenge_type", "")
-    
-    # Construct a prompt for the AI to evaluate the solution
-    evaluation_prompt = f"""
-    Evaluate this solution for the {challenge_type} algorithm challenge:
-    
-    ```javascript
-    {user_solution}
-    ```
-    
-    Check for:
-    1. Correctness - Does it implement the required algorithm properly?
-    2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
-    3. Edge cases - Does it handle null/empty inputs and other edge cases?
-    4. Code quality - Is the code well-structured and efficient?
-    
-    Return a JSON with: score (0-100), feedback (detailed explanation), and improvement_suggestions (list).
-    """
-    
-    # Use your existing chat service to get an evaluation
-    response_content = chat_service.get_response(evaluation_prompt)
-    
-    # Try to parse as JSON, fall back to text if not valid JSON
     try:
-        import json
-        evaluation = json.loads(response_content)
-        return jsonify(evaluation)
-    except:
+        print("Received challenge evaluation request")
+        data = request.get_json()
+        if not data:
+            print("No JSON data received")
+            return jsonify({
+                "score": 0,
+                "feedback": "No solution data received",
+                "improvement_suggestions": ["Please provide a solution"]
+            }), 400
+            
+        user_solution = data.get("code", "")
+        challenge_type = data.get("challenge_type", "")
+        
+        print(f"Processing solution of length: {len(user_solution)}")
+        
+        # Existing code...
+        
+        # Add more logging
+        print(f"API response received, length: {len(response_content)}")
+        
+        # Rest of your code...
+        
+    except Exception as e:
+        import traceback
+        print(f"Error in evaluate_challenge: {str(e)}")
+        traceback.print_exc()  # This prints the full stack trace
         return jsonify({
             "score": 0,
-            "feedback": response_content,
-            "improvement_suggestions": []
-        })
+            "feedback": f"Server error: {str(e)}",
+            "improvement_suggestions": ["Try a simpler solution"]
+        }), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
