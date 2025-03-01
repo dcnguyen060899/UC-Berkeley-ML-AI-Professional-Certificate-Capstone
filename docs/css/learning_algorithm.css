@@ -549,3 +549,53 @@ footer {
     color: var(--berkeley-blue);
     margin-bottom: 10px;
 }
+
+/* Thinking animation styles */
+.thinking-animation {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.thinking-animation.hidden {
+    display: none;
+}
+
+.thinking-text {
+    margin-left: 10px;
+    color: var(--berkeley-blue);
+    font-weight: 500;
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background-color: var(--berkeley-blue);
+    animation: dot-pulse 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes dot-pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+}
