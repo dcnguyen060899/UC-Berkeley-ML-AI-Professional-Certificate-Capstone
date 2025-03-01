@@ -7,7 +7,7 @@ from chatservice import ChatService
 import time
 
 load_dotenv()
-app = Flask(__name__, static_folder='../../docs', static_url_path='/static')
+app = Flask(__name__, static_folder='../../docs', static_url_path='/')
 CORS(app)  # Initialize CORS with the Flask app
 
 
@@ -67,7 +67,7 @@ def api_check():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
         
-@app.route("/evaluate-challenge", methods=["POST"])
+@app.route("/api/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
     try:
         print(">>> /evaluate-challenge called")
