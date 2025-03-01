@@ -38,6 +38,7 @@ base_qa = {
     "What were the main challenges you faced during this project?": "The main challenges included dealing with imbalanced data, ensuring model generalization across different hospital types and regions, and accurately predicting outcomes for less common cases. Hyperparameter tuning and feature engineering were also critical to improving model performance."
 }
 
+
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
@@ -54,19 +55,6 @@ def chat():
     response_content = chat_service.get_response(user_message)
     return jsonify({"response": response_content})
 
-
-@app.route("/api-check", methods=["GET"])
-def api_check():
-    try:
-        # This is a simplified check. Consider a more specific test for API connectivity if necessary.
-        response = chat_service.get_response("Hello")
-        if response:
-            return jsonify(
-                {"status": "success", "message": "API connection is working."}
-            )
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)})
-        
 @app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
     data = request.get_json()
@@ -106,6 +94,18 @@ def evaluate_challenge():
             "feedback": response_content,
             "improvement_suggestions": []
         })
+
+@app.route("/api-check", methods=["GET"])
+def api_check():
+    try:
+        # This is a simplified check. Consider a more specific test for API connectivity if necessary.
+        response = chat_service.get_response("Hello")
+        if response:
+            return jsonify(
+                {"status": "success", "message": "API connection is working."}
+            )
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
     
 if __name__ == "__main__":
     app.run(debug=True)
