@@ -437,37 +437,11 @@ function clearChallenge() {
 
 function submitChallenge() {
     const userSolution = challengeEditor.value;
-    challengeSubmitted = true;
-    
-    // Check for key elements
-    const keyElements = [
-        "fuzzySubtree", 
-        "maxDifferences", 
-        "isSameTree", 
-        "let differences = 0",
-        "differences++",
-        "differences <= maxDifferences"
-    ];
-    
-    const missingElements = keyElements.filter(element => 
-        !userSolution.includes(element)
-    );
     
     challengeFeedback.classList.remove('hidden');
+    challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    if (missingElements.length === 0) {
-        challengeFeedbackText.textContent = "Great job! Your solution includes all the key elements for a fuzzy matching algorithm. The approach to track differences and allow for a maximum number of mismatches is correct.";
-    } else if (missingElements.length <= 2) {
-        challengeFeedbackText.textContent = `Your solution is on the right track, but is missing some key elements: ${missingElements.join(", ")}. Try implementing these concepts to complete the fuzzy matching algorithm.`;
-    } else {
-        challengeFeedbackText.textContent = "Your solution is missing several key elements needed for fuzzy matching. Remember that you need to track the number of value differences and allow matching when differences are below the threshold.";
-    }
-    
-    solutionSection.classList.remove('hidden');
-    
-    // Optional: Send to backend for more sophisticated evaluation
-    // This would be implemented if you have a backend service
-    // Replace the simple validation with API call
+    // Use the backend API to evaluate the solution
     fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -480,26 +454,58 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-        challengeFeedback.classList.remove('hidden');
+        challengeSubmitted = true;
         
         if (typeof data.feedback === 'string') {
             challengeFeedbackText.textContent = data.feedback;
         } else {
-            challengeFeedbackText.textContent = "Your solution has been evaluated. Score: " + data.score + "/100";
+            let feedbackText = `Your solution has been evaluated. Score: ${data.score}/100\n\n${data.feedback}`;
             
             // If there are improvement suggestions, display them
             if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-                challengeFeedbackText.textContent += "\n\nSuggestions for improvement:\n" + 
-                    data.improvement_suggestions.join("\n");
+                feedbackText += "\n\nSuggestions for improvement:\n" + 
+                    data.improvement_suggestions.join("\n- ");
             }
+            
+            challengeFeedbackText.textContent = feedbackText;
         }
         
-        solutionSection.classList.remove('hidden');
+        // Show the solution if their score is low or they're missing key elements
+        if (!data.score || data.score < 70) {
+            solutionSection.classList.remove('hidden');
+        }
     })
     .catch(error => {
         console.error('Error:', error);
-        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+        
+        // Fallback to client-side evaluation if API call fails
+        challengeSubmitted = true;
+        
+        // Check for key elements
+        const keyElements = [
+            "fuzzySubtree", 
+            "maxDifferences", 
+            "isSameTree", 
+            "let differences = 0",
+            "differences++",
+            "differences <= maxDifferences"
+        ];
+        
+        const missingElements = keyElements.filter(element => 
+            !userSolution.includes(element)
+        );
+        
+        if (missingElements.length === 0) {
+            challengeFeedbackText.textContent = "Great job! Your solution includes all the key elements for a fuzzy matching algorithm. The approach to track differences and allow for a maximum number of mismatches is correct.";
+        } else if (missingElements.length <= 2) {
+            challengeFeedbackText.textContent = `Your solution is on the right track, but is missing some key elements: ${missingElements.join(", ")}. Try implementing these concepts to complete the fuzzy matching algorithm.`;
+        } else {
+            challengeFeedbackText.textContent = "Your solution is missing several key elements needed for fuzzy matching. Remember that you need to track the number of value differences and allow matching when differences are below the threshold.";
+        }
+        
+        solutionSection.classList.remove('hidden');
     });
+}
 
 // Utility functions
 function showFeedback(message, duration = 0) {
