@@ -436,66 +436,56 @@ function clearChallenge() {
 }
 
 // Function to submit the challenge solution
-    function submitChallenge() {
-        const userSolution = challengeEditor.value;
+function submitChallenge() {
+    const userSolution = challengeEditor.value;
+    
+    // Show loading state
+    challengeFeedback.classList.remove('hidden');
+    challengeFeedbackText.textContent = "Evaluating your solution...";
+    
+    // Call the API for evaluation
+    fetch('/evaluate-challenge', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            code: userSolution,
+            challenge_type: 'fuzzySubtree'
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        challengeFeedback.classList.remove('hidden');
         
-        if (!userSolution || userSolution.trim() === '') {
-            challengeFeedback.classList.remove('hidden');
-            challengeFeedbackText.textContent = "Please enter a solution before submitting.";
-            return;
+        if (typeof data.feedback === 'string') {
+            challengeFeedbackText.textContent = data.feedback;
+        } else {
+            challengeFeedbackText.textContent = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
         }
         
-        // Show loading state
-        challengeFeedback.classList.remove('hidden');
-        challengeFeedbackText.textContent = "Evaluating your solution...";
-        
-        // Make the API call to evaluate the solution
-        fetch('/evaluate-challenge', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code: userSolution, challenge_type: 'fuzzySubtree' }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Server responded with status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Process and display the evaluation data
-            if (data.feedback) {
-                let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
-                if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-                    formattedFeedback += "\n\nSuggestions for improvement:";
-                    data.improvement_suggestions.forEach(suggestion => {
-                        formattedFeedback += `\n• ${suggestion}`;
-                    });
-                }
-                // Replace newlines with HTML breaks for proper formatting
-                challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
-            } else {
-                challengeFeedbackText.textContent = "Received response but no feedback was provided.";
-            }
-            
-            // Show the solution section if the score is low (or score is not provided)
-            if (!data.score || data.score < 70) {
-                solutionSection.classList.remove('hidden');
-            } else {
-                solutionSection.classList.add('hidden');
-            }
-            
-            challengeSubmitted = true;
-        })
-        .catch(error => {
-            console.error('Error details:', error);
-            challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check the console for details.`;
+        // Show example solution if score is below threshold
+        if (data.score < 70) {
             solutionSection.classList.remove('hidden');
-        });
-    }
-    
-    // Attach the submitChallenge function to the submit button
-    submitButton.addEventListener('click', submitChallenge);
-});
+        } else {
+            solutionSection.classList.add('hidden');
+        }
+        
+        // Show improvement suggestions if any
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            let suggestionsText = "\n\nSuggestions for improvement:\n• " + 
+                data.improvement_suggestions.join("\n• ");
+            
+            challengeFeedbackText.textContent += suggestionsText;
+        }
+        
+        challengeSubmitted = true;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+    });
+}
 
 // Update UI based on current state
 function updateUI() {
