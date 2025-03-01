@@ -191,41 +191,48 @@
             </p>
             
             <textarea id="challenge-editor" class="code-editor" placeholder="function fuzzySubtree(root, subRoot, maxDifferences = 1) {
-  // Your implementation here
-}"></textarea>
+              // Your implementation here
+            }"></textarea>
             
             <div id="challenge-feedback" class="challenge-feedback hidden">
+                <div id="thinking-animation" class="thinking-animation hidden">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <div class="thinking-text">Evaluating your solution...</div>
+                </div>
+                
                 <p id="challenge-feedback-text"></p>
                 
                 <div id="solution-section" class="solution-section hidden">
                     <h4>Example Solution:</h4>
                     <pre class="solution-code" id="solution-code">function fuzzySubtree(root, subRoot, maxDifferences = 1) {
-  if (!subRoot) return true;
-  if (!root) return false;
-  
-  // Check if current trees fuzzy match
-  if (fuzzySameTree(root, subRoot, maxDifferences)) return true;
-  
-  // Recursive search in left and right subtrees
-  return fuzzySubtree(root.left, subRoot, maxDifferences) || 
-         fuzzySubtree(root.right, subRoot, maxDifferences);
-}
-
-function fuzzySameTree(p, q, maxDifferences, differences = 0) {
-  // Base cases
-  if (!p && !q) return true;
-  if (!p || !q) return false;
-  
-  // Value comparison - allow differences up to maxDifferences
-  if (p.val !== q.val) {
-    differences++;
-    if (differences > maxDifferences) return false;
-  }
-  
-  // Check both subtrees recursively, passing the current difference count
-  return fuzzySameTree(p.left, q.left, maxDifferences, differences) && 
-         fuzzySameTree(p.right, q.right, maxDifferences, differences);
-}</pre>
+                      if (!subRoot) return true;
+                      if (!root) return false;
+                      
+                      // Check if current trees fuzzy match
+                      if (fuzzySameTree(root, subRoot, maxDifferences)) return true;
+                      
+                      // Recursive search in left and right subtrees
+                      return fuzzySubtree(root.left, subRoot, maxDifferences) || 
+                             fuzzySubtree(root.right, subRoot, maxDifferences);
+                    }
+                    
+                    function fuzzySameTree(p, q, maxDifferences, differences = 0) {
+                      // Base cases
+                      if (!p && !q) return true;
+                      if (!p || !q) return false;
+                      
+                      // Value comparison - allow differences up to maxDifferences
+                      if (p.val !== q.val) {
+                        differences++;
+                        if (differences > maxDifferences) return false;
+                      }
+                      
+                      // Check both subtrees recursively, passing the current difference count
+                      return fuzzySameTree(p.left, q.left, maxDifferences, differences) && 
+                             fuzzySameTree(p.right, q.right, maxDifferences, differences);
+                    }</pre>
                 </div>
             </div>
             
