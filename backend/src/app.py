@@ -65,14 +65,12 @@ def evaluate_challenge():
     
     # Try to parse as JSON, fall back to text if not valid JSON
     try:
-        # If the response is already JSON, return it directly
         import json
         evaluation = json.loads(response_content)
         return jsonify(evaluation)
     except:
-        # If response isn't valid JSON, wrap it in a simple structure
         return jsonify({
-            "score": 0,  # Default score
+            "score": 0,
             "feedback": response_content,
             "improvement_suggestions": []
         })
