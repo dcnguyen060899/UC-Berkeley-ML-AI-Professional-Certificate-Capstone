@@ -10,8 +10,8 @@ load_dotenv()
 app = Flask(__name__, static_folder='../../docs', static_url_path='/')
 CORS(app)  # Initialize CORS with the Flask app
 
-# # Add specific CORS configuration for the evaluate-challenge endpoint
-# CORS(app, resources={r"/evaluate-challenge": {"origins": "https://ucberkeley-ml-ai-capstone.com"}})
+# Add specific CORS configuration for the evaluate-challenge endpoint
+CORS(app, resources={r"/evaluate-challenge": {"origins": "https://ucberkeley-ml-ai-capstone.com"}})
 
 api_key = os.getenv("OPENAI_API_KEY")
 chat_service = ChatService(api_key=api_key)
