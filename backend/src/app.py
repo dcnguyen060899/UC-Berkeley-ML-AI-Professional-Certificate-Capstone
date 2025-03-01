@@ -66,52 +66,67 @@ def api_check():
             )
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
-
+        
 @app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
     try:
+        print(">>> /evaluate-challenge called")
         data = request.get_json()
+        if not data:
+            print("No JSON received.")
+            return jsonify({
+                "score": 0,
+                "feedback": "No solution data received.",
+                "improvement_suggestions": []
+            }), 400
+        
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
-        
-        # Construct a prompt for the AI to evaluate the solution
+        print(f"User solution length: {len(user_solution)}")
+        print(f"Challenge type: {challenge_type}")
+
+        # Construct a prompt that instructs the model to return valid JSON.
         evaluation_prompt = f"""
         Evaluate this JavaScript solution for the {challenge_type} algorithm challenge:
-        
+
         ```javascript
         {user_solution}
         ```
-        
+
         The challenge is to implement a modification of the isSubtree function that allows for a "fuzzy" match, 
         where the subtree can differ by at most one node value from the pattern.
-        
+
         Check for:
         1. Correctness - Does it implement the required algorithm properly?
         2. Key concepts - Does it handle tracking of differences and maximum differences correctly?
         3. Edge cases - Does it handle null/empty inputs and other edge cases?
         4. Code quality - Is the code well-structured and efficient?
-        
-        Return your evaluation as JSON with these fields:
-        - score (0-100): How well the solution meets the requirements
-        - feedback: Detailed explanation of strengths and weaknesses
-        - improvement_suggestions: List of specific ways to improve the code
+
+        Please return your evaluation as valid JSON in the following format:
+        {{
+            "score": <number 0-100>,
+            "feedback": "<detailed explanation>",
+            "improvement_suggestions": ["<suggestion 1>", "<suggestion 2>", ...]
+        }}
         """
-        
-        # Use your existing chat service to get an evaluation
+
         response_content = chat_service.get_response(evaluation_prompt)
-        
-        # Try to parse as JSON, fall back to text if not valid JSON
+        print("Raw response from chat_service:", response_content)
+
         try:
-            import json
             evaluation = json.loads(response_content)
+            print("Parsed JSON successfully:", evaluation)
             return jsonify(evaluation)
-        except:
-            # If the response isn't valid JSON, wrap it in a simple structure
+        except Exception as parse_error:
+            print("JSON parse error:", parse_error)
+            # Return a fallback JSON structure if parsing fails.
             return jsonify({
                 "score": 60,
-                "feedback": response_content,
-                "improvement_suggestions": ["Ensure you track the count of differences properly", 
-                                         "Make sure your recursive calls pass the differences parameter"]
+                "feedback": f"Response did not parse as JSON. Raw response: {response_content}",
+                "improvement_suggestions": [
+                    "Ensure you track the count of differences properly",
+                    "Make sure your recursive calls pass the differences parameter"
+                ]
             })
             
     except Exception as e:
