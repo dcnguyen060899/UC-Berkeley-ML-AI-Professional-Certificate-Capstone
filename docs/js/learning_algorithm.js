@@ -448,12 +448,12 @@ function submitChallenge() {
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    // Call the API for evaluation
+    // Use a fully qualified URL if necessary. For example, if your Flask app is running on port 5000:
+    // const apiUrl = 'http://127.0.0.1:5000/evaluate-challenge';
+    // Otherwise, if you're serving the HTML from Flask, '/evaluate-challenge' is fine.
     fetch('/evaluate-challenge', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             code: userSolution,
             challenge_type: 'fuzzySubtree'
@@ -467,27 +467,15 @@ function submitChallenge() {
     })
     .then(data => {
         challengeFeedback.classList.remove('hidden');
-        
-        // Handle the response data
-        if (data.feedback) {
-            // Format feedback with proper line breaks for HTML
-            let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
-            
-            // Add improvement suggestions if available
-            if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-                formattedFeedback += "\n\nSuggestions for improvement:";
-                data.improvement_suggestions.forEach(suggestion => {
-                    formattedFeedback += `\n• ${suggestion}`;
-                });
-            }
-            
-            // Display feedback with proper line breaks
-            challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
-        } else {
-            challengeFeedbackText.textContent = "Received response but no feedback was provided.";
+        let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            formattedFeedback += "\n\nSuggestions for improvement:";
+            data.improvement_suggestions.forEach(suggestion => {
+                formattedFeedback += `\n• ${suggestion}`;
+            });
         }
+        challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
         
-        // Show example solution for lower scores
         if (!data.score || data.score < 70) {
             solutionSection.classList.remove('hidden');
         } else {
@@ -498,12 +486,8 @@ function submitChallenge() {
     })
     .catch(error => {
         console.error('Error details:', error);
-        
-        // Handle the error state
         challengeFeedback.classList.remove('hidden');
         challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check the console for details and try again.`;
-        
-        // Still show the solution since there was an error
         solutionSection.classList.remove('hidden');
     });
 }
