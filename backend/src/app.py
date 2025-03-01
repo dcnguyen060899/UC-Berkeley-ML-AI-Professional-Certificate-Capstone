@@ -67,66 +67,45 @@ def api_check():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
         
-@app.route("/evaluate-challenge", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+@app.route("/evaluate-challenge", methods=["POST"])
 def evaluate_challenge():
+    data = request.get_json()
+    user_solution = data.get("code", "")
+    challenge_type = data.get("challenge_type", "")
+    
+    # Construct a prompt for the AI to evaluate the solution
+    evaluation_prompt = f"""
+    Evaluate this solution for the {challenge_type} algorithm challenge:
+    
+    ```javascript
+    {user_solution}
+    ```
+    
+    Check for:
+    1. Correctness - Does it implement the required algorithm properly?
+    2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
+    3. Edge cases - Does it handle null/empty inputs and other edge cases?
+    4. Code quality - Is the code well-structured and efficient?
+    
+    Return a JSON with: score (0-100), feedback (detailed explanation), and improvement_suggestions (list).
+    """
+    
+    # Use your existing chat service to get an evaluation
+    response_content = chat_service.get_response(evaluation_prompt)
+    
+    # Try to parse as JSON, fall back to text if not valid JSON
     try:
-        data = request.get_json()
-        user_solution = data.get("code", "")
-        challenge_type = data.get("challenge_type", "")
-        
-        # Log what we're receiving
-        print(f"Received solution for evaluation, length: {len(user_solution)}")
-        
-        # Construct a prompt for the AI
-        evaluation_prompt = f"""
-        Evaluate this solution for the {challenge_type} algorithm challenge:
-        
-        ```javascript
-        {user_solution}
-        ```
-        
-        Check for:
-        1. Correctness - Does it implement the required algorithm properly?
-        2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
-        3. Edge cases - Does it handle null/empty inputs and other edge cases?
-        4. Code quality - Is the code well-structured and efficient?
-        
-        Return a score from 0-100, followed by detailed feedback and 2-3 specific improvement suggestions.
-        """
-        
-        try:
-            # Use your existing chat service
-            response_content = chat_service.get_response(evaluation_prompt)
-            print(f"Received response from AI, length: {len(response_content)}")
-            
-            # Format as simple JSON even if the response isn't JSON
-            return jsonify({
-                "score": 75,  # Default score
-                "feedback": response_content,
-                "improvement_suggestions": []
-            })
-            
-        except Exception as chat_error:
-            print(f"Error from chat service: {str(chat_error)}")
-            return jsonify({
-                "score": 50,
-                "feedback": "Your solution has been evaluated. It includes some key elements for fuzzy matching but might benefit from more structure and error handling.",
-                "improvement_suggestions": ["Ensure you're tracking difference counts properly", "Consider adding more comments to explain your logic"]
-            })
-            
-    except Exception as e:
-        import traceback
-        print(f"Error in evaluate-challenge: {str(e)}")
-        print(traceback.format_exc())
+        # If the response is already JSON, return it directly
+        import json
+        evaluation = json.loads(response_content)
+        return jsonify(evaluation)
+    except:
+        # If response isn't valid JSON, wrap it in a simple structure
         return jsonify({
-            "score": 0,
-            "feedback": "Server encountered an error during evaluation.",
+            "score": 0,  # Default score
+            "feedback": response_content,
             "improvement_suggestions": []
         })
-
-@app.route("/eval2", methods=["POST"])
-def eval2():
-    return jsonify({"status": "success"})
     
 if __name__ == "__main__":
     app.run(debug=True)
