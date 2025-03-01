@@ -44,83 +44,33 @@ def evaluate_challenge():
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
         
-        print(f"Received solution ({len(user_solution)} chars) for evaluation")
-        
-        # Construct the prompt for the AI
+        # Construct a prompt that asks for specific feedback but doesn't require JSON formatting
         evaluation_prompt = f"""
-        Evaluate this solution for the {challenge_type} algorithm challenge:
+        You are an expert code reviewer evaluating a solution for the {challenge_type} algorithm challenge.
         
+        Here is the user's solution:
         ```javascript
         {user_solution}
         ```
         
-        Check for:
-        1. Correctness - Does it implement the required algorithm properly?
-        2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
-        3. Edge cases - Does it handle null/empty inputs and other edge cases?
-        4. Code quality - Is the code well-structured and efficient?
+        Please provide a detailed evaluation covering:
+        1. SCORE: Give a numerical score from 0-100
+        2. FEEDBACK: Detailed explanation of the solution's strengths and weaknesses
+        3. SUGGESTIONS: Bullet points of specific ways to improve the solution
         
-        You MUST return your response in valid JSON format with the following structure:
-        {
-            "score": (a number from 0-100),
-            "feedback": "detailed explanation here",
-            "improvement_suggestions": ["suggestion 1", "suggestion 2", "etc"]
-        }
+        Format your response in clear sections with the headings "Score", "Feedback", and "Suggestions for Improvement".
+        Be specific and technical in your feedback.
         """
         
-        # Use your existing chat service to get an evaluation
-        try:
-            response_content = chat_service.get_response(evaluation_prompt)
-            print(f"Received API response of length: {len(response_content)}")
-        except Exception as api_error:
-            print(f"API Error: {str(api_error)}")
-            return jsonify({
-                "score": 0,
-                "feedback": f"Error connecting to evaluation service: {str(api_error)}",
-                "improvement_suggestions": ["Try again later"]
-            })
+        # Simply get the response as text, similar to your chat endpoint
+        response_content = chat_service.get_response(evaluation_prompt)
         
-        # Try to parse as JSON
-        try:
-            import json
-            # First try direct parsing
-            evaluation = json.loads(response_content)
-            return jsonify(evaluation)
-        except json.JSONDecodeError as json_error:
-            print(f"JSON Parsing Error: {str(json_error)}")
-            try:
-                # Look for JSON within the text (sometimes APIs wrap JSON in explanatory text)
-                import re
-                json_pattern = r'\{[\s\S]*\}'
-                match = re.search(json_pattern, response_content)
-                if match:
-                    evaluation = json.loads(match.group(0))
-                    return jsonify(evaluation)
-            except:
-                pass
-            
-            # Fall back to text response
-            return jsonify({
-                "score": 50,
-                "feedback": "Your solution was evaluated, but we couldn't format the feedback properly. Here's what our analysis found:\n\n" + response_content,
-                "improvement_suggestions": []
-            })
-            
+        # Return it directly without trying to parse as JSON
+        return jsonify({"response": response_content})
+        
     except Exception as e:
-        print(f"General Error: {str(e)}")
-        return jsonify({
-            "score": 0,
-            "feedback": f"An error occurred during evaluation: {str(e)}",
-            "improvement_suggestions": ["Please try again"]
-        })
-
-@app.route("/test-evaluation", methods=["GET"])
-def test_evaluation():
-    return jsonify({
-        "score": 85,
-        "feedback": "This is a test response. Your solution has good structure and handles the core requirements well.",
-        "improvement_suggestions": ["Add more comments", "Consider edge cases"]
-    })
+        print(f"Error in evaluate_challenge: {str(e)}")
+        return jsonify({"response": f"Error evaluating solution: {str(e)}"})
         
 @app.route("/")
 def index():
