@@ -439,6 +439,12 @@ function clearChallenge() {
 function submitChallenge() {
     const userSolution = challengeEditor.value;
     
+    if (!userSolution || userSolution.trim() === '') {
+        challengeFeedback.classList.remove('hidden');
+        challengeFeedbackText.textContent = "Please enter a solution before submitting.";
+        return;
+    }
+    
     // Show loading state
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
@@ -454,36 +460,52 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         challengeFeedback.classList.remove('hidden');
         
-        if (typeof data.feedback === 'string') {
-            challengeFeedbackText.textContent = data.feedback;
+        // Handle the response data
+        if (data.feedback) {
+            // Format feedback with proper line breaks for HTML
+            let formattedFeedback = `Score: ${data.score || 'N/A'}/100\n\n${data.feedback}`;
+            
+            // Add improvement suggestions if available
+            if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+                formattedFeedback += "\n\nSuggestions for improvement:";
+                data.improvement_suggestions.forEach(suggestion => {
+                    formattedFeedback += `\n• ${suggestion}`;
+                });
+            }
+            
+            // Display feedback with proper line breaks
+            challengeFeedbackText.innerHTML = formattedFeedback.replace(/\n/g, '<br>');
         } else {
-            challengeFeedbackText.textContent = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
+            challengeFeedbackText.textContent = "Received response but no feedback was provided.";
         }
         
-        // Show example solution if score is below threshold
-        if (data.score < 70) {
+        // Show example solution for lower scores
+        if (!data.score || data.score < 70) {
             solutionSection.classList.remove('hidden');
         } else {
             solutionSection.classList.add('hidden');
         }
         
-        // Show improvement suggestions if any
-        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-            let suggestionsText = "\n\nSuggestions for improvement:\n• " + 
-                data.improvement_suggestions.join("\n• ");
-            
-            challengeFeedbackText.textContent += suggestionsText;
-        }
-        
         challengeSubmitted = true;
     })
     .catch(error => {
-        console.error('Error:', error);
-        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+        console.error('Error details:', error);
+        
+        // Handle the error state
+        challengeFeedback.classList.remove('hidden');
+        challengeFeedbackText.textContent = `Error evaluating solution: ${error.message}. Please check the console for details and try again.`;
+        
+        // Still show the solution since there was an error
+        solutionSection.classList.remove('hidden');
     });
 }
 
