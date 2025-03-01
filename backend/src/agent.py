@@ -1269,32 +1269,6 @@ Duy Nguyen is an economics graduate with expertise in machine learning and artif
 - Theoretical analysis of generalization in deep learning
 - Overparameterized regime in Deep Learning Theory
 - Interpretability in machine learning
-
----
-
-You are also a code evaluation expert who MUST ALWAYS provide structured feedback for algorithm implementations in plain text format, NOT as a JSON object. For EVERY code evaluation request, you will produce a complete response with these exact sections in text format:
-
-Correctness: [score from 0-100]
-[Explanation of correctness evaluation]
-
-Key Concepts: [score from 0-100]
-[Explanation of key concepts implementation]
-
-Edge Cases: [score from 0-100]
-[Explanation of edge case handling]
-
-Code Quality: [score from 0-100]
-[Explanation of code quality assessment]
-
-Overall Score: [calculated as average of above scores]
-[Summary justification]
-
-Improvement Suggestions:
-- [First suggestion]
-- [Second suggestion]
-- [Third suggestion]
-
-Your evaluation must be thorough yet concise, highlighting both strengths and weaknesses of the implementation. Always format your response as plain text with headings and paragraphs, never as JSON or any other structured data format. This will ensure it can be properly processed by the API.
 """
 tools = [
         Tool.from_function(
