@@ -470,6 +470,63 @@ function submitChallenge() {
     });
 }
 
+// Helper function to format the feedback nicely
+function formatFeedback(data) {
+    // Create a formatted feedback text
+    let feedbackText = '';
+    
+    // Add overall score if available
+    if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
+        const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
+        feedbackText += `🎯 Overall Score: ${score}/100\n\n`;
+    }
+    
+    // Format each category
+    const categories = ['Correctness', 'Key Concepts', 'Edge Cases', 'Code Quality'];
+    
+    categories.forEach(category => {
+        if (data[category]) {
+            feedbackText += `✅ ${category}:\n`;
+            
+            if (typeof data[category] === 'object') {
+                // If it's an object with Score and Feedback
+                if (data[category].Score) {
+                    feedbackText += `   Score: ${data[category].Score}/100\n`;
+                }
+                if (data[category].Feedback) {
+                    feedbackText += `   ${data[category].Feedback}\n`;
+                }
+            } else {
+                // If it's just a string
+                feedbackText += `   ${data[category]}\n`;
+            }
+            feedbackText += '\n';
+        }
+    });
+    
+    // Add suggestions
+    if (data.Suggestions || data.suggestions) {
+        const suggestions = data.Suggestions || data.suggestions;
+        feedbackText += `💡 Improvement Suggestions:\n`;
+        if (Array.isArray(suggestions)) {
+            suggestions.forEach((suggestion, index) => {
+                feedbackText += `   ${index + 1}. ${suggestion}\n`;
+            });
+        } else {
+            feedbackText += `   ${suggestions}\n`;
+        }
+    }
+    
+    // Use the formatted text
+    challengeFeedbackText.textContent = feedbackText;
+    
+    // Style the text for better readability
+    challengeFeedbackText.style.whiteSpace = 'pre-line';
+    challengeFeedbackText.style.lineHeight = '1.5';
+    
+    solutionSection.classList.remove('hidden');
+}
+
 // Utility functions
 function showFeedback(message, duration = 0) {
     feedbackMessage.classList.remove('hidden');
