@@ -3,191 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Subtree Algorithm Learning</title>
-    <link rel="stylesheet" href="learning_algorithm.css">
+    <title>Interactive Subtree Algorithm Learning - UC Berkeley</title>
+    <link rel="stylesheet" href="berkeley-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">Interactive Subtree Algorithm Learning</h1>
-        
-        <!-- Mode Selection -->
-        <div class="mode-selection">
-            <button id="learn-mode" class="mode-btn active">Learn Mode</button>
-            <button id="practice-mode" class="mode-btn">Practice Mode</button>
-            <button id="challenge-mode" class="mode-btn">Challenge Mode</button>
+    <!-- Berkeley Header -->
+    <header>
+        <div class="logo">
+            <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" class="logo-link" target="_blank">
+                <img src="https://brand.berkeley.edu/wp-content/uploads/2016/11/ucbseal_139_540.png" alt="UC Berkeley Logo">
+            </a>
         </div>
-        
-        <div class="content-area">
-            <!-- Tree Visualization Area -->
-            <div class="visualization-section">
-                <h2>Tree Visualization</h2>
-                
-                <div class="trees-container">
-                    <!-- Main Tree -->
-                    <div class="tree">
-                        <h3>Main Tree</h3>
-                        <svg width="180" height="220" viewBox="0 0 180 220" id="main-tree-svg">
-                            <!-- Node 1 -->
-                            <circle id="node1" cx="90" cy="30" r="15" class="node" data-node-id="node1"></circle>
-                            <text x="90" y="34" text-anchor="middle" font-size="12">1</text>
-                            
-                            <!-- Edge to Node 2 -->
-                            <line x1="80" y1="40" x2="55" y2="65" class="edge"></line>
-                            
-                            <!-- Node 2 -->
-                            <circle id="node2" cx="50" cy="70" r="15" class="node" data-node-id="node2"></circle>
-                            <text x="50" y="74" text-anchor="middle" font-size="12">2</text>
-                            
-                            <!-- Edge to Node 3 -->
-                            <line x1="100" y1="40" x2="125" y2="65" class="edge"></line>
-                            
-                            <!-- Node 3 -->
-                            <circle id="node3" cx="130" cy="70" r="15" class="node" data-node-id="node3"></circle>
-                            <text x="130" y="74" text-anchor="middle" font-size="12">3</text>
-                            
-                            <!-- Edge to Node 4 -->
-                            <line x1="40" y1="80" x2="25" y2="105" class="edge"></line>
-                            
-                            <!-- Node 4 -->
-                            <circle id="node4Main" cx="20" cy="110" r="15" class="node" data-node-id="node4Main"></circle>
-                            <text x="20" y="114" text-anchor="middle" font-size="12">4</text>
-                            
-                            <!-- Edge to Node 5 -->
-                            <line x1="60" y1="80" x2="75" y2="105" class="edge"></line>
-                            
-                            <!-- Node 5 -->
-                            <circle id="node5Main" cx="80" cy="110" r="15" class="node" data-node-id="node5Main"></circle>
-                            <text x="80" y="114" text-anchor="middle" font-size="12">5</text>
-                            
-                            <!-- Edge to Node 6 -->
-                            <line x1="10" y1="120" x2="0" y2="145" class="edge"></line>
-                            
-                            <!-- Node 6 -->
-                            <circle id="node6" cx="0" cy="150" r="15" class="node" data-node-id="node6"></circle>
-                            <text x="0" y="154" text-anchor="middle" font-size="12">6</text>
-                        </svg>
-                    </div>
-                    
-                    <!-- Subtree -->
-                    <div class="tree">
-                        <h3>Subtree</h3>
-                        <svg width="120" height="120" viewBox="0 0 120 120" id="subtree-svg">
-                            <!-- Node 2 -->
-                            <circle id="subRoot" cx="60" cy="30" r="15" class="node" data-node-id="subRoot"></circle>
-                            <text x="60" y="34" text-anchor="middle" font-size="12">2</text>
-                            
-                            <!-- Edge to Node 4 -->
-                            <line x1="50" y1="40" x2="35" y2="65" class="edge"></line>
-                            
-                            <!-- Node 4 -->
-                            <circle id="node4Sub" cx="30" cy="70" r="15" class="node" data-node-id="node4Sub"></circle>
-                            <text x="30" y="74" text-anchor="middle" font-size="12">4</text>
-                            
-                            <!-- Edge to Node 5 -->
-                            <line x1="70" y1="40" x2="85" y2="65" class="edge"></line>
-                            
-                            <!-- Node 5 -->
-                            <circle id="node5Sub" cx="90" cy="70" r="15" class="node" data-node-id="node5Sub"></circle>
-                            <text x="90" y="74" text-anchor="middle" font-size="12">5</text>
-                        </svg>
-                    </div>
-                </div>
-                
-                <!-- Explanation Box -->
-                <div class="explanation-box">
-                    <h3>Current Step</h3>
-                    <p id="step-explanation">Start with isSubtree(root, subRoot) where root is node 1 and subRoot is node 2. We check if the entire trees are identical.</p>
-                    
-                    <div id="hint-box" class="hint-box hidden">
-                        <p><strong>Hint:</strong> <span id="hint-text">We start by comparing the root of the main tree with the root of the subtree.</span></p>
-                    </div>
-                </div>
-                
-                <!-- Controls -->
-                <div class="controls">
-                    <div class="main-controls">
-                        <button id="reset-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>
-                        <button id="prev-btn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button id="play-btn" class="control-btn play-btn"><i class="fas fa-play"></i></button>
-                        <button id="next-btn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
-                        <button id="end-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>
-                    </div>
-                    
-                    <div class="secondary-controls">
-                        <button id="hint-btn" class="control-btn"><i class="fas fa-question-circle"></i></button>
-                        <button id="code-toggle-btn" class="control-btn"><i class="fas fa-code"></i></button>
-                    </div>
-                </div>
-                
-                <!-- Progress Bar -->
-                <div class="progress-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
-                
-                <!-- Feedback Message -->
-                <div id="feedback-message" class="feedback-message hidden">
-                    <p id="feedback-text"></p>
-                </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="https://em-executive.berkeley.edu/professional-certificate-machine-learning-artificial-intelligence" target="_blank">Certificate Program</a>
+            <a href="https://ucberkeley-ml-ai-capstone.com/index_portfolio.html" target="_blank">Portfolio</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="title">Interactive Subtree Algorithm Learning</h1>
+            
+            <!-- Mode Selection -->
+            <div class="mode-selection">
+                <button id="learn-mode" class="mode-btn active">Learn Mode</button>
+                <button id="practice-mode" class="mode-btn">Practice Mode</button>
+                <button id="challenge-mode" class="mode-btn">Challenge Mode</button>
             </div>
             
-            <!-- Code Implementation Area (Hidden by Default) -->
-            <div id="code-section" class="code-section hidden">
-                <h2>Algorithm Implementation</h2>
-                
-                <div class="code-header">
-                    <div class="code-progress">
-                        <div class="progress-text">Current Progress Level: <span id="code-progress-level">0</span> / 3</div>
-                        <div class="progress-container mini">
-                            <div id="code-progress-bar" class="progress-bar"></div>
+            <div class="content-area">
+                <!-- Tree Visualization Area -->
+                <div class="visualization-section">
+                    <h2>Tree Visualization</h2>
+                    
+                    <div class="trees-container">
+                        <!-- Main Tree -->
+                        <div class="tree">
+                            <h3>Main Tree</h3>
+                            <svg width="180" height="220" viewBox="0 0 180 220" id="main-tree-svg">
+                                <!-- Node 1 -->
+                                <circle id="node1" cx="90" cy="30" r="15" class="node" data-node-id="node1"></circle>
+                                <text x="90" y="34" text-anchor="middle" font-size="12">1</text>
+                                
+                                <!-- Edge to Node 2 -->
+                                <line x1="80" y1="40" x2="55" y2="65" class="edge"></line>
+                                
+                                <!-- Node 2 -->
+                                <circle id="node2" cx="50" cy="70" r="15" class="node" data-node-id="node2"></circle>
+                                <text x="50" y="74" text-anchor="middle" font-size="12">2</text>
+                                
+                                <!-- Edge to Node 3 -->
+                                <line x1="100" y1="40" x2="125" y2="65" class="edge"></line>
+                                
+                                <!-- Node 3 -->
+                                <circle id="node3" cx="130" cy="70" r="15" class="node" data-node-id="node3"></circle>
+                                <text x="130" y="74" text-anchor="middle" font-size="12">3</text>
+                                
+                                <!-- Edge to Node 4 -->
+                                <line x1="40" y1="80" x2="25" y2="105" class="edge"></line>
+                                
+                                <!-- Node 4 -->
+                                <circle id="node4Main" cx="20" cy="110" r="15" class="node" data-node-id="node4Main"></circle>
+                                <text x="20" y="114" text-anchor="middle" font-size="12">4</text>
+                                
+                                <!-- Edge to Node 5 -->
+                                <line x1="60" y1="80" x2="75" y2="105" class="edge"></line>
+                                
+                                <!-- Node 5 -->
+                                <circle id="node5Main" cx="80" cy="110" r="15" class="node" data-node-id="node5Main"></circle>
+                                <text x="80" y="114" text-anchor="middle" font-size="12">5</text>
+                                
+                                <!-- Edge to Node 6 -->
+                                <line x1="10" y1="120" x2="0" y2="145" class="edge"></line>
+                                
+                                <!-- Node 6 -->
+                                <circle id="node6" cx="0" cy="150" r="15" class="node" data-node-id="node6"></circle>
+                                <text x="0" y="154" text-anchor="middle" font-size="12">6</text>
+                            </svg>
+                        </div>
+                        
+                        <!-- Subtree -->
+                        <div class="tree">
+                            <h3>Subtree</h3>
+                            <svg width="120" height="120" viewBox="0 0 120 120" id="subtree-svg">
+                                <!-- Node 2 -->
+                                <circle id="subRoot" cx="60" cy="30" r="15" class="node" data-node-id="subRoot"></circle>
+                                <text x="60" y="34" text-anchor="middle" font-size="12">2</text>
+                                
+                                <!-- Edge to Node 4 -->
+                                <line x1="50" y1="40" x2="35" y2="65" class="edge"></line>
+                                
+                                <!-- Node 4 -->
+                                <circle id="node4Sub" cx="30" cy="70" r="15" class="node" data-node-id="node4Sub"></circle>
+                                <text x="30" y="74" text-anchor="middle" font-size="12">4</text>
+                                
+                                <!-- Edge to Node 5 -->
+                                <line x1="70" y1="40" x2="85" y2="65" class="edge"></line>
+                                
+                                <!-- Node 5 -->
+                                <circle id="node5Sub" cx="90" cy="70" r="15" class="node" data-node-id="node5Sub"></circle>
+                                <text x="90" y="74" text-anchor="middle" font-size="12">5</text>
+                            </svg>
                         </div>
                     </div>
                     
-                    <div class="code-templates">
-                        <button id="template-btn" class="template-btn">Template</button>
-                        <button id="level1-btn" class="template-btn">Level 1</button>
-                        <button id="level2-btn" class="template-btn">Level 2</button>
-                        <button id="complete-btn" class="template-btn">Complete</button>
+                    <!-- Explanation Box -->
+                    <div class="explanation-box">
+                        <h3>Current Step</h3>
+                        <p id="step-explanation">Start with isSubtree(root, subRoot) where root is node 1 and subRoot is node 2. We check if the entire trees are identical.</p>
+                        
+                        <div id="hint-box" class="hint-box hidden">
+                            <p><strong>Hint:</strong> <span id="hint-text">We start by comparing the root of the main tree with the root of the subtree.</span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="controls">
+                        <div class="main-controls">
+                            <button id="reset-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>
+                            <button id="prev-btn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button id="play-btn" class="control-btn play-btn"><i class="fas fa-play"></i></button>
+                            <button id="next-btn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+                            <button id="end-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>
+                        </div>
+                        
+                        <div class="secondary-controls">
+                            <button id="hint-btn" class="control-btn"><i class="fas fa-question-circle"></i></button>
+                            <button id="code-toggle-btn" class="control-btn"><i class="fas fa-code"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    
+                    <!-- Feedback Message -->
+                    <div id="feedback-message" class="feedback-message hidden">
+                        <p id="feedback-text"></p>
                     </div>
                 </div>
                 
-                <textarea id="code-editor" class="code-editor" placeholder="Implement the isSubtree and isSameTree functions here..."></textarea>
-                
-                <div class="code-actions">
-                    <button id="reset-code-btn" class="action-btn">Reset</button>
-                    <button id="check-code-btn" class="action-btn primary">Check Code</button>
-                </div>
-                
-                <div class="code-explanation">
-                    <h3>Key Algorithm Insights:</h3>
-                    <ul>
-                        <li>We need two helper functions: <code>isSubtree</code> for the main search and <code>isSameTree</code> to check if two trees match.</li>
-                        <li>The <code>isSubtree</code> function recursively checks if any subtree of the main tree matches the target subtree.</li>
-                        <li>The <code>isSameTree</code> function checks if two trees have the same structure and values.</li>
-                        <li>Base cases: An empty subtree pattern is always found. If the main tree is empty but subtree isn't, return false.</li>
-                    </ul>
+                <!-- Code Implementation Area (Hidden by Default) -->
+                <div id="code-section" class="code-section hidden">
+                    <h2>Algorithm Implementation</h2>
+                    
+                    <div class="code-header">
+                        <div class="code-progress">
+                            <div class="progress-text">Current Progress Level: <span id="code-progress-level">0</span> / 3</div>
+                            <div class="progress-container mini">
+                                <div id="code-progress-bar" class="progress-bar"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="code-templates">
+                            <button id="template-btn" class="template-btn">Template</button>
+                            <button id="level1-btn" class="template-btn">Level 1</button>
+                            <button id="level2-btn" class="template-btn">Level 2</button>
+                            <button id="complete-btn" class="template-btn">Complete</button>
+                        </div>
+                    </div>
+                    
+                    <textarea id="code-editor" class="code-editor" placeholder="Implement the isSubtree and isSameTree functions here..."></textarea>
+                    
+                    <div class="code-actions">
+                        <button id="reset-code-btn" class="action-btn">Reset</button>
+                        <button id="check-code-btn" class="action-btn primary">Check Code</button>
+                    </div>
+                    
+                    <div class="code-explanation">
+                        <h3>Key Algorithm Insights:</h3>
+                        <ul>
+                            <li>We need two helper functions: <code>isSubtree</code> for the main search and <code>isSameTree</code> to check if two trees match.</li>
+                            <li>The <code>isSubtree</code> function recursively checks if any subtree of the main tree matches the target subtree.</li>
+                            <li>The <code>isSameTree</code> function checks if two trees have the same structure and values.</li>
+                            <li>Base cases: An empty subtree pattern is always found. If the main tree is empty but subtree isn't, return false.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Challenge Mode Section (Hidden by Default) -->
-        <div id="challenge-section" class="challenge-section hidden">
-            <h2>Challenge: Implement a Variation</h2>
-            <p class="challenge-description">
-                Implement a modification of the isSubtree function that allows for a "fuzzy" match, 
-                where the subtree can differ by at most one node value from the pattern.
-            </p>
             
-            <textarea id="challenge-editor" class="code-editor" placeholder="function fuzzySubtree(root, subRoot, maxDifferences = 1) {
+            <!-- Challenge Mode Section (Hidden by Default) -->
+            <div id="challenge-section" class="challenge-section hidden">
+                <h2>Challenge: Implement a Variation</h2>
+                <p class="challenge-description">
+                    Implement a modification of the isSubtree function that allows for a "fuzzy" match, 
+                    where the subtree can differ by at most one node value from the pattern.
+                </p>
+                
+                <textarea id="challenge-editor" class="code-editor" placeholder="function fuzzySubtree(root, subRoot, maxDifferences = 1) {
   // Your implementation here
 }"></textarea>
-            
-            <div id="challenge-feedback" class="challenge-feedback hidden">
-                <p id="challenge-feedback-text"></p>
                 
-                <div id="solution-section" class="solution-section hidden">
-                    <h4>Example Solution:</h4>
-                    <pre class="solution-code" id="solution-code">function fuzzySubtree(root, subRoot, maxDifferences = 1) {
+                <div id="challenge-feedback" class="challenge-feedback hidden">
+                    <p id="challenge-feedback-text"></p>
+                    
+                    <div id="solution-section" class="solution-section hidden">
+                        <h4>Example Solution:</h4>
+                        <pre class="solution-code" id="solution-code">function fuzzySubtree(root, subRoot, maxDifferences = 1) {
   if (!subRoot) return true;
   if (!root) return false;
   
@@ -214,21 +229,27 @@ function fuzzySameTree(p, q, maxDifferences, differences = 0) {
   return fuzzySameTree(p.left, q.left, maxDifferences, differences) && 
          fuzzySameTree(p.right, q.right, maxDifferences, differences);
 }</pre>
+                    </div>
+                </div>
+                
+                <div class="challenge-actions">
+                    <button id="clear-challenge-btn" class="action-btn">Clear</button>
+                    <button id="submit-challenge-btn" class="action-btn primary">Submit Solution</button>
+                </div>
+                
+                <div id="challenge-hint" class="hint-box">
+                    <p><strong>Hint:</strong> You'll need to modify both functions. Create a 
+                    fuzzySameTree function that tracks the number of differing nodes and 
+                    allows matches when differences ≤ maxDifferences.</p>
                 </div>
             </div>
-            
-            <div class="challenge-actions">
-                <button id="clear-challenge-btn" class="action-btn">Clear</button>
-                <button id="submit-challenge-btn" class="action-btn primary">Submit Solution</button>
-            </div>
-            
-            <div id="challenge-hint" class="hint-box">
-                <p><strong>Hint:</strong> You'll need to modify both functions. Create a 
-                fuzzySameTree function that tracks the number of differing nodes and 
-                allows matches when differences ≤ maxDifferences.</p>
-            </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Berkeley Footer -->
+    <footer>
+        <p>© 2025 UC Berkeley ML/AI Professional Certificate Program</p>
+    </footer>
     
     <script src="script.js"></script>
 </body>
