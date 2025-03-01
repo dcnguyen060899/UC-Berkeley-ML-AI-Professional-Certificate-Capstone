@@ -442,9 +442,7 @@ function submitChallenge() {
     challengeFeedback.classList.remove('hidden');
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
-    console.log("Sending evaluation request for:", userSolution.substring(0, 100) + "...");
-    
-    // Call the API for evaluation - make sure the URL is correct!
+    // Call the API for evaluation
     fetch('/evaluate-challenge', {
         method: 'POST',
         headers: {
@@ -455,20 +453,36 @@ function submitChallenge() {
             challenge_type: 'fuzzySubtree'
         }),
     })
-    .then(response => {
-        console.log("Response status:", response.status);
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log("Received data:", data);
-        // Rest of your code...
+        challengeFeedback.classList.remove('hidden');
+        
+        if (typeof data.feedback === 'string') {
+            challengeFeedbackText.textContent = data.feedback;
+        } else {
+            challengeFeedbackText.textContent = `Your solution score: ${data.score}/100\n\n${data.feedback}`;
+        }
+        
+        // Show example solution if score is below threshold
+        if (data.score < 70) {
+            solutionSection.classList.remove('hidden');
+        } else {
+            solutionSection.classList.add('hidden');
+        }
+        
+        // Show improvement suggestions if any
+        if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
+            let suggestionsText = "\n\nSuggestions for improvement:\n• " + 
+                data.improvement_suggestions.join("\n• ");
+            
+            challengeFeedbackText.textContent += suggestionsText;
+        }
+        
+        challengeSubmitted = true;
     })
     .catch(error => {
-        console.error('Error details:', error);
-        challengeFeedbackText.textContent = `Error: ${error.message}. Please try again.`;
+        console.error('Error:', error);
+        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
 }
 
