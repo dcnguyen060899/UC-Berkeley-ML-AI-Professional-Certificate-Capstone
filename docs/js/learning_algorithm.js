@@ -465,8 +465,10 @@ function submitChallenge() {
     
     solutionSection.classList.remove('hidden');
     
-    // Replace the simple validation with API call
-    fetch('/evaluate-challenge', {
+    // Optional: Send to backend for more sophisticated evaluation
+    // This would be implemented if you have a backend service
+    /*
+    fetch('/api/evaluate-challenge', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -478,26 +480,14 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-        challengeFeedback.classList.remove('hidden');
-        
-        if (typeof data.feedback === 'string') {
-            challengeFeedbackText.textContent = data.feedback;
-        } else {
-            challengeFeedbackText.textContent = "Your solution has been evaluated. Score: " + data.score + "/100";
-            
-            // If there are improvement suggestions, display them
-            if (data.improvement_suggestions && data.improvement_suggestions.length > 0) {
-                challengeFeedbackText.textContent += "\n\nSuggestions for improvement:\n" + 
-                    data.improvement_suggestions.join("\n");
-            }
-        }
-        
-        solutionSection.classList.remove('hidden');
+        challengeFeedbackText.textContent = data.evaluation;
     })
     .catch(error => {
         console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
     });
+    */
+}
 
 // Utility functions
 function showFeedback(message, duration = 0) {
