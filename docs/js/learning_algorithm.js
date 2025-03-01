@@ -449,7 +449,7 @@ function submitChallenge() {
     challengeFeedbackText.textContent = "Evaluating your solution...";
     
     // Call the API for evaluation
-    fetch('/evaluate-challenge', {
+    fetch('/evaluate_challenge', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
