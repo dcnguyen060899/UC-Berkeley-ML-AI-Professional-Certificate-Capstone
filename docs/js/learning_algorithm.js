@@ -451,7 +451,7 @@ function submitChallenge() {
     // Use a fully qualified URL if necessary. For example, if your Flask app is running on port 5000:
     // const apiUrl = 'http://127.0.0.1:5000/evaluate-challenge';
     // Otherwise, if you're serving the HTML from Flask, '/evaluate-challenge' is fine.
-    fetch('/evaluate-challenge', {
+    fetch('/api/evaluate-challenge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
