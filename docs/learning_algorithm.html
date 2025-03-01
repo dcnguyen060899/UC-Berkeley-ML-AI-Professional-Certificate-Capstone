@@ -50,7 +50,30 @@
         .header-nav a:hover {
             text-decoration: underline;
         }
+
+        /* Fix header logos display */
+        .header-logos {
+            display: flex;
+            align-items: center;
+        }
         
+        .header-logos img:first-child {
+            height: 40px;
+            margin-right: 10px;
+            border-right: 1px solid #ccc;
+            padding-right: 10px;
+        }
+        
+        .header-logos img:last-child {
+            height: 35px;
+            margin-left: 10px;
+        }
+        
+        /* Fix mode tab active state */
+        .mode-tab.active {
+            background-color: var(--berkeley-gold);
+            color: white; /* Make sure text is white, not blue */
+        }
         /* Main content container */
         .container {
             max-width: 1000px;
