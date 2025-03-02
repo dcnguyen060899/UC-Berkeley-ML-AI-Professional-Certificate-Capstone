@@ -761,50 +761,52 @@ footer {
     overflow: visible;
 }
 
-/* Add these styles to reduce the spacing between headings and content */
-.formatted-feedback h3,
-.formatted-feedback .evaluation-section {
-    margin-bottom: 5px; /* Reduce from 10px */
+
+/* fixing the section header and content paragraph gap distance */
+/* Add these styles to your CSS or update the existing styles */
+
+/* Fix for section headers spacing */
+.formatted-feedback h3.evaluation-section,
+.formatted-feedback h4.evaluation-section {
+    margin-bottom: 2px; /* Reduce from 10px to 2px */
+    margin-top: 20px;   /* Add space between sections instead */
     color: var(--berkeley-blue);
+    font-weight: 600;
+    padding-left: 0;
 }
 
-.formatted-feedback p {
-    margin-top: 0; /* Remove top margin on paragraphs */
-    margin-bottom: 15px; /* Keep some space between sections */
-}
-
-.evaluation-score {
+/* Fix for the score header */
+.formatted-feedback h3.evaluation-score {
+    margin-bottom: 20px; /* Keep good spacing after the score */
     color: var(--berkeley-blue);
-    font-size: 1.4rem;
-    border-bottom: 2px solid var(--berkeley-gold); /* Add visual separation */
+    font-weight: 700;
+    border-bottom: 2px solid var(--berkeley-gold);
     padding-bottom: 5px;
-    margin-bottom: 15px !important; /* Force this spacing */
+}
+
+/* Adjust paragraph spacing */
+.formatted-feedback p {
+    margin-top: 0;       /* Remove top margin */
+    margin-bottom: 12px; /* Keep bottom margin for spacing between sections */
+    line-height: 1.5;
+    padding-left: 5px;   /* Very slight indent */
+}
+
+/* Adjust list spacing */
+.formatted-feedback ul {
+    margin-top: 0;      /* Remove top margin */
+    margin-left: 20px;  /* Keep left margin for indent */
+    padding-left: 5px;  /* Slight indent */
+}
+
+/* Make sure the evaluation content has proper spacing */
+.evaluation-content {
+    padding: 5px;
 }
 
 /* Make section headers more prominent */
-.evaluation-section {
-    color: var(--berkeley-blue);
-    font-weight: 600;
-    font-size: 1.1rem;
+.formatted-feedback .evaluation-section {
     padding-left: 0;
-    margin-bottom: 3px !important; /* Force this spacing */
-}
-
-/* This ensures no extra space between header and content */
-.evaluation-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0; /* Remove gaps */
-}
-
-/* Add blue bar to section headings for visual separation */
-.evaluation-section {
-    border-left: 3px solid var(--berkeley-blue);
+    border-left: 3px solid var(--berkeley-gold);
     padding-left: 8px;
-}
-
-/* Fix for lists under Suggestions */
-.formatted-feedback ul {
-    margin-top: 3px;
-    margin-bottom: 15px;
 }
