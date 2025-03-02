@@ -810,8 +810,3 @@ footer {
     border-left: 3px solid var(--berkeley-gold);
     padding-left: 8px;
 }
-
-/* fixing the tree got blocked in node 6 */
-.trees-container, .visualization-section {
-  overflow: visible; /* or auto; just not hidden if you want to see the circle */
-}
