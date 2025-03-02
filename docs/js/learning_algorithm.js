@@ -466,55 +466,40 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-        // Hide thinking animation
-        thinkingAnimation.classList.add('hidden');
-        
-        // If data is a string, format it directly
-        if (typeof data === 'string') {
-            formatFeedback(data);
-            return;
+      thinkingAnimation.classList.add('hidden');
+    
+      // If it's a raw string
+      if (typeof data === 'string') {
+        formatFeedback(data);
+        return;
+      }
+    
+      if (data.response) {
+        try {
+          // Attempt to parse data.response
+          const jsonData = JSON.parse(data.response);
+    
+          // If the chain uses "action_input" for the actual text
+          if (jsonData.action_input) {
+            // Display the text stored in action_input
+            formatFeedback(jsonData.action_input);
+          } else {
+            // Otherwise pass the entire object
+            formatFeedback(jsonData);
+          }
+        } catch (e) {
+          // data.response might be markdown or plain text
+          formatFeedback(data.response);
         }
-        
-        // Check if the response has an action_input field
-        if (data.action_input) {
-            try {
-                // Parse the action_input string into JSON
-                const jsonData = JSON.parse(data.action_input);
-                formatFeedback(jsonData);
-            } catch (e) {
-                // If parsing fails, fallback to displaying the raw action_input text
-                formatFeedback(data.action_input);
-            }
-        } else if (data.response) {
-            try {
-                const jsonData = JSON.parse(data.response);
-                formatFeedback(jsonData);
-            } catch (e) {
-                formatFeedback(data.response);
-            }
-        } else {
-            formatFeedback(data);
-        }
-    })
+      } else {
+        // If there's no data.response
+        formatFeedback(data);
+      }
+    });
 }
 
 // Helper function to format the feedback nicely
-function normalizeFeedbackKeys(feedbackObj) {
-    const normalized = {};
-    Object.keys(feedbackObj).forEach(key => {
-        // Remove any extra annotation after ' ('
-        const normalizedKey = key.split(' (')[0];
-        normalized[normalizedKey] = feedbackObj[key];
-    });
-    return normalized;
-}
-
 function formatFeedback(data) {
-    // If data is an object, normalize its keys first
-    if (typeof data === 'object') {
-        data = normalizeFeedbackKeys(data);
-    }
-    
     // Create container for formatted feedback
     const feedbackContainer = document.createElement('div');
     feedbackContainer.className = 'formatted-feedback';
@@ -532,12 +517,13 @@ function formatFeedback(data) {
     if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
         const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
         const scoreHeader = document.createElement('h3');
-        scoreHeader.textContent = `🎯 Overall Score: ${score}`;
+        scoreHeader.textContent = `🎯 Overall Score: ${score}/100`;
         feedbackContainer.appendChild(scoreHeader);
     }
     
     // Format each category
     const categories = ['Correctness', 'Key Concepts', 'Edge Cases', 'Code Quality'];
+    
     categories.forEach(category => {
         if (data[category]) {
             const categoryHeader = document.createElement('h4');
@@ -569,36 +555,6 @@ function formatFeedback(data) {
             feedbackContainer.appendChild(categoryContent);
         }
     });
-    
-    // Handle suggestions if available
-    if (data.Suggestions || data.suggestions) {
-        const suggestions = data.Suggestions || data.suggestions;
-        const suggestionsHeader = document.createElement('h4');
-        suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
-        feedbackContainer.appendChild(suggestionsHeader);
-        
-        const suggestionsList = document.createElement('ul');
-        if (Array.isArray(suggestions)) {
-            suggestions.forEach((suggestion) => {
-                const item = document.createElement('li');
-                item.innerHTML = renderMarkdown(suggestion);
-                suggestionsList.appendChild(item);
-            });
-        } else {
-            const item = document.createElement('li');
-            item.innerHTML = renderMarkdown(suggestions);
-            suggestionsList.appendChild(item);
-        }
-        feedbackContainer.appendChild(suggestionsList);
-    }
-    
-    // Clear and add the formatted content
-    challengeFeedbackText.innerHTML = '';
-    challengeFeedbackText.appendChild(feedbackContainer);
-    
-    solutionSection.classList.remove('hidden');
-}
-
     
     // Add suggestions
     if (data.Suggestions || data.suggestions) {
