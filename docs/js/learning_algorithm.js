@@ -466,36 +466,36 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-      thinkingAnimation.classList.add('hidden');
-    
-      // If it's a raw string
-      if (typeof data === 'string') {
-        formatFeedback(data);
-        return;
-      }
-    
-      if (data.response) {
-        try {
-          // Attempt to parse data.response
-          const jsonData = JSON.parse(data.response);
-    
-          // If the chain uses "action_input" for the actual text
-          if (jsonData.action_input) {
-            // Display the text stored in action_input
-            formatFeedback(jsonData.action_input);
-          } else {
-            // Otherwise pass the entire object
-            formatFeedback(jsonData);
-          }
-        } catch (e) {
-          // data.response might be markdown or plain text
-          formatFeedback(data.response);
+        // Hide thinking animation
+        thinkingAnimation.classList.add('hidden');
+        
+        // If data is a string, format it directly
+        if (typeof data === 'string') {
+            formatFeedback(data);
+            return;
         }
-      } else {
-        // If there's no data.response
-        formatFeedback(data);
-      }
-    });
+        
+        // Check if the response has an action_input field
+        if (data.action_input) {
+            try {
+                // Parse the action_input string into JSON
+                const jsonData = JSON.parse(data.action_input);
+                formatFeedback(jsonData);
+            } catch (e) {
+                // If parsing fails, fallback to displaying the raw action_input text
+                formatFeedback(data.action_input);
+            }
+        } else if (data.response) {
+            try {
+                const jsonData = JSON.parse(data.response);
+                formatFeedback(jsonData);
+            } catch (e) {
+                formatFeedback(data.response);
+            }
+        } else {
+            formatFeedback(data);
+        }
+    })
 }
 
 // Helper function to format the feedback nicely
