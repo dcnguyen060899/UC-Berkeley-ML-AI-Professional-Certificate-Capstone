@@ -65,7 +65,7 @@ def evaluate_challenge():
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
         
-        # Instruct the model to return formatted text
+        # Very explicit instructions to return plain text
         evaluation_prompt = f"""
         Evaluate this solution for the {challenge_type} algorithm challenge:
         
@@ -73,85 +73,53 @@ def evaluate_challenge():
         {user_solution}
         ```
         
-        Check for:
-        1. Correctness - Does it implement the required algorithm properly?
-        2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
-        3. Edge cases - Does it handle null/empty inputs and other edge cases?
-        4. Code quality - Is the code well-structured and efficient?
+        Format your response EXACTLY as shown below, with no JSON, just plain text:
         
-        FORMAT YOUR RESPONSE AS PLAIN TEXT with the following structure:
+        Score: [0-100]/100
         
-        Score: X/100
+        Correctness: [your detailed assessment]
         
-        Correctness: [Your detailed feedback]
+        Key Concepts: [your detailed assessment]
         
-        Key Concepts: [Your detailed feedback]
+        Edge Cases: [your detailed assessment]
         
-        Edge Cases: [Your detailed feedback]
-        
-        Code Quality: [Your detailed feedback]
+        Code Quality: [your detailed assessment]
         
         Suggestions for Improvement:
-        1. [First suggestion]
-        2. [Second suggestion]
-        3. [Third suggestion]
-        
-        DO NOT return a JSON object. Return ONLY the formatted text as specified above.
+        1. [first specific suggestion]
+        2. [second specific suggestion]
+        3. [third specific suggestion]
         """
         
         try:
-            # Get response
+            # Get the evaluation
             response_content = chat_service.get_response(evaluation_prompt)
-            
-            # Force conversion to string if somehow we get a dict
-            if isinstance(response_content, dict):
-                try:
-                    import json
-                    response_content = json.dumps(response_content)
-                except:
-                    response_content = str(response_content)
-            
             return jsonify({"response": response_content})
             
         except Exception as e:
             error_msg = str(e)
             print(f"Chat service error: {error_msg}")
             
-            # Try to extract useful content from error messages
-            if "input_value=" in error_msg:
-                try:
-                    # Extract the JSON part from the error message
-                    import re
-                    json_str = re.search(r'input_value=(\{.*?\})', error_msg, re.DOTALL)
-                    if json_str:
-                        import ast
-                        eval_dict = ast.literal_eval(json_str.group(1))
-                        
-                        # Format extracted content as text
-                        formatted_text = ""
-                        for key, value in eval_dict.items():
-                            if key == "Score":
-                                formatted_text += f"Score: {value}\n\n"
-                            elif key == "Suggestions for Improvement":
-                                formatted_text += f"{key}:\n"
-                                if isinstance(value, list):
-                                    for i, suggestion in enumerate(value, 1):
-                                        formatted_text += f"{i}. {suggestion}\n"
-                                else:
-                                    formatted_text += f"{value}\n"
-                            else:
-                                formatted_text += f"{key}: {value}\n\n"
-                                
-                        return jsonify({"response": formatted_text})
-                except Exception as ex:
-                    print(f"Error extracting data from error message: {ex}")
+            # Extract the actual response from the error message
+            if "Could not parse LLM output:" in error_msg:
+                # Get the text after this phrase
+                start_idx = error_msg.find("Could not parse LLM output:") + len("Could not parse LLM output:")
+                end_idx = error_msg.find("For troubleshooting")
+                
+                # If end_idx wasn't found, just take the rest of the string
+                if end_idx == -1:
+                    actual_content = error_msg[start_idx:].strip()
+                else:
+                    actual_content = error_msg[start_idx:end_idx].strip()
+                
+                return jsonify({"response": actual_content})
             
-            # Return a simplified error message
-            return jsonify({"response": "Error evaluating your solution. Please try again."}), 500
+            # For other errors, return a simplified message
+            return jsonify({"response": "Error evaluating solution. Please try again."}), 500
             
     except Exception as e:
         print(f"Error in evaluate-challenge: {str(e)}")
-        return jsonify({"response": f"Error: {str(e)}"}), 500
+        return jsonify({"response": "Server error occurred. Please try again."}), 500
         
 @app.route("/api-check", methods=["GET"])
 def api_check():
