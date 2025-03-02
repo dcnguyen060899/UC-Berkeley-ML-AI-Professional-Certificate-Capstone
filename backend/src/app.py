@@ -66,47 +66,98 @@ def evaluate_challenge():
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
         
-        # Updated prompt with character limits and formatting guidance
+        # Prompt asking for text format
         evaluation_prompt = f"""
-        Evaluate this solution for the {challenge_type} algorithm challenge concisely.
+        Evaluate this solution for the {challenge_type} algorithm challenge:
         
         ```javascript
         {user_solution}
         ```
         
-        FORMAT YOUR RESPONSE EXACTLY AS FOLLOWS:
+        Check for:
+        1. Correctness - Does it implement the required algorithm properly?
+        2. Key concepts - Does it handle the core requirements (e.g., tracking differences in fuzzy matching)?
+        3. Edge cases - Does it handle null/empty inputs and other edge cases?
+        4. Code quality - Is the code well-structured and efficient?
+        
+        IMPORTANT: Format your response as plain text with the following structure:
         
         Score: X/100
         
-        Correctness: [2-3 sentences max]
+        Correctness: [Your detailed feedback]
         
-        Key Concepts: [2-3 sentences max]
+        Key Concepts: [Your detailed feedback]
         
-        Edge Cases: [2-3 sentences max]
+        Edge Cases: [Your detailed feedback]
         
-        Code Quality: [2-3 sentences max]
+        Code Quality: [Your detailed feedback]
         
         Suggestions for Improvement:
-        1. [One brief suggestion]
-        2. [One brief suggestion]
-        3. [One brief suggestion]
-        
-        IMPORTANT: Keep each section brief. Total response should be under 1500 characters.
+        1. [First suggestion]
+        2. [Second suggestion]
+        3. [Third suggestion]
         """
         
         try:
             # Get response
-            response_content = chat_service.get_evaluation_response(evaluation_prompt)
+            response_content = chat_service.get_response(evaluation_prompt)
             
-            # Ensure suggestions section is complete by checking for expected format
-            if "Suggestions for Improvement:" in response_content and not re.search(r'\d\.\s+\S+', response_content):
-                # If we have the header but no numbered suggestions, add some defaults
-                response_content += "\n1. Consider optimizing the algorithm for performance.\n2. Add more comprehensive tests.\n3. Improve documentation."
+            # Handle dictionary response
+            if isinstance(response_content, dict):
+                import json
+                try:
+                    # Try to convert to JSON string
+                    response_content = json.dumps(response_content)
+                except:
+                    # If that fails, manually format as text
+                    formatted_text = f"Score: {response_content.get('Score', 'N/A')}\n\n"
+                    formatted_text += f"Correctness: {response_content.get('Correctness', '')}\n\n"
+                    formatted_text += f"Key Concepts: {response_content.get('Key Concepts', '')}\n\n"
+                    formatted_text += f"Edge Cases: {response_content.get('Edge Cases', '')}\n\n"
+                    formatted_text += f"Code Quality: {response_content.get('Code Quality', '')}\n\n"
+                    
+                    suggestions = response_content.get('Suggestions for Improvement', [])
+                    formatted_text += "Suggestions for Improvement:\n"
+                    if isinstance(suggestions, list):
+                        for i, suggestion in enumerate(suggestions, 1):
+                            formatted_text += f"{i}. {suggestion}\n"
+                    else:
+                        formatted_text += str(suggestions)
+                    
+                    response_content = formatted_text
+            
+            # If response is from action_input, extract and convert
+            if isinstance(response_content, str):
+                try:
+                    import json
+                    # Try to parse as JSON
+                    parsed = json.loads(response_content)
+                    if isinstance(parsed, dict) and parsed.get("action") == "Final Answer" and parsed.get("action_input"):
+                        action_input = parsed["action_input"]
+                        if isinstance(action_input, dict):
+                            # Format it as text
+                            formatted_text = f"Score: {action_input.get('Score', 'N/A')}\n\n"
+                            formatted_text += f"Correctness: {action_input.get('Correctness', '')}\n\n"
+                            formatted_text += f"Key Concepts: {action_input.get('Key Concepts', '')}\n\n"
+                            formatted_text += f"Edge Cases: {action_input.get('Edge Cases', '')}\n\n"
+                            formatted_text += f"Code Quality: {action_input.get('Code Quality', '')}\n\n"
+                            
+                            suggestions = action_input.get('Suggestions for Improvement', [])
+                            formatted_text += "Suggestions for Improvement:\n"
+                            if isinstance(suggestions, list):
+                                for i, suggestion in enumerate(suggestions, 1):
+                                    formatted_text += f"{i}. {suggestion}\n"
+                            else:
+                                formatted_text += str(suggestions)
+                            
+                            response_content = formatted_text
+                except:
+                    # If parsing fails, use the string as is
+                    pass
             
             return jsonify({"response": response_content})
             
         except Exception as e:
-            # Error handling (unchanged)
             print(f"Chat service error: {str(e)}")
             return jsonify({"response": f"Error evaluating solution: {str(e)}"}), 500
             
