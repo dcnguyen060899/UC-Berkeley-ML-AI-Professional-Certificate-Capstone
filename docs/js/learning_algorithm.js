@@ -498,33 +498,58 @@ function formatEvaluationText(text) {
     // Format score
     text = text.replace(/Score:\s*(\d+)\/100/g, '<h3 class="evaluation-score">Score: $1/100</h3>');
     
-    // Format section headers
-    text = text.replace(/(\w+\s*\w+):\s*([^\n]+)/g, function(match, section, content) {
-        // Skip if already wrapped in HTML
-        if (match.includes('<h3') || match.includes('<li')) return match;
-        
-        if (section === 'Suggestions for Improvement') {
-            return `<h3 class="evaluation-section">${section}:</h3>`;
+    // Extract and handle each section separately
+    const sections = {
+        "Correctness": "",
+        "Key Concepts": "",
+        "Edge Cases": "",
+        "Code Quality": "",
+        "Suggestions for Improvement": ""
+    };
+    
+    // Extract content for each section
+    Object.keys(sections).forEach(sectionName => {
+        const regex = new RegExp(`${sectionName}:\\s*([\\s\\S]*?)(?=(${Object.keys(sections).join('|')}):|\$)`, 'i');
+        const match = text.match(regex);
+        if (match && match[1]) {
+            sections[sectionName] = match[1].trim();
         }
-        return `<h3 class="evaluation-section">${section}:</h3><p>${content}</p>`;
     });
     
-    // Format numbered suggestions
-    text = text.replace(/(\d+)\.\s+([^\n]+)/g, '<li>$2</li>');
+    // Build formatted HTML
+    let formattedHtml = `<h3 class="evaluation-score">Score: ${text.match(/Score:\s*(\d+)\/100/)?.[1] || "N/A"}/100</h3>`;
     
-    // Wrap suggestions in a list
-    const listItems = text.match(/<li>.*?<\/li>/g);
-    if (listItems) {
-        const listHtml = listItems.join('');
-        text = text.replace(/<li>.*?<\/li>/g, '');
-        text = text.replace(/<h3 class="evaluation-section">Suggestions for Improvement:<\/h3>/, 
-            `<h3 class="evaluation-section">Suggestions for Improvement:</h3><ul>${listHtml}</ul>`);
+    // Add each section except suggestions
+    Object.keys(sections).forEach(sectionName => {
+        if (sectionName !== "Suggestions for Improvement" && sections[sectionName]) {
+            formattedHtml += `
+                <h3 class="evaluation-section">${sectionName}:</h3>
+                <p>${sections[sectionName]}</p>
+            `;
+        }
+    });
+    
+    // Handle suggestions section specially
+    if (sections["Suggestions for Improvement"]) {
+        formattedHtml += `<h3 class="evaluation-section">Suggestions for Improvement:</h3><ul>`;
+        
+        // Extract numbered suggestions or split by newlines
+        const suggestions = sections["Suggestions for Improvement"];
+        const suggestionItems = suggestions.match(/\d+\.\s+.+?(?=\d+\.|$)/gs) || 
+                               suggestions.split('\n').filter(line => line.trim());
+                               
+        suggestionItems.forEach(item => {
+            // Clean up the item
+            const cleanItem = item.replace(/^\d+\.\s*/, '').trim();
+            if (cleanItem) {
+                formattedHtml += `<li>${cleanItem}</li>`;
+            }
+        });
+        
+        formattedHtml += `</ul>`;
     }
     
-    // Add line breaks
-    text = text.replace(/\n\n/g, '<br>');
-    
-    return text;
+    return formattedHtml;
 }
 
 // Helper function to format the feedback nicely
