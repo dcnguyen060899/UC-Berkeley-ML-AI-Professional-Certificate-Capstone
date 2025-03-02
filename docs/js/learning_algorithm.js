@@ -466,124 +466,162 @@ function submitChallenge() {
     })
     .then(response => response.json())
     .then(data => {
-      thinkingAnimation.classList.add('hidden');
-    
-      // If it's a raw string
-      if (typeof data === 'string') {
-        formatFeedback(data);
-        return;
-      }
-    
-      if (data.response) {
-        try {
-          // Attempt to parse data.response
-          const jsonData = JSON.parse(data.response);
-    
-          // If the chain uses "action_input" for the actual text
-          if (jsonData.action_input) {
-            // Display the text stored in action_input
-            formatFeedback(jsonData.action_input);
-          } else {
-            // Otherwise pass the entire object
-            formatFeedback(jsonData);
-          }
-        } catch (e) {
-          // data.response might be markdown or plain text
-          formatFeedback(data.response);
+        // Hide thinking animation
+        thinkingAnimation.classList.add('hidden');
+        
+        console.log("Received data:", data);
+        
+        // Handle LangChain specific format where data.response contains a JSON string
+        if (data.response) {
+            try {
+                // First, try to parse data.response if it's a string
+                const parsedResponse = typeof data.response === 'string' 
+                    ? JSON.parse(data.response) 
+                    : data.response;
+                
+                console.log("Parsed response:", parsedResponse);
+                
+                // Then check if it has action_input
+                if (parsedResponse.action_input) {
+                    try {
+                        // Try to parse action_input if it's a string
+                        const feedbackData = typeof parsedResponse.action_input === 'string'
+                            ? JSON.parse(parsedResponse.action_input)
+                            : parsedResponse.action_input;
+                        
+                        console.log("Feedback data:", feedbackData);
+                        formatFeedback(feedbackData);
+                    } catch (e) {
+                        console.error("Error parsing action_input:", e);
+                        formatFeedback(parsedResponse.action_input);
+                    }
+                } else {
+                    formatFeedback(parsedResponse);
+                }
+            } catch (e) {
+                console.error("Error parsing response:", e);
+                formatFeedback(data.response);
+            }
+        } else {
+            formatFeedback(data);
         }
-      } else {
-        // If there's no data.response
-        formatFeedback(data);
-      }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        thinkingAnimation.classList.add('hidden');
+        challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
+        challengeFeedback.classList.remove('hidden');
     });
 }
 
 // Helper function to format the feedback nicely
 function formatFeedback(data) {
-    // Create container for formatted feedback
+    console.log("Data received in formatFeedback:", data);
+    
+    // Create container
     const feedbackContainer = document.createElement('div');
     feedbackContainer.className = 'formatted-feedback';
     
-    // Check if response is markdown text
-    if (typeof data === 'string' && (data.includes('**') || data.includes('###'))) {
-        // Render markdown directly
-        feedbackContainer.innerHTML = renderMarkdown(data);
-        challengeFeedbackText.innerHTML = '';
-        challengeFeedbackText.appendChild(feedbackContainer);
-        return;
-    }
-    
-    // Add overall score if available
-    if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
-        const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
-        const scoreHeader = document.createElement('h3');
-        scoreHeader.textContent = `🎯 Overall Score: ${score}/100`;
-        feedbackContainer.appendChild(scoreHeader);
-    }
-    
-    // Format each category
-    const categories = ['Correctness', 'Key Concepts', 'Edge Cases', 'Code Quality'];
-    
-    categories.forEach(category => {
-        if (data[category]) {
-            const categoryHeader = document.createElement('h4');
-            categoryHeader.textContent = `✅ ${category}:`;
-            feedbackContainer.appendChild(categoryHeader);
-            
-            const categoryContent = document.createElement('div');
-            categoryContent.className = 'category-content';
-            
-            if (typeof data[category] === 'object') {
-                // If it's an object with Score and Feedback
-                if (data[category].Score) {
-                    const scoreText = document.createElement('p');
-                    scoreText.innerHTML = `<strong>Score:</strong> ${data[category].Score}/100`;
-                    categoryContent.appendChild(scoreText);
+    try {
+        // Handle special case where data is a string from LangChain that contains JSON
+        if (typeof data === 'string' && data.includes('action_input')) {
+            try {
+                // This handles LangChain output format
+                const parsedData = JSON.parse(data);
+                if (parsedData.action_input) {
+                    // The actual feedback is in action_input as a string
+                    const feedbackData = JSON.parse(parsedData.action_input);
+                    // Now process the inner data
+                    return formatFeedback(feedbackData);
                 }
-                if (data[category].Feedback) {
-                    const feedbackText = document.createElement('p');
-                    feedbackText.innerHTML = renderMarkdown(data[category].Feedback);
-                    categoryContent.appendChild(feedbackText);
-                }
-            } else {
-                // If it's just a string
-                const feedbackText = document.createElement('p');
-                feedbackText.innerHTML = renderMarkdown(data[category]);
-                categoryContent.appendChild(feedbackText);
+            } catch (e) {
+                console.error("Error parsing LangChain string:", e);
+                // Continue with the string as-is
             }
+        }
+        
+        // Case 1: If data has score and feedback properties (your current format)
+        if (data.score !== undefined && data.feedback) {
+            // Display overall score
+            const scoreHeader = document.createElement('h3');
+            scoreHeader.textContent = `🎯 Overall Score: ${data.score}/100`;
+            feedbackContainer.appendChild(scoreHeader);
             
-            feedbackContainer.appendChild(categoryContent);
+            // Display each feedback category
+            if (typeof data.feedback === 'object') {
+                const categoryMapping = {
+                    'correctness': 'Correctness',
+                    'keyConcepts': 'Key Concepts', 
+                    'edgeCases': 'Edge Cases',
+                    'codeQuality': 'Code Quality'
+                };
+                
+                Object.entries(data.feedback).forEach(([key, value]) => {
+                    const displayTitle = categoryMapping[key] || key;
+                    
+                    const categoryHeader = document.createElement('h4');
+                    categoryHeader.textContent = `✅ ${displayTitle}:`;
+                    feedbackContainer.appendChild(categoryHeader);
+                    
+                    const feedbackText = document.createElement('p');
+                    feedbackText.textContent = value;
+                    feedbackContainer.appendChild(feedbackText);
+                });
+            }
         }
-    });
-    
-    // Add suggestions
-    if (data.Suggestions || data.suggestions) {
-        const suggestions = data.Suggestions || data.suggestions;
-        const suggestionsHeader = document.createElement('h4');
-        suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
-        feedbackContainer.appendChild(suggestionsHeader);
-        
-        const suggestionsList = document.createElement('ul');
-        
-        if (Array.isArray(suggestions)) {
-            suggestions.forEach((suggestion) => {
-                const item = document.createElement('li');
-                item.innerHTML = renderMarkdown(suggestion);
-                suggestionsList.appendChild(item);
+        // Case 2: Plain text or markdown response
+        else if (typeof data === 'string') {
+            const feedbackText = document.createElement('div');
+            feedbackText.innerHTML = renderMarkdown(data);
+            feedbackContainer.appendChild(feedbackText);
+        }
+        // Case 3: Other structured data (fallback)
+        else {
+            // Default handling for other structures
+            Object.entries(data).forEach(([key, value]) => {
+                if (key !== 'suggestions' && key !== 'Suggestions') {
+                    const header = document.createElement('h4');
+                    header.textContent = `${key}:`;
+                    feedbackContainer.appendChild(header);
+                    
+                    const content = document.createElement('p');
+                    content.textContent = typeof value === 'object' ? JSON.stringify(value) : value;
+                    feedbackContainer.appendChild(content);
+                }
             });
-        } else {
-            const item = document.createElement('li');
-            item.innerHTML = renderMarkdown(suggestions);
-            suggestionsList.appendChild(item);
+            
+            // Handle suggestions separately
+            const suggestions = data.suggestions || data.Suggestions;
+            if (suggestions) {
+                const suggestionsHeader = document.createElement('h4');
+                suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
+                feedbackContainer.appendChild(suggestionsHeader);
+                
+                const list = document.createElement('ul');
+                if (Array.isArray(suggestions)) {
+                    suggestions.forEach(suggestion => {
+                        const item = document.createElement('li');
+                        item.textContent = suggestion;
+                        list.appendChild(item);
+                    });
+                } else {
+                    const item = document.createElement('li');
+                    item.textContent = suggestions;
+                    list.appendChild(item);
+                }
+                feedbackContainer.appendChild(list);
+            }
         }
-        
-        feedbackContainer.appendChild(suggestionsList);
+    } catch (error) {
+        console.error("Error in formatFeedback:", error);
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = "Error formatting feedback. Please try again.";
+        feedbackContainer.appendChild(errorMsg);
     }
     
-    // Clear and add the formatted content
+    // Update the UI
     challengeFeedbackText.innerHTML = '';
     challengeFeedbackText.appendChild(feedbackContainer);
-    
     solutionSection.classList.remove('hidden');
 }
 
