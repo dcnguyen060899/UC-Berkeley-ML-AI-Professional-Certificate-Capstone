@@ -1297,3 +1297,23 @@ def generate_response(prompt):
     response = agent(prompt)
 
     return response['output']
+
+# Second agent for evaluation queries
+EVALUATION_SYSTEM_MESSAGE = """
+You are an expert evaluator of learning algorithms. Your role is to evaluate code solutions for algorithm challenges. 
+Focus on assessing correctness, key concepts, edge cases, and code quality. 
+Your responses should be concise and formatted as plain text or a JSON-formatted string if needed.
+"""
+
+evaluation_agent = initialize_agent(
+    tools,
+    llm,
+    memory=memory,
+    verbose=True,
+    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+    agent_kwargs={"system_message": EVALUATION_SYSTEM_MESSAGE}
+)
+
+def generate_evaluation_response(prompt):
+    response = evaluation_agent(prompt)
+    return response['output']
