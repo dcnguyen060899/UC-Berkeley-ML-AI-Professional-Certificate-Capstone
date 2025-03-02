@@ -82,7 +82,7 @@ def evaluate_challenge():
         """
         
         # Use the same pattern as your working /chat endpoint
-        response_content = chat_service.get_response(evaluation_prompt)
+        response_content = chat_service.get_evaluation_response(evaluation_prompt)
         return jsonify({"response": response_content})
         
     except Exception as e:
