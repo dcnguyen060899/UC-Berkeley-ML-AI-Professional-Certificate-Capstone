@@ -434,6 +434,7 @@ function clearChallenge() {
     solutionSection.classList.add('hidden');
     challengeSubmitted = false;
 }
+
 function submitChallenge() {
     const userSolution = challengeEditor.value;
     challengeSubmitted = true;
@@ -469,46 +470,15 @@ function submitChallenge() {
         // Hide thinking animation
         thinkingAnimation.classList.add('hidden');
         
-        console.log("Received data:", data);
-        
-        // Handle LangChain specific format where data.response contains a JSON string
-        if (data.response) {
-            try {
-                // First, try to parse data.response if it's a string
-                const parsedResponse = typeof data.response === 'string' 
-                    ? JSON.parse(data.response) 
-                    : data.response;
-                
-                console.log("Parsed response:", parsedResponse);
-                
-                // Then check if it has action_input
-                if (parsedResponse.action_input) {
-                    try {
-                        // Try to parse action_input if it's a string
-                        const feedbackData = typeof parsedResponse.action_input === 'string'
-                            ? JSON.parse(parsedResponse.action_input)
-                            : parsedResponse.action_input;
-                        
-                        console.log("Feedback data:", feedbackData);
-                        formatFeedback(feedbackData);
-                    } catch (e) {
-                        console.error("Error parsing action_input:", e);
-                        formatFeedback(parsedResponse.action_input);
-                    }
-                } else {
-                    formatFeedback(parsedResponse);
-                }
-            } catch (e) {
-                console.error("Error parsing response:", e);
-                formatFeedback(data.response);
-            }
-        } else {
-            formatFeedback(data);
-        }
+        // Simply render the response as markdown
+        challengeFeedbackText.innerHTML = renderMarkdown(data.response || "No feedback received");
+        challengeFeedback.classList.remove('hidden');
+        solutionSection.classList.remove('hidden');
     })
     .catch(error => {
-        console.error('Error:', error);
+        // Hide thinking animation and show error
         thinkingAnimation.classList.add('hidden');
+        console.error('Error:', error);
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
         challengeFeedback.classList.remove('hidden');
     });
