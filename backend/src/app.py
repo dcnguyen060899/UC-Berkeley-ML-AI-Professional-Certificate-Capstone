@@ -80,9 +80,13 @@ def evaluate_challenge():
         
         Give a score from 0-100 and provide specific feedback and improvement suggestions.
         """
+
         
         # Use the same pattern as your working /chat endpoint
         response_content = chat_service.get_evaluation_response(evaluation_prompt)
+        # Convert the dictionary response to a JSON string if needed
+        if isinstance(response_content, dict):
+            response_content = json.dumps(response_content)
         return jsonify({"response": response_content})
         
     except Exception as e:
