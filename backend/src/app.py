@@ -93,7 +93,7 @@ def evaluate_challenge():
         
         try:
             # Get the evaluation
-            response_content = chat_service.get_response(evaluation_prompt)
+            response_content = chat_service.get_evaluation_response(evaluation_prompt)
             return jsonify({"response": response_content})
             
         except Exception as e:
