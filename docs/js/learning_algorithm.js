@@ -441,15 +441,14 @@ function submitChallenge() {
     
     // Show thinking animation
     const thinkingAnimation = document.getElementById('thinking-animation');
-    const challengeFeedbackText = document.getElementById('challenge-feedback-text');
     
-    // Hide any previous feedback and show the thinking animation
+    // Hide previous feedback and show thinking animation
     challengeFeedback.classList.remove('hidden');
-    challengeFeedbackText.textContent = '';
+    challengeFeedbackText.innerHTML = '';
     thinkingAnimation.classList.remove('hidden');
     solutionSection.classList.add('hidden');
     
-    // Make API call to evaluate solution
+    // API endpoint - check if on GitHub Pages
     const isGitHubPages = window.location.hostname === 'ucberkeley-ml-ai-capstone.com';
     const apiUrl = isGitHubPages 
         ? 'https://uc-berkeley-ml-ai-capstone-work-sample.onrender.com/evaluate-challenge'
@@ -470,18 +469,62 @@ function submitChallenge() {
         // Hide thinking animation
         thinkingAnimation.classList.add('hidden');
         
-        // Simply render the response as markdown
-        challengeFeedbackText.innerHTML = renderMarkdown(data.response || "No feedback received");
-        challengeFeedback.classList.remove('hidden');
+        let responseText = data.response || '';
+        
+        // Create a container for formatted feedback
+        const formattedFeedback = document.createElement('div');
+        formattedFeedback.className = 'formatted-feedback';
+        
+        // Format the text with nice styling
+        const formattedHtml = formatEvaluationText(responseText);
+        formattedFeedback.innerHTML = formattedHtml;
+        
+        // Replace content
+        challengeFeedbackText.innerHTML = '';
+        challengeFeedbackText.appendChild(formattedFeedback);
+        
+        // Show solution section
         solutionSection.classList.remove('hidden');
     })
     .catch(error => {
-        // Hide thinking animation and show error
-        thinkingAnimation.classList.add('hidden');
         console.error('Error:', error);
+        thinkingAnimation.classList.add('hidden');
         challengeFeedbackText.textContent = 'Error evaluating solution. Please try again.';
-        challengeFeedback.classList.remove('hidden');
     });
+}
+
+// Helper function to format evaluation text
+function formatEvaluationText(text) {
+    // Format score
+    text = text.replace(/Score:\s*(\d+)\/100/g, '<h3 class="evaluation-score">Score: $1/100</h3>');
+    
+    // Format section headers
+    text = text.replace(/(\w+\s*\w+):\s*([^\n]+)/g, function(match, section, content) {
+        // Skip if already wrapped in HTML
+        if (match.includes('<h3') || match.includes('<li')) return match;
+        
+        if (section === 'Suggestions for Improvement') {
+            return `<h3 class="evaluation-section">${section}:</h3>`;
+        }
+        return `<h3 class="evaluation-section">${section}:</h3><p>${content}</p>`;
+    });
+    
+    // Format numbered suggestions
+    text = text.replace(/(\d+)\.\s+([^\n]+)/g, '<li>$2</li>');
+    
+    // Wrap suggestions in a list
+    const listItems = text.match(/<li>.*?<\/li>/g);
+    if (listItems) {
+        const listHtml = listItems.join('');
+        text = text.replace(/<li>.*?<\/li>/g, '');
+        text = text.replace(/<h3 class="evaluation-section">Suggestions for Improvement:<\/h3>/, 
+            `<h3 class="evaluation-section">Suggestions for Improvement:</h3><ul>${listHtml}</ul>`);
+    }
+    
+    // Add line breaks
+    text = text.replace(/\n\n/g, '<br>');
+    
+    return text;
 }
 
 // Helper function to format the feedback nicely
