@@ -504,110 +504,61 @@ function formatFeedback(data) {
     const feedbackContainer = document.createElement('div');
     feedbackContainer.className = 'formatted-feedback';
     
-    // Handle different response formats
-    let feedbackData = data;
-    
-    // First check: If response is a string that might be JSON
-    if (typeof data === 'string') {
-        try {
-            feedbackData = JSON.parse(data);
-        } catch (e) {
-            // If it's regular text/markdown, render it directly
-            feedbackContainer.innerHTML = renderMarkdown(data);
-            challengeFeedbackText.innerHTML = '';
-            challengeFeedbackText.appendChild(feedbackContainer);
-            return;
-        }
+    // Check if response is markdown text
+    if (typeof data === 'string' && (data.includes('**') || data.includes('###'))) {
+        // Render markdown directly
+        feedbackContainer.innerHTML = renderMarkdown(data);
+        challengeFeedbackText.innerHTML = '';
+        challengeFeedbackText.appendChild(feedbackContainer);
+        return;
     }
     
-    // Second check: Look for response wrapper from Flask API
-    if (feedbackData.response) {
-        try {
-            feedbackData = JSON.parse(feedbackData.response);
-        } catch (e) {
-            // If not parseable, just use the text
-            feedbackContainer.innerHTML = renderMarkdown(feedbackData.response);
-            challengeFeedbackText.innerHTML = '';
-            challengeFeedbackText.appendChild(feedbackContainer);
-            return;
-        }
-    }
-    
-    // Third check: Look for LangChain agent format with action_input
-    if (feedbackData.action && feedbackData.action === "Final Answer" && feedbackData.action_input) {
-        try {
-            feedbackData = JSON.parse(feedbackData.action_input);
-        } catch (e) {
-            // If not parseable, just use the text
-            feedbackContainer.innerHTML = renderMarkdown(feedbackData.action_input);
-            challengeFeedbackText.innerHTML = '';
-            challengeFeedbackText.appendChild(feedbackContainer);
-            return;
-        }
-    }
-    
-    // Extract overall score - check various possible field names
-    let overallScore = null;
-    if (feedbackData['Overall Score']) {
-        overallScore = feedbackData['Overall Score'];
-    } else if (feedbackData.OverallScore) {
-        overallScore = feedbackData.OverallScore;
-    } else if (feedbackData.Overall_Score) {
-        overallScore = feedbackData.Overall_Score;
-    }
-    
-    if (overallScore) {
+    // Add overall score if available
+    if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
+        const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
         const scoreHeader = document.createElement('h3');
-        scoreHeader.textContent = `🎯 Overall Score: ${overallScore}`;
+        scoreHeader.textContent = `🎯 Overall Score: ${score}/100`;
         feedbackContainer.appendChild(scoreHeader);
     }
     
-    // Find the category keys - filter out non-category fields
-    const categoryKeys = Object.keys(feedbackData).filter(key => 
-        !['Overall Score', 'OverallScore', 'Overall_Score', 'Feedback', 'Suggestions', 'suggestions'].includes(key)
-    );
+    // Format each category
+    const categories = ['Correctness', 'Key Concepts', 'Edge Cases', 'Code Quality'];
     
-    // Process each category
-    categoryKeys.forEach(key => {
-        const categoryHeader = document.createElement('h4');
-        // Remove any "(Score: XX/100)" from the key for display
-        const displayKey = key.replace(/\s*\(Score:.*\)/, '');
-        categoryHeader.textContent = `✅ ${displayKey}:`;
-        feedbackContainer.appendChild(categoryHeader);
-        
-        const categoryContent = document.createElement('div');
-        categoryContent.className = 'category-content';
-        
-        // Extract score if it's in the key
-        const scoreMatch = key.match(/\(Score:\s*(\d+)\/(\d+)\)/);
-        if (scoreMatch) {
-            const scoreText = document.createElement('p');
-            scoreText.innerHTML = `<strong>Score:</strong> ${scoreMatch[1]}/${scoreMatch[2]}`;
-            categoryContent.appendChild(scoreText);
+    categories.forEach(category => {
+        if (data[category]) {
+            const categoryHeader = document.createElement('h4');
+            categoryHeader.textContent = `✅ ${category}:`;
+            feedbackContainer.appendChild(categoryHeader);
+            
+            const categoryContent = document.createElement('div');
+            categoryContent.className = 'category-content';
+            
+            if (typeof data[category] === 'object') {
+                // If it's an object with Score and Feedback
+                if (data[category].Score) {
+                    const scoreText = document.createElement('p');
+                    scoreText.innerHTML = `<strong>Score:</strong> ${data[category].Score}/100`;
+                    categoryContent.appendChild(scoreText);
+                }
+                if (data[category].Feedback) {
+                    const feedbackText = document.createElement('p');
+                    feedbackText.innerHTML = renderMarkdown(data[category].Feedback);
+                    categoryContent.appendChild(feedbackText);
+                }
+            } else {
+                // If it's just a string
+                const feedbackText = document.createElement('p');
+                feedbackText.innerHTML = renderMarkdown(data[category]);
+                categoryContent.appendChild(feedbackText);
+            }
+            
+            feedbackContainer.appendChild(categoryContent);
         }
-        
-        // Add feedback text
-        const feedbackText = document.createElement('p');
-        feedbackText.innerHTML = renderMarkdown(feedbackData[key]);
-        categoryContent.appendChild(feedbackText);
-        
-        feedbackContainer.appendChild(categoryContent);
     });
     
-    // Add general feedback if present
-    if (feedbackData.Feedback) {
-        const feedbackHeader = document.createElement('h4');
-        feedbackHeader.textContent = `💬 General Feedback:`;
-        feedbackContainer.appendChild(feedbackHeader);
-        
-        const feedbackText = document.createElement('p');
-        feedbackText.innerHTML = renderMarkdown(feedbackData.Feedback);
-        feedbackContainer.appendChild(feedbackText);
-    }
-    
-    // Add suggestions if present
-    const suggestions = feedbackData.Suggestions || feedbackData.suggestions;
-    if (suggestions) {
+    // Add suggestions
+    if (data.Suggestions || data.suggestions) {
+        const suggestions = data.Suggestions || data.suggestions;
         const suggestionsHeader = document.createElement('h4');
         suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
         feedbackContainer.appendChild(suggestionsHeader);
