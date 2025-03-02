@@ -15,3 +15,7 @@ Answer: Let's think step by step."""
     def get_response(self, user_message):
         response = generate_response(user_message)
         return response
+
+    def get_evaluation_response(self, user_message):
+        response = generate_evaluation_response(user_message)
+        return response
