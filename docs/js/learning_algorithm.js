@@ -499,7 +499,22 @@ function submitChallenge() {
 }
 
 // Helper function to format the feedback nicely
+function normalizeFeedbackKeys(feedbackObj) {
+    const normalized = {};
+    Object.keys(feedbackObj).forEach(key => {
+        // Remove any extra annotation after ' ('
+        const normalizedKey = key.split(' (')[0];
+        normalized[normalizedKey] = feedbackObj[key];
+    });
+    return normalized;
+}
+
 function formatFeedback(data) {
+    // If data is an object, normalize its keys first
+    if (typeof data === 'object') {
+        data = normalizeFeedbackKeys(data);
+    }
+    
     // Create container for formatted feedback
     const feedbackContainer = document.createElement('div');
     feedbackContainer.className = 'formatted-feedback';
@@ -517,13 +532,12 @@ function formatFeedback(data) {
     if (data.Overall_Score || data.OverallScore || data["Overall Score"]) {
         const score = data.Overall_Score || data.OverallScore || data["Overall Score"];
         const scoreHeader = document.createElement('h3');
-        scoreHeader.textContent = `🎯 Overall Score: ${score}/100`;
+        scoreHeader.textContent = `🎯 Overall Score: ${score}`;
         feedbackContainer.appendChild(scoreHeader);
     }
     
     // Format each category
     const categories = ['Correctness', 'Key Concepts', 'Edge Cases', 'Code Quality'];
-    
     categories.forEach(category => {
         if (data[category]) {
             const categoryHeader = document.createElement('h4');
@@ -555,6 +569,36 @@ function formatFeedback(data) {
             feedbackContainer.appendChild(categoryContent);
         }
     });
+    
+    // Handle suggestions if available
+    if (data.Suggestions || data.suggestions) {
+        const suggestions = data.Suggestions || data.suggestions;
+        const suggestionsHeader = document.createElement('h4');
+        suggestionsHeader.textContent = `💡 Improvement Suggestions:`;
+        feedbackContainer.appendChild(suggestionsHeader);
+        
+        const suggestionsList = document.createElement('ul');
+        if (Array.isArray(suggestions)) {
+            suggestions.forEach((suggestion) => {
+                const item = document.createElement('li');
+                item.innerHTML = renderMarkdown(suggestion);
+                suggestionsList.appendChild(item);
+            });
+        } else {
+            const item = document.createElement('li');
+            item.innerHTML = renderMarkdown(suggestions);
+            suggestionsList.appendChild(item);
+        }
+        feedbackContainer.appendChild(suggestionsList);
+    }
+    
+    // Clear and add the formatted content
+    challengeFeedbackText.innerHTML = '';
+    challengeFeedbackText.appendChild(feedbackContainer);
+    
+    solutionSection.classList.remove('hidden');
+}
+
     
     // Add suggestions
     if (data.Suggestions || data.suggestions) {
