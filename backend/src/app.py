@@ -65,6 +65,7 @@ def evaluate_challenge():
         user_solution = data.get("code", "")
         challenge_type = data.get("challenge_type", "")
         
+        # Construct a prompt for the AI to evaluate the solution
         evaluation_prompt = f"""
         Evaluate this solution for the {challenge_type} algorithm challenge:
         
@@ -78,21 +79,46 @@ def evaluate_challenge():
         3. Edge cases - Does it handle null/empty inputs and other edge cases?
         4. Code quality - Is the code well-structured and efficient?
         
-        Give a score from 0-100 and provide specific feedback and improvement suggestions.
+        Provide your evaluation as a score out of 100 and detailed feedback in markdown format with:
+        
+        Score: [0-100]/100
+        
+        **Correctness:** [detailed feedback]
+        
+        **Key Concepts:** [detailed feedback]
+        
+        **Edge Cases:** [detailed feedback]
+        
+        **Code Quality:** [detailed feedback]
+        
+        **Suggestions for Improvement:**
+        1. [suggestion 1]
+        2. [suggestion 2]
+        3. [suggestion 3]
         """
-
         
-        # Use the same pattern as your working /chat endpoint
-        response_content = chat_service.get_evaluation_response(evaluation_prompt)
-        # Convert the dictionary response to a JSON string if needed
-        if isinstance(response_content, dict):
-            response_content = json.dumps(response_content)
-        return jsonify({"response": response_content})
-        
+        try:
+            # Get the evaluation from ChatService
+            response_content = chat_service.get_response(evaluation_prompt)
+            
+            # Simply return raw response - don't try to parse as JSON
+            return jsonify({"response": response_content})
+            
+        except Exception as e:
+            error_message = str(e)
+            # If it's a parsing error, extract the actual feedback
+            if "Could not parse LLM output" in error_message:
+                start_idx = error_message.find("Could not parse LLM output: ")
+                if start_idx != -1:
+                    feedback = error_message[start_idx + len("Could not parse LLM output: "):]
+                    return jsonify({"response": feedback})
+            
+            # Other errors
+            return jsonify({"response": f"Error evaluating solution: {error_message}"}), 500
+            
     except Exception as e:
         print(f"Error in evaluate-challenge: {str(e)}")
         return jsonify({"response": f"Error evaluating solution: {str(e)}"}), 500
-
 
 @app.route("/api-check", methods=["GET"])
 def api_check():
