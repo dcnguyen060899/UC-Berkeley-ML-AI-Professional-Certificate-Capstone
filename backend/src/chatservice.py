@@ -1,10 +1,10 @@
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import OpenAI
-from agent import generate_response
+from agent import generate_response, generate_evaluation_response
 import os
 
-class ChatService:
+class ChatService:e
     def __init__(self, api_key):
         self.api_key = api_key
         self.template = """Question: {question}
