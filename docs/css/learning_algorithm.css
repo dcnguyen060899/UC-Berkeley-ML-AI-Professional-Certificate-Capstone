@@ -760,3 +760,51 @@ footer {
     max-height: none;
     overflow: visible;
 }
+
+/* Add these styles to reduce the spacing between headings and content */
+.formatted-feedback h3,
+.formatted-feedback .evaluation-section {
+    margin-bottom: 5px; /* Reduce from 10px */
+    color: var(--berkeley-blue);
+}
+
+.formatted-feedback p {
+    margin-top: 0; /* Remove top margin on paragraphs */
+    margin-bottom: 15px; /* Keep some space between sections */
+}
+
+.evaluation-score {
+    color: var(--berkeley-blue);
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--berkeley-gold); /* Add visual separation */
+    padding-bottom: 5px;
+    margin-bottom: 15px !important; /* Force this spacing */
+}
+
+/* Make section headers more prominent */
+.evaluation-section {
+    color: var(--berkeley-blue);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding-left: 0;
+    margin-bottom: 3px !important; /* Force this spacing */
+}
+
+/* This ensures no extra space between header and content */
+.evaluation-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Remove gaps */
+}
+
+/* Add blue bar to section headings for visual separation */
+.evaluation-section {
+    border-left: 3px solid var(--berkeley-blue);
+    padding-left: 8px;
+}
+
+/* Fix for lists under Suggestions */
+.formatted-feedback ul {
+    margin-top: 3px;
+    margin-bottom: 15px;
+}
