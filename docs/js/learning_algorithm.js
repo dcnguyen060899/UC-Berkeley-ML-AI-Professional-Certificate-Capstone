@@ -252,7 +252,34 @@ function setMode(mode) {
     }
 }
 
-// Handle node click (for practice mode)
+// // Handle node click (for practice mode)
+// function handleNodeClick(nodeId) {
+//     if (currentMode !== 'practice') return;
+    
+//     const node = document.getElementById(nodeId);
+    
+//     if (selectedNodes.includes(nodeId)) {
+//         // Deselect node
+//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
+//         node.classList.remove('selected');
+//     } else {
+//         // Select node
+//         selectedNodes.push(nodeId);
+//         node.classList.add('selected');
+//         checkNodeSelection(nodeId);
+//     }
+// }
+
+function isStepComplete() {
+    // Get the correct nodes for the current step (or empty array if none)
+    const correctNodes = stepHighlightMap[currentStep] || [];
+    // Check if every required node is in the selectedNodes array
+    // and that no extra nodes are selected.
+    return correctNodes.length > 0 &&
+           correctNodes.every(id => selectedNodes.includes(id)) &&
+           selectedNodes.length === correctNodes.length;
+}
+
 function handleNodeClick(nodeId) {
     if (currentMode !== 'practice') return;
     
@@ -267,6 +294,16 @@ function handleNodeClick(nodeId) {
         selectedNodes.push(nodeId);
         node.classList.add('selected');
         checkNodeSelection(nodeId);
+    }
+    
+    // After each click, check if all required nodes are selected
+    if (isStepComplete()) {
+        showFeedback("All correct nodes selected! Moving to the next step.", 1000);
+        // Wait a moment for the user to see the feedback, then move on
+        setTimeout(() => {
+            clearSelectedNodes();  // clear the green selections
+            nextStep();            // automatically move to the next step
+        }, 1000);
     }
 }
 
