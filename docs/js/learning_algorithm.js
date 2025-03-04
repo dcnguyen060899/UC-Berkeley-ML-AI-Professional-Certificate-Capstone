@@ -252,20 +252,44 @@ function setMode(mode) {
     }
 }
 
-// Handle node click (for practice mode)
+// // Handle node click (for practice mode)
+// function handleNodeClick(nodeId) {
+//     if (currentMode !== 'practice') return;
+    
+//     const node = document.getElementById(nodeId);
+    
+//     if (selectedNodes.includes(nodeId)) {
+//         // Deselect node
+//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
+//         node.classList.remove('selected');
+//     } else {
+//         // Select node
+//         selectedNodes.push(nodeId);
+//         node.classList.add('selected');
+//         checkNodeSelection(nodeId);
+//     }
+// }
+
 function handleNodeClick(nodeId) {
+    // Add console logging to debug
+    console.log("Node clicked:", nodeId);
+    console.log("Current mode:", currentMode);
+    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
+    console.log("Node element:", node);
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
         node.classList.remove('selected');
+        console.log("Node deselected:", nodeId);
     } else {
         // Select node
         selectedNodes.push(nodeId);
         node.classList.add('selected');
+        console.log("Node selected:", nodeId, "Class list:", node.classList);
         checkNodeSelection(nodeId);
     }
 }
@@ -827,27 +851,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', init);
 
-// // Add this at the end of your JavaScript file, outside any function
-// document.addEventListener('click', function(event) {
-//     // Check if the clicked element is the toggle-hints button
-//     if (event.target.id === 'toggle-hints' || 
-//         (event.target.parentElement && event.target.parentElement.id === 'toggle-hints')) {
+// Add this at the end of your JavaScript file, outside any function
+document.addEventListener('click', function(event) {
+    // Check if the clicked element is the toggle-hints button
+    if (event.target.id === 'toggle-hints' || 
+        (event.target.parentElement && event.target.parentElement.id === 'toggle-hints')) {
         
-//         const hintsContainer = document.getElementById('hints-container');
-//         if (hintsContainer) {
-//             const isHidden = hintsContainer.classList.contains('hidden');
-//             hintsContainer.classList.toggle('hidden');
+        const hintsContainer = document.getElementById('hints-container');
+        if (hintsContainer) {
+            const isHidden = hintsContainer.classList.contains('hidden');
+            hintsContainer.classList.toggle('hidden');
             
-//             // Update button text
-//             const button = document.getElementById('toggle-hints');
-//             if (button) {
-//                 button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-//             }
-//         }
-//     }
-//     // Don't interfere with other clicks
-//     if (event.target.classList.contains('node')) {
-//         // Let the original handler handle this
-//         return;
-//     }
-// });
+            // Update button text
+            const button = document.getElementById('toggle-hints');
+            if (button) {
+                button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+            }
+        }
+    }
+    // Don't interfere with other clicks
+    if (event.target.classList.contains('node')) {
+        // Let the original handler handle this
+        return;
+    }
+});
