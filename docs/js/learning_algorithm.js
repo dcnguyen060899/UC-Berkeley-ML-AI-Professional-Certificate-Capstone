@@ -17,12 +17,8 @@ const modeButtons = {
     challenge: document.getElementById('challenge-mode')
 };
 
-// const mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
-// const subtreeNodes = document.querySelectorAll('#subtree-svg .node');
-
-// Replace your global variable declarations
-let mainTreeNodes = [];
-let subtreeNodes = [];
+const mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
+const subtreeNodes = document.querySelectorAll('#subtree-svg .node');
 const stepExplanation = document.getElementById('step-explanation');
 const progressBar = document.getElementById('progress-bar');
 const hintBox = document.getElementById('hint-box');
@@ -181,10 +177,6 @@ function isSameTree(p, q) {
 
 // Initialize
 function init() {
-    // Get DOM elements AFTER the DOM is loaded
-    mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
-    subtreeNodes = document.querySelectorAll('#subtree-svg .node');
-    
     // Set initial code template
     codeEditor.value = codeTemplates[0];
     
