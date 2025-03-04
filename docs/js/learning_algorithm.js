@@ -252,50 +252,51 @@ function setMode(mode) {
     }
 }
 
-// // Handle node click (for practice mode)
-// function handleNodeClick(nodeId) {
-//     if (currentMode !== 'practice') return;
+// Add this function to your code
+function debugSvgClasses() {
+    console.log('Current mode:', currentMode);
+    console.log('Selected nodes:', selectedNodes);
     
-//     const node = document.getElementById(nodeId);
-    
-//     if (selectedNodes.includes(nodeId)) {
-//         // Deselect node
-//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-//         node.classList.remove('selected');
-//     } else {
-//         // Select node
-//         selectedNodes.push(nodeId);
-//         node.classList.add('selected');
-//         checkNodeSelection(nodeId);
-//     }
-// }
+    // Log the class of each node
+    mainTreeNodes.forEach(node => {
+        const nodeId = node.getAttribute('data-node-id');
+        const nodeClass = node.getAttribute('class');
+        console.log(`Node ${nodeId} classes: ${nodeClass}`);
+    });
+}
 
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
+    console.log(`Node clicked: ${nodeId} in mode: ${currentMode}`);
+    
+    if (currentMode !== 'practice') {
+        console.log('Not in practice mode, ignoring click');
+        return;
+    }
+    
+    const node = document.getElementById(nodeId);
+    if (!node) {
+        console.error(`Node with id ${nodeId} not found`);
+        return;
+    }
+    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
-    if (!node) return;
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-        
-        // Handle SVG class removal properly
-        const currentClasses = node.getAttribute('class') || '';
-        const newClasses = currentClasses.replace('selected', '').trim();
-        node.setAttribute('class', newClasses);
+        node.classList.remove('selected');
     } else {
         // Select node
         selectedNodes.push(nodeId);
-        
-        // Handle SVG class addition properly
-        const currentClasses = node.getAttribute('class') || '';
-        const newClasses = currentClasses + ' selected';
-        node.setAttribute('class', newClasses);
-        
+        node.classList.add('selected');
         checkNodeSelection(nodeId);
     }
+
+    // Debug after changes
+    debugSvgClasses();
 }
 
 // Check if selected node is correct for current step
