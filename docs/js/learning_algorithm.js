@@ -847,17 +847,17 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// // Better solution - add this at the end of your script
-// document.addEventListener('DOMContentLoaded', function() {
-//     const toggleHintsBtn = document.getElementById('toggle-hints');
-//     if (toggleHintsBtn) {
-//         toggleHintsBtn.addEventListener('click', function(event) {
-//             const hintsContainer = document.getElementById('hints-container');
-//             if (hintsContainer) {
-//                 const isHidden = hintsContainer.classList.contains('hidden');
-//                 hintsContainer.classList.toggle('hidden');
-//                 this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-//             }
-//         });
-//     }
-// });
+// Better solution - add this at the end of your script
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleHintsBtn = document.getElementById('toggle-hints');
+    if (toggleHintsBtn) {
+        toggleHintsBtn.addEventListener('click', function(event) {
+            const hintsContainer = document.getElementById('hints-container');
+            if (hintsContainer) {
+                const isHidden = hintsContainer.classList.contains('hidden');
+                hintsContainer.classList.toggle('hidden');
+                this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+            }
+        });
+    }
+});
