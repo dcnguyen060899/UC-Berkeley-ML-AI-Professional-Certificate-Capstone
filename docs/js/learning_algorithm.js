@@ -271,30 +271,25 @@ function setMode(mode) {
 // }
 
 function handleNodeClick(nodeId) {
-    console.log("Node clicked:", nodeId);
+    console.log("Node clicked:", nodeId, "Current mode:", currentMode); // Add this debugging
     
-    if (currentMode !== 'practice') {
-        console.log("Not in practice mode, current mode:", currentMode);
-        return;
-    }
+    if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
-    console.log("Node element:", node);
+    console.log("Node element:", node); // Check if node element is found
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
-        console.log("Deselecting node:", nodeId);
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
         node.classList.remove('selected');
-        console.log("After removing class, classList:", node.classList);
     } else {
         // Select node
-        console.log("Selecting node:", nodeId);
         selectedNodes.push(nodeId);
         node.classList.add('selected');
-        console.log("After adding class, classList:", node.classList);
         checkNodeSelection(nodeId);
     }
+    
+    console.log("Selected nodes:", selectedNodes); // Check which nodes are selected
 }
 
 // Check if selected node is correct for current step
@@ -854,6 +849,26 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', init);
 
+// // Add this at the end of your JavaScript file, outside any function
+// document.addEventListener('click', function(event) {
+//     // Check if the clicked element is the toggle-hints button
+//     if (event.target.id === 'toggle-hints' || 
+//         (event.target.parentElement && event.target.parentElement.id === 'toggle-hints')) {
+        
+//         const hintsContainer = document.getElementById('hints-container');
+//         if (hintsContainer) {
+//             const isHidden = hintsContainer.classList.contains('hidden');
+//             hintsContainer.classList.toggle('hidden');
+            
+//             // Update button text
+//             const button = document.getElementById('toggle-hints');
+//             if (button) {
+//                 button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+//             }
+//         }
+//     }
+// });
+
 // Add this at the end of your JavaScript file, outside any function
 document.addEventListener('click', function(event) {
     // Check if the clicked element is the toggle-hints button
@@ -871,10 +886,14 @@ document.addEventListener('click', function(event) {
                 button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
             }
         }
+        
+        // Prevent event from reaching other handlers
+        event.stopPropagation();
     }
-    // Don't interfere with other clicks
-    if (event.target.classList.contains('node')) {
-        // Let the original handler handle this
-        return;
+    
+    // Make sure we're not interfering with node clicks
+    // Only handle events for elements that aren't nodes
+    if (event.target.classList && event.target.classList.contains('node')) {
+        return; // Don't interfere with node clicks
     }
 });
