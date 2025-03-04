@@ -182,6 +182,15 @@ function init() {
     
     // Attach event listeners
     attachEventListeners();
+
+    // Add this to your existing init() function or document ready handler
+    document.getElementById('toggle-hints').addEventListener('click', function() {
+        const hintsContainer = document.getElementById('hints-container');
+        const isHidden = hintsContainer.classList.contains('hidden');
+        
+        hintsContainer.classList.toggle('hidden');
+        this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+    });
     
     // Update UI based on initial state
     updateUI();
@@ -225,8 +234,36 @@ function attachEventListeners() {
     submitChallengeBtn.addEventListener('click', submitChallenge);
 }
 
+// // Set active mode
+// function setMode(mode) {
+//     currentMode = mode;
+    
+//     // Update mode buttons
+//     Object.keys(modeButtons).forEach(key => {
+//         modeButtons[key].classList.toggle('active', key === mode);
+//     });
+    
+//     // Update UI for the selected mode
+//     if (mode === 'learn') {
+//         codeSection.classList.add('hidden');
+//         challengeSection.classList.add('hidden');
+//         resetAnimation();
+//     } else if (mode === 'practice') {
+//         codeSection.classList.add('hidden');
+//         challengeSection.classList.add('hidden');
+//         resetAnimation();
+//         clearSelectedNodes();
+//         showFeedback("Click on nodes to select which ones should be compared at this step.", 3000);
+//     } else if (mode === 'challenge') {
+//         codeSection.classList.add('hidden');
+//         challengeSection.classList.remove('hidden');
+//         resetAnimation();
+//     }
+// }
+
 // Set active mode
 function setMode(mode) {
+    console.log("Setting mode to:", mode);
     currentMode = mode;
     
     // Update mode buttons
@@ -239,6 +276,9 @@ function setMode(mode) {
         codeSection.classList.add('hidden');
         challengeSection.classList.add('hidden');
         resetAnimation();
+        
+        // Clear any selected nodes when switching to learn mode
+        clearSelectedNodes();
     } else if (mode === 'practice') {
         codeSection.classList.add('hidden');
         challengeSection.classList.add('hidden');
@@ -249,25 +289,58 @@ function setMode(mode) {
         codeSection.classList.add('hidden');
         challengeSection.classList.remove('hidden');
         resetAnimation();
+        
+        // Clear any selected nodes when switching to challenge mode
+        clearSelectedNodes();
     }
 }
 
+// // Handle node click (for practice mode)
+// function handleNodeClick(nodeId) {
+//     if (currentMode !== 'practice') return;
+    
+//     const node = document.getElementById(nodeId);
+    
+//     if (selectedNodes.includes(nodeId)) {
+//         // Deselect node
+//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
+//         node.classList.remove('selected');
+//     } else {
+//         // Select node
+//         selectedNodes.push(nodeId);
+//         node.classList.add('selected');
+//         checkNodeSelection(nodeId);
+//     }
+// }
+
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
+    console.log("Node clicked:", nodeId, "Current mode:", currentMode);
+    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
+    if (!node) {
+        console.error("Node not found:", nodeId);
+        return;
+    }
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
         node.classList.remove('selected');
+        // For SVG elements, also set the fill directly
+        node.setAttribute('fill', ''); // Reset to default
     } else {
         // Select node
         selectedNodes.push(nodeId);
         node.classList.add('selected');
+        // For SVG elements, also set the fill directly
+        node.setAttribute('fill', '#4caf50'); // Green color
         checkNodeSelection(nodeId);
     }
+    
+    console.log("Selected nodes:", selectedNodes);
 }
 
 // Check if selected node is correct for current step
@@ -747,73 +820,73 @@ function updateNodeHighlighting() {
     }
 }
 
-// // Add this function to your script.js file
-// function setupCodeEditor() {
-//     // Get all code editor textareas
-//     const codeEditors = [
-//         document.getElementById('code-editor'),
-//         document.getElementById('challenge-editor')
-//     ];
+// Add this function to your script.js file
+function setupCodeEditor() {
+    // Get all code editor textareas
+    const codeEditors = [
+        document.getElementById('code-editor'),
+        document.getElementById('challenge-editor')
+    ];
     
-//     codeEditors.forEach(editor => {
-//         if (!editor) return;
+    codeEditors.forEach(editor => {
+        if (!editor) return;
         
-//         // Handle tab key presses for indentation
-//         editor.addEventListener('keydown', function(e) {
-//             if (e.key === 'Tab') {
-//                 e.preventDefault(); // Prevent moving to next element
+        // Handle tab key presses for indentation
+        editor.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault(); // Prevent moving to next element
                 
-//                 // Get cursor position
-//                 const start = this.selectionStart;
-//                 const end = this.selectionEnd;
+                // Get cursor position
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
                 
-//                 // Insert 4 spaces at cursor position
-//                 this.value = this.value.substring(0, start) + 
-//                             "    " + 
-//                             this.value.substring(end);
+                // Insert 4 spaces at cursor position
+                this.value = this.value.substring(0, start) + 
+                            "    " + 
+                            this.value.substring(end);
                 
-//                 // Move cursor after the inserted spaces
-//                 this.selectionStart = this.selectionEnd = start + 4;
-//             }
-//         });
+                // Move cursor after the inserted spaces
+                this.selectionStart = this.selectionEnd = start + 4;
+            }
+        });
         
-//         // Add autoindent on Enter key
-//         editor.addEventListener('keydown', function(e) {
-//             if (e.key === 'Enter') {
-//                 e.preventDefault();
+        // Add autoindent on Enter key
+        editor.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
                 
-//                 const start = this.selectionStart;
-//                 const end = this.selectionEnd;
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
                 
-//                 // Get current line before cursor
-//                 const currentLine = this.value.substring(0, start).split('\n').pop();
+                // Get current line before cursor
+                const currentLine = this.value.substring(0, start).split('\n').pop();
                 
-//                 // Calculate indentation of current line
-//                 let indent = '';
-//                 for (let i = 0; i < currentLine.length; i++) {
-//                     if (currentLine[i] === ' ' || currentLine[i] === '\t') {
-//                         indent += currentLine[i];
-//                     } else {
-//                         break;
-//                     }
-//                 }
+                // Calculate indentation of current line
+                let indent = '';
+                for (let i = 0; i < currentLine.length; i++) {
+                    if (currentLine[i] === ' ' || currentLine[i] === '\t') {
+                        indent += currentLine[i];
+                    } else {
+                        break;
+                    }
+                }
                 
-//                 // Add extra indent if line ends with {
-//                 if (currentLine.trim().endsWith('{')) {
-//                     indent += '    ';
-//                 }
+                // Add extra indent if line ends with {
+                if (currentLine.trim().endsWith('{')) {
+                    indent += '    ';
+                }
                 
-//                 // Insert newline and indentation
-//                 this.value = this.value.substring(0, start) + 
-//                             "\n" + indent + 
-//                             this.value.substring(end);
+                // Insert newline and indentation
+                this.value = this.value.substring(0, start) + 
+                            "\n" + indent + 
+                            this.value.substring(end);
                 
-//                 // Move cursor after the inserted indentation
-//                 this.selectionStart = this.selectionEnd = start + 1 + indent.length;
-//             }
-//         });
-//     });
-// }
+                // Move cursor after the inserted indentation
+                this.selectionStart = this.selectionEnd = start + 1 + indent.length;
+            }
+        });
+    });
+}
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
