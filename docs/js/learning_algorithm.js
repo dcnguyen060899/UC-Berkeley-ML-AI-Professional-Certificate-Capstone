@@ -271,20 +271,28 @@ function setMode(mode) {
 // }
 
 function handleNodeClick(nodeId) {
-    if (currentMode !== 'practice') return;
+    console.log("Node clicked:", nodeId);
+    
+    if (currentMode !== 'practice') {
+        console.log("Not in practice mode, current mode:", currentMode);
+        return;
+    }
     
     const node = document.getElementById(nodeId);
+    console.log("Node element:", node);
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
+        console.log("Deselecting node:", nodeId);
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-        // For SVG elements, we need to use setAttribute instead of classList
-        node.setAttribute('class', 'node');
+        node.classList.remove('selected');
+        console.log("After removing class, classList:", node.classList);
     } else {
         // Select node
+        console.log("Selecting node:", nodeId);
         selectedNodes.push(nodeId);
-        // For SVG elements, we need to use setAttribute instead of classList
-        node.setAttribute('class', 'node selected');
+        node.classList.add('selected');
+        console.log("After adding class, classList:", node.classList);
         checkNodeSelection(nodeId);
     }
 }
