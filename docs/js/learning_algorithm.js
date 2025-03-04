@@ -185,6 +185,15 @@ function init() {
     
     // Update UI based on initial state
     updateUI();
+
+    // Add this to your existing init() function or document ready handler
+    document.getElementById('toggle-hints').addEventListener('click', function() {
+        const hintsContainer = document.getElementById('hints-container');
+        const isHidden = hintsContainer.classList.contains('hidden');
+        
+        hintsContainer.classList.toggle('hidden');
+        this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+    });
 }
 
 // Attach event listeners
