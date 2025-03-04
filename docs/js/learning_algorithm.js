@@ -747,73 +747,73 @@ function updateNodeHighlighting() {
     }
 }
 
-// Add this function to your script.js file
-function setupCodeEditor() {
-    // Get all code editor textareas
-    const codeEditors = [
-        document.getElementById('code-editor'),
-        document.getElementById('challenge-editor')
-    ];
+// // Add this function to your script.js file
+// function setupCodeEditor() {
+//     // Get all code editor textareas
+//     const codeEditors = [
+//         document.getElementById('code-editor'),
+//         document.getElementById('challenge-editor')
+//     ];
     
-    codeEditors.forEach(editor => {
-        if (!editor) return;
+//     codeEditors.forEach(editor => {
+//         if (!editor) return;
         
-        // Handle tab key presses for indentation
-        editor.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') {
-                e.preventDefault(); // Prevent moving to next element
+//         // Handle tab key presses for indentation
+//         editor.addEventListener('keydown', function(e) {
+//             if (e.key === 'Tab') {
+//                 e.preventDefault(); // Prevent moving to next element
                 
-                // Get cursor position
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
+//                 // Get cursor position
+//                 const start = this.selectionStart;
+//                 const end = this.selectionEnd;
                 
-                // Insert 4 spaces at cursor position
-                this.value = this.value.substring(0, start) + 
-                            "    " + 
-                            this.value.substring(end);
+//                 // Insert 4 spaces at cursor position
+//                 this.value = this.value.substring(0, start) + 
+//                             "    " + 
+//                             this.value.substring(end);
                 
-                // Move cursor after the inserted spaces
-                this.selectionStart = this.selectionEnd = start + 4;
-            }
-        });
+//                 // Move cursor after the inserted spaces
+//                 this.selectionStart = this.selectionEnd = start + 4;
+//             }
+//         });
         
-        // Add autoindent on Enter key
-        editor.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
+//         // Add autoindent on Enter key
+//         editor.addEventListener('keydown', function(e) {
+//             if (e.key === 'Enter') {
+//                 e.preventDefault();
                 
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
+//                 const start = this.selectionStart;
+//                 const end = this.selectionEnd;
                 
-                // Get current line before cursor
-                const currentLine = this.value.substring(0, start).split('\n').pop();
+//                 // Get current line before cursor
+//                 const currentLine = this.value.substring(0, start).split('\n').pop();
                 
-                // Calculate indentation of current line
-                let indent = '';
-                for (let i = 0; i < currentLine.length; i++) {
-                    if (currentLine[i] === ' ' || currentLine[i] === '\t') {
-                        indent += currentLine[i];
-                    } else {
-                        break;
-                    }
-                }
+//                 // Calculate indentation of current line
+//                 let indent = '';
+//                 for (let i = 0; i < currentLine.length; i++) {
+//                     if (currentLine[i] === ' ' || currentLine[i] === '\t') {
+//                         indent += currentLine[i];
+//                     } else {
+//                         break;
+//                     }
+//                 }
                 
-                // Add extra indent if line ends with {
-                if (currentLine.trim().endsWith('{')) {
-                    indent += '    ';
-                }
+//                 // Add extra indent if line ends with {
+//                 if (currentLine.trim().endsWith('{')) {
+//                     indent += '    ';
+//                 }
                 
-                // Insert newline and indentation
-                this.value = this.value.substring(0, start) + 
-                            "\n" + indent + 
-                            this.value.substring(end);
+//                 // Insert newline and indentation
+//                 this.value = this.value.substring(0, start) + 
+//                             "\n" + indent + 
+//                             this.value.substring(end);
                 
-                // Move cursor after the inserted indentation
-                this.selectionStart = this.selectionEnd = start + 1 + indent.length;
-            }
-        });
-    });
-}
+//                 // Move cursor after the inserted indentation
+//                 this.selectionStart = this.selectionEnd = start + 1 + indent.length;
+//             }
+//         });
+//     });
+// }
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
