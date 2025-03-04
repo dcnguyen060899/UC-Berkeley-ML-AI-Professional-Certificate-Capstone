@@ -22,6 +22,67 @@
 
     <main>
         <h1 class="main-title">Interactive Subtree Algorithm Learning</h1>
+        <!-- Problem Statement Section -->
+        <div class="problem-statement">
+            <h2>Problem: Subtree of Another Tree</h2>
+            
+            <div class="problem-description">
+                <p>Given the roots of two binary trees <code>root</code> and <code>subRoot</code>, return <code>true</code> if there is a subtree of <code>root</code> with the same structure and node values of <code>subRoot</code> and <code>false</code> otherwise.</p>
+                
+                <p>A subtree of a binary tree <code>tree</code> is a tree that consists of a node in <code>tree</code> and all of this node's descendants. The tree <code>tree</code> could also be considered as a subtree of itself.</p>
+            </div>
+            
+            <div class="problem-examples">
+                <div class="example">
+                    <h3>Example 1:</h3>
+                    <div class="example-content">
+                        <p><strong>Input:</strong> root = [1,2,3,4,5], subRoot = [2,4,5]</p>
+                        <p><strong>Output:</strong> true</p>
+                        <p class="example-explanation">The subtree with root 2 in the main tree matches the structure and values of subRoot.</p>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h3>Example 2:</h3>
+                    <div class="example-content">
+                        <p><strong>Input:</strong> root = [1,2,3,4,5,null,null,6], subRoot = [2,4,5]</p>
+                        <p><strong>Output:</strong> false</p>
+                        <p class="example-explanation">While the subtree with root 2 appears similar, the additional node 6 as a child of node 4 means the structures don't match.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem-constraints">
+                <h3>Constraints:</h3>
+                <ul>
+                    <li>0 ≤ The number of nodes in both trees ≤ 100</li>
+                    <li>-100 ≤ root.val, subRoot.val ≤ 100</li>
+                </ul>
+            </div>
+            
+            <div class="problem-complexity">
+                <h3>Recommended Time & Space Complexity:</h3>
+                <p>You should aim for a solution as good or better than <code>O(m * n)</code> time and <code>O(m + n)</code> space, where <code>n</code> and <code>m</code> are the number of nodes in <code>root</code> and <code>subRoot</code>, respectively.</p>
+            </div>
+            
+            <div class="problem-hints">
+                <h3>Hints <button id="toggle-hints" class="hint-toggle">Show Hints</button></h3>
+                <div id="hints-container" class="hints-container hidden">
+                    <div class="hint">
+                        <h4>Hint 1:</h4>
+                        <p>A subtree of a tree is a tree rooted at a specific node. We need to check whether the given <code>subRoot</code> is identical to any of the subtrees of <code>root</code>. Can you think of a recursive way to check this? Maybe you can leverage the idea of solving a problem where two trees are given, and you need to check whether they are identical in structure and values.</p>
+                    </div>
+                    <div class="hint">
+                        <h4>Hint 2:</h4>
+                        <p>When two trees are identical, it means that every node in both trees has the same value and structure. We can use the Depth First Search (DFS) algorithm to solve the problem. How do you implement this?</p>
+                    </div>
+                    <div class="hint">
+                        <h4>Hint 3:</h4>
+                        <p>We traverse the given <code>root</code>, and at each node, we check if the subtree rooted at that node is identical to the given <code>subRoot</code>. We use a helper function, <code>sameTree(root1, root2)</code>, to determine whether the two trees passed to it are identical in both structure and values.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Mode Selection -->
         <div class="mode-selection">
