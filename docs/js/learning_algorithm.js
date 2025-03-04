@@ -252,24 +252,6 @@ function setMode(mode) {
     }
 }
 
-// // Handle node click (for practice mode)
-// function handleNodeClick(nodeId) {
-//     if (currentMode !== 'practice') return;
-    
-//     const node = document.getElementById(nodeId);
-    
-//     if (selectedNodes.includes(nodeId)) {
-//         // Deselect node
-//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-//         node.classList.remove('selected');
-//     } else {
-//         // Select node
-//         selectedNodes.push(nodeId);
-//         node.classList.add('selected');
-//         checkNodeSelection(nodeId);
-//     }
-// }
-
 function isStepComplete() {
     // Get the correct nodes for the current step (or empty array if none)
     const correctNodes = stepHighlightMap[currentStep] || [];
@@ -285,27 +267,62 @@ function handleNodeClick(nodeId) {
     
     const node = document.getElementById(nodeId);
     
+    // If the node is already selected, toggle it off
     if (selectedNodes.includes(nodeId)) {
-        // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
         node.classList.remove('selected');
     } else {
-        // Select node
+        // Add the node to the selection and add green class
         selectedNodes.push(nodeId);
         node.classList.add('selected');
-        checkNodeSelection(nodeId);
+        
+        // Get the correct nodes for the current step
+        const correctNodes = stepHighlightMap[currentStep] || [];
+        
+        // Check if the clicked node is correct
+        if (correctNodes.includes(nodeId)) {
+            // Provide dynamic feedback on how many are left to select
+            const selectedCorrectCount = selectedNodes.filter(id => correctNodes.includes(id)).length;
+            const remaining = correctNodes.length - selectedCorrectCount;
+            
+            if (remaining > 0) {
+                showFeedback(`Correct! ${remaining} more node${remaining > 1 ? 's' : ''} left to select.`, 2000);
+            } else {
+                showFeedback("All correct nodes selected!", 2000);
+            }
+        } else {
+            // Provide feedback for a wrong selection
+            showFeedback("Not quite. Think about which nodes we need to compare at this step.", 2000);
+            // Automatically remove the wrong selection after a short delay
+            setTimeout(() => {
+                selectedNodes = selectedNodes.filter(id => id !== nodeId);
+                node.classList.remove('selected');
+            }, 1000);
+        }
     }
     
-    // After each click, check if all required nodes are selected
+    // After each click, check if the step is complete (all correct nodes selected)
     if (isStepComplete()) {
-        showFeedback("All correct nodes selected! Moving to the next step.", 1500);
-        // Wait a moment for the user to see the feedback, then move on
+        showFeedback("All correct nodes selected! Moving to the next step.", 1000);
         setTimeout(() => {
-            clearSelectedNodes();  // clear the green selections
-            nextStep();            // automatically move to the next step
-        }, 1500);
+            clearSelectedNodes();  // Remove the green selections from all nodes
+            nextStep();            // Automatically move to the next step
+        }, 1000);
     }
 }
+
+// Helper to check if the step is complete
+function isStepComplete() {
+    const correctNodes = stepHighlightMap[currentStep] || [];
+    // The step is complete if:
+    // 1. There is at least one correct node required, and
+    // 2. Every required node is selected, and
+    // 3. No extra nodes are selected.
+    return correctNodes.length > 0 &&
+           correctNodes.every(id => selectedNodes.includes(id)) &&
+           selectedNodes.length === correctNodes.length;
+}
+
 
 // Check if selected node is correct for current step
 function checkNodeSelection(nodeId) {
