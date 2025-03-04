@@ -194,7 +194,7 @@ h3 {
 }
 
 .node.selected {
-    fill: #4caf50;
+    fill: #4caf50 !important; /* Adding !important to override any other styles */
 }
 
 .node.highlighted {
