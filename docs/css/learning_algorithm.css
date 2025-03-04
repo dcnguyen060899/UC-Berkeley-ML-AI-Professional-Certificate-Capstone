@@ -193,14 +193,8 @@ h3 {
     transition: fill 0.3s ease;
 }
 
-/* .node.selected {
+.node.selected {
     fill: #4caf50;
-} */
-
-/* Add this to your CSS */
-.node.selected,
-circle[fill="#4caf50"] {
-    fill: #4caf50 !important; /* Green color with !important to override */
 }
 
 .node.highlighted {
@@ -916,3 +910,11 @@ code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9em;
 }
+
+/* Add this to your CSS to increase specificity for node selection */
+#main-tree-svg .node.selected,
+#subtree-svg .node.selected {
+    fill: #4caf50 !important; /* Using !important to override any conflicts */
+}
+
+/* Also check that your handleNodeClick function is working properly */
