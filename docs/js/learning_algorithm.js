@@ -252,34 +252,8 @@ function setMode(mode) {
     }
 }
 
-// Add this function to your code
-function debugSvgClasses() {
-    console.log('Current mode:', currentMode);
-    console.log('Selected nodes:', selectedNodes);
-    
-    // Log the class of each node
-    mainTreeNodes.forEach(node => {
-        const nodeId = node.getAttribute('data-node-id');
-        const nodeClass = node.getAttribute('class');
-        console.log(`Node ${nodeId} classes: ${nodeClass}`);
-    });
-}
-
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
-    console.log(`Node clicked: ${nodeId} in mode: ${currentMode}`);
-    
-    if (currentMode !== 'practice') {
-        console.log('Not in practice mode, ignoring click');
-        return;
-    }
-    
-    const node = document.getElementById(nodeId);
-    if (!node) {
-        console.error(`Node with id ${nodeId} not found`);
-        return;
-    }
-    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
@@ -294,9 +268,6 @@ function handleNodeClick(nodeId) {
         node.classList.add('selected');
         checkNodeSelection(nodeId);
     }
-
-    // Debug after changes
-    debugSvgClasses();
 }
 
 // Check if selected node is correct for current step
