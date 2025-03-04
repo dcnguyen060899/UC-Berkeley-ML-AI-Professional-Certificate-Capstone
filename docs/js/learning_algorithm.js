@@ -188,12 +188,12 @@ function init() {
 }
 
 // Attach event listeners
-function attachEventListeners() {    
+function attachEventListeners() {
     // Mode buttons
     modeButtons.learn.addEventListener('click', () => setMode('learn'));
     modeButtons.practice.addEventListener('click', () => setMode('practice'));
     modeButtons.challenge.addEventListener('click', () => setMode('challenge'));
-
+    
     // Node click handlers
     mainTreeNodes.forEach(node => {
         node.addEventListener('click', () => handleNodeClick(node.getAttribute('data-node-id')));
@@ -826,23 +826,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', init);
-
-// Add this at the end of your JavaScript file, outside any function
-document.addEventListener('click', function(event) {
-    // Check if the clicked element is the toggle-hints button
-    if (event.target.id === 'toggle-hints' || 
-        (event.target.parentElement && event.target.parentElement.id === 'toggle-hints')) {
-        
-        const hintsContainer = document.getElementById('hints-container');
-        if (hintsContainer) {
-            const isHidden = hintsContainer.classList.contains('hidden');
-            hintsContainer.classList.toggle('hidden');
-            
-            // Update button text
-            const button = document.getElementById('toggle-hints');
-            if (button) {
-                button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-            }
-        }
-    }
-});
