@@ -188,29 +188,7 @@ function init() {
 }
 
 // Attach event listeners
-function attachEventListeners() {
-    // First get fresh references to the nodes
-    const freshMainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
-    const freshSubtreeNodes = document.querySelectorAll('#subtree-svg .node');
-    
-    console.log('Found nodes:', freshMainTreeNodes.length, freshSubtreeNodes.length);
-    
-    // Attach click handlers to main tree nodes
-    freshMainTreeNodes.forEach(node => {
-        // Remove any existing listener first to prevent duplicates
-        node.removeEventListener('click', nodeClickHandler);
-        // Add the event listener
-        node.addEventListener('click', nodeClickHandler);
-    });
-    
-    // Attach click handlers to subtree nodes
-    freshSubtreeNodes.forEach(node => {
-        // Remove any existing listener first to prevent duplicates
-        node.removeEventListener('click', nodeClickHandler);
-        // Add the event listener
-        node.addEventListener('click', nodeClickHandler);
-    });
-    
+function attachEventListeners() {    
     // Mode buttons
     modeButtons.learn.addEventListener('click', () => setMode('learn'));
     modeButtons.practice.addEventListener('click', () => setMode('practice'));
@@ -274,50 +252,22 @@ function setMode(mode) {
     }
 }
 
-// // Handle node click (for practice mode)
-// function handleNodeClick(nodeId) {
-//     if (currentMode !== 'practice') return;
-    
-//     const node = document.getElementById(nodeId);
-    
-//     if (selectedNodes.includes(nodeId)) {
-//         // Deselect node
-//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-//         node.classList.remove('selected');
-//     } else {
-//         // Select node
-//         selectedNodes.push(nodeId);
-//         node.classList.add('selected');
-//         checkNodeSelection(nodeId);
-//     }
-// }
-
-// Modify your handleNodeClick function
+// Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
-    console.log('Node clicked:', nodeId, 'Mode:', currentMode); // Debug logging
-    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
-    if (!node) {
-        console.error('Node element not found:', nodeId);
-        return;
-    }
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
         node.classList.remove('selected');
-        node.setAttribute('fill', 'white'); // Force fill attribute for SVG
     } else {
         // Select node
         selectedNodes.push(nodeId);
         node.classList.add('selected');
-        node.setAttribute('fill', '#4caf50'); // Force fill attribute for SVG
         checkNodeSelection(nodeId);
     }
-    
-    console.log('Selected nodes:', selectedNodes);
 }
 
 // Check if selected node is correct for current step
