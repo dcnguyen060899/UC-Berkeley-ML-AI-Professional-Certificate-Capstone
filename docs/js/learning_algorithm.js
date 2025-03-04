@@ -815,17 +815,17 @@ function setupCodeEditor() {
     });
 }
 
-// Call this function after the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Your existing init function
-    init();
+// // Call this function after the DOM is loaded
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Your existing init function
+//     init();
     
-    // Setup code editors
-    setupCodeEditor();
-});
+//     // Setup code editors
+//     setupCodeEditor();
+// });
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', init);
+// // Initialize on page load
+// document.addEventListener('DOMContentLoaded', init);
 
 // Add this at the end of your JavaScript file, outside any function
 document.addEventListener('click', function(event) {
