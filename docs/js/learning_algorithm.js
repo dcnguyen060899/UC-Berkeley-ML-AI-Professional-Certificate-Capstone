@@ -17,8 +17,12 @@ const modeButtons = {
     challenge: document.getElementById('challenge-mode')
 };
 
-const mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
-const subtreeNodes = document.querySelectorAll('#subtree-svg .node');
+// const mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
+// const subtreeNodes = document.querySelectorAll('#subtree-svg .node');
+
+// Replace your global variable declarations
+let mainTreeNodes = [];
+let subtreeNodes = [];
 const stepExplanation = document.getElementById('step-explanation');
 const progressBar = document.getElementById('progress-bar');
 const hintBox = document.getElementById('hint-box');
@@ -177,6 +181,10 @@ function isSameTree(p, q) {
 
 // Initialize
 function init() {
+    // Get DOM elements AFTER the DOM is loaded
+    mainTreeNodes = document.querySelectorAll('#main-tree-svg .node');
+    subtreeNodes = document.querySelectorAll('#subtree-svg .node');
+    
     // Set initial code template
     codeEditor.value = codeTemplates[0];
     
@@ -252,42 +260,19 @@ function setMode(mode) {
     }
 }
 
-// // Handle node click (for practice mode)
-// function handleNodeClick(nodeId) {
-//     if (currentMode !== 'practice') return;
-    
-//     const node = document.getElementById(nodeId);
-    
-//     if (selectedNodes.includes(nodeId)) {
-//         // Deselect node
-//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-//         node.classList.remove('selected');
-//     } else {
-//         // Select node
-//         selectedNodes.push(nodeId);
-//         node.classList.add('selected');
-//         checkNodeSelection(nodeId);
-//     }
-// }
-
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
-    if (!node) return;
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-        // For SVG elements, we need to set the fill attribute directly
-        node.setAttribute('fill', 'white'); // Reset to default white fill
         node.classList.remove('selected');
     } else {
         // Select node
         selectedNodes.push(nodeId);
-        // For SVG elements, we need to set the fill attribute directly
-        node.setAttribute('fill', '#4caf50'); // Green color
         node.classList.add('selected');
         checkNodeSelection(nodeId);
     }
@@ -302,25 +287,11 @@ function checkNodeSelection(nodeId) {
     }
 }
 
-// // Clear selected nodes
-// function clearSelectedNodes() {
-//     selectedNodes = [];
-//     mainTreeNodes.forEach(node => node.classList.remove('selected'));
-//     subtreeNodes.forEach(node => node.classList.remove('selected'));
-// }
-
 // Clear selected nodes
 function clearSelectedNodes() {
     selectedNodes = [];
-    // For SVG elements, we need to reset fill attributes directly
-    mainTreeNodes.forEach(node => {
-        node.classList.remove('selected');
-        node.setAttribute('fill', 'white');
-    });
-    subtreeNodes.forEach(node => {
-        node.classList.remove('selected');
-        node.setAttribute('fill', 'white');
-    });
+    mainTreeNodes.forEach(node => node.classList.remove('selected'));
+    subtreeNodes.forEach(node => node.classList.remove('selected'));
 }
 
 // Navigation functions
