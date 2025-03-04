@@ -182,15 +182,6 @@ function init() {
     
     // Attach event listeners
     attachEventListeners();
-
-    // Add this to your existing init() function or document ready handler
-    document.getElementById('toggle-hints').addEventListener('click', function() {
-        const hintsContainer = document.getElementById('hints-container');
-        const isHidden = hintsContainer.classList.contains('hidden');
-        
-        hintsContainer.classList.toggle('hidden');
-        this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-    });
     
     // Update UI based on initial state
     updateUI();
@@ -234,36 +225,8 @@ function attachEventListeners() {
     submitChallengeBtn.addEventListener('click', submitChallenge);
 }
 
-// // Set active mode
-// function setMode(mode) {
-//     currentMode = mode;
-    
-//     // Update mode buttons
-//     Object.keys(modeButtons).forEach(key => {
-//         modeButtons[key].classList.toggle('active', key === mode);
-//     });
-    
-//     // Update UI for the selected mode
-//     if (mode === 'learn') {
-//         codeSection.classList.add('hidden');
-//         challengeSection.classList.add('hidden');
-//         resetAnimation();
-//     } else if (mode === 'practice') {
-//         codeSection.classList.add('hidden');
-//         challengeSection.classList.add('hidden');
-//         resetAnimation();
-//         clearSelectedNodes();
-//         showFeedback("Click on nodes to select which ones should be compared at this step.", 3000);
-//     } else if (mode === 'challenge') {
-//         codeSection.classList.add('hidden');
-//         challengeSection.classList.remove('hidden');
-//         resetAnimation();
-//     }
-// }
-
 // Set active mode
 function setMode(mode) {
-    console.log("Setting mode to:", mode);
     currentMode = mode;
     
     // Update mode buttons
@@ -276,9 +239,6 @@ function setMode(mode) {
         codeSection.classList.add('hidden');
         challengeSection.classList.add('hidden');
         resetAnimation();
-        
-        // Clear any selected nodes when switching to learn mode
-        clearSelectedNodes();
     } else if (mode === 'practice') {
         codeSection.classList.add('hidden');
         challengeSection.classList.add('hidden');
@@ -289,9 +249,6 @@ function setMode(mode) {
         codeSection.classList.add('hidden');
         challengeSection.classList.remove('hidden');
         resetAnimation();
-        
-        // Clear any selected nodes when switching to challenge mode
-        clearSelectedNodes();
     }
 }
 
@@ -315,32 +272,25 @@ function setMode(mode) {
 
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
-    console.log("Node clicked:", nodeId, "Current mode:", currentMode);
-    
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
-    if (!node) {
-        console.error("Node not found:", nodeId);
-        return;
-    }
+    if (!node) return;
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
+        // For SVG elements, we need to set the fill attribute directly
+        node.setAttribute('fill', 'white'); // Reset to default white fill
         node.classList.remove('selected');
-        // For SVG elements, also set the fill directly
-        node.setAttribute('fill', ''); // Reset to default
     } else {
         // Select node
         selectedNodes.push(nodeId);
-        node.classList.add('selected');
-        // For SVG elements, also set the fill directly
+        // For SVG elements, we need to set the fill attribute directly
         node.setAttribute('fill', '#4caf50'); // Green color
+        node.classList.add('selected');
         checkNodeSelection(nodeId);
     }
-    
-    console.log("Selected nodes:", selectedNodes);
 }
 
 // Check if selected node is correct for current step
@@ -352,11 +302,25 @@ function checkNodeSelection(nodeId) {
     }
 }
 
+// // Clear selected nodes
+// function clearSelectedNodes() {
+//     selectedNodes = [];
+//     mainTreeNodes.forEach(node => node.classList.remove('selected'));
+//     subtreeNodes.forEach(node => node.classList.remove('selected'));
+// }
+
 // Clear selected nodes
 function clearSelectedNodes() {
     selectedNodes = [];
-    mainTreeNodes.forEach(node => node.classList.remove('selected'));
-    subtreeNodes.forEach(node => node.classList.remove('selected'));
+    // For SVG elements, we need to reset fill attributes directly
+    mainTreeNodes.forEach(node => {
+        node.classList.remove('selected');
+        node.setAttribute('fill', 'white');
+    });
+    subtreeNodes.forEach(node => {
+        node.classList.remove('selected');
+        node.setAttribute('fill', 'white');
+    });
 }
 
 // Navigation functions
@@ -899,3 +863,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', init);
+
+// Add this at the end of your JavaScript file, outside any function
+document.addEventListener('click', function(event) {
+    // Check if the clicked element is the toggle-hints button
+    if (event.target.id === 'toggle-hints' || 
+        (event.target.parentElement && event.target.parentElement.id === 'toggle-hints')) {
+        
+        const hintsContainer = document.getElementById('hints-container');
+        if (hintsContainer) {
+            const isHidden = hintsContainer.classList.contains('hidden');
+            hintsContainer.classList.toggle('hidden');
+            
+            // Update button text
+            const button = document.getElementById('toggle-hints');
+            if (button) {
+                button.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+            }
+        }
+    }
+});
