@@ -193,18 +193,6 @@ function attachEventListeners() {
     modeButtons.learn.addEventListener('click', () => setMode('learn'));
     modeButtons.practice.addEventListener('click', () => setMode('practice'));
     modeButtons.challenge.addEventListener('click', () => setMode('challenge'));
-
-    // // Add Toggle Hints Event Listener
-    // const toggleHintsBtn = document.getElementById('toggle-hints');
-    // if (toggleHintsBtn) {
-    //     toggleHintsBtn.addEventListener('click', function() {
-    //         const hintsContainer = document.getElementById('hints-container');
-    //         const isHidden = hintsContainer.classList.contains('hidden');
-            
-    //         hintsContainer.classList.toggle('hidden');
-    //         this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-    //     });
-    // }
     
     // Node click handlers
     mainTreeNodes.forEach(node => {
