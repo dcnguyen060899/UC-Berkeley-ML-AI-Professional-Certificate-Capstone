@@ -252,20 +252,48 @@ function setMode(mode) {
     }
 }
 
+// // Handle node click (for practice mode)
+// function handleNodeClick(nodeId) {
+//     if (currentMode !== 'practice') return;
+    
+//     const node = document.getElementById(nodeId);
+    
+//     if (selectedNodes.includes(nodeId)) {
+//         // Deselect node
+//         selectedNodes = selectedNodes.filter(id => id !== nodeId);
+//         node.classList.remove('selected');
+//     } else {
+//         // Select node
+//         selectedNodes.push(nodeId);
+//         node.classList.add('selected');
+//         checkNodeSelection(nodeId);
+//     }
+// }
+
 // Handle node click (for practice mode)
 function handleNodeClick(nodeId) {
     if (currentMode !== 'practice') return;
     
     const node = document.getElementById(nodeId);
+    if (!node) return;
     
     if (selectedNodes.includes(nodeId)) {
         // Deselect node
         selectedNodes = selectedNodes.filter(id => id !== nodeId);
-        node.classList.remove('selected');
+        
+        // Handle SVG class removal properly
+        const currentClasses = node.getAttribute('class') || '';
+        const newClasses = currentClasses.replace('selected', '').trim();
+        node.setAttribute('class', newClasses);
     } else {
         // Select node
         selectedNodes.push(nodeId);
-        node.classList.add('selected');
+        
+        // Handle SVG class addition properly
+        const currentClasses = node.getAttribute('class') || '';
+        const newClasses = currentClasses + ' selected';
+        node.setAttribute('class', newClasses);
+        
         checkNodeSelection(nodeId);
     }
 }
