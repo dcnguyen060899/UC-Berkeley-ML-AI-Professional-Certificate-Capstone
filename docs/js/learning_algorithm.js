@@ -815,25 +815,6 @@ function setupCodeEditor() {
     });
 }
 
-// Remove the global document click listener and do this instead:
-function setupHintToggle() {
-    const toggleBtn = document.getElementById('toggle-hints');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', function(event) {
-            // Prevent default and stop propagation
-            event.preventDefault();
-            event.stopPropagation();
-            
-            const hintsContainer = document.getElementById('hints-container');
-            if (hintsContainer) {
-                const isHidden = hintsContainer.classList.contains('hidden');
-                hintsContainer.classList.toggle('hidden');
-                this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-            }
-        });
-    }
-}
-
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Your existing init function
