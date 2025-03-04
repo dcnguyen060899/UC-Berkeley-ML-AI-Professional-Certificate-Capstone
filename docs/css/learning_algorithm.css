@@ -911,10 +911,16 @@ code {
     font-size: 0.9em;
 }
 
-/* Add this to your CSS to increase specificity for node selection */
-#main-tree-svg .node.selected,
-#subtree-svg .node.selected {
-    fill: #4caf50 !important; /* Using !important to override any conflicts */
+/* Ensure SVG node selection works properly */
+svg .node.selected {
+    fill: #4caf50 !important; /* Using !important to override any other styles */
 }
 
-/* Also check that your handleNodeClick function is working properly */
+svg .node.highlighted {
+    fill: var(--berkeley-gold) !important;
+}
+
+/* Make sure SVG elements receive pointer events */
+svg, svg * {
+    pointer-events: auto;
+}
