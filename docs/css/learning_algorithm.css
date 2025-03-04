@@ -193,8 +193,14 @@ h3 {
     transition: fill 0.3s ease;
 }
 
-.node.selected {
+/* .node.selected {
     fill: #4caf50;
+} */
+
+/* Add this to your CSS */
+.node.selected,
+circle[fill="#4caf50"] {
+    fill: #4caf50 !important; /* Green color with !important to override */
 }
 
 .node.highlighted {
