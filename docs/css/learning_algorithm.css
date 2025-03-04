@@ -197,11 +197,6 @@ h3 {
     fill: #4caf50;
 }
 
-/* Add this CSS rule */
-.node.selected, circle.selected, [data-node-id].selected {
-    fill: #4caf50 !important;
-}
-
 .node.highlighted {
     fill: var(--berkeley-gold);
 }
