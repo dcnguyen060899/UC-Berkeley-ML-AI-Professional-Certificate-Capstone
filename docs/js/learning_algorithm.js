@@ -186,14 +186,14 @@ function init() {
     // Update UI based on initial state
     updateUI();
 
-    // Add this to your existing init() function or document ready handler
-    document.getElementById('toggle-hints').addEventListener('click', function() {
-        const hintsContainer = document.getElementById('hints-container');
-        const isHidden = hintsContainer.classList.contains('hidden');
+    // // Add this to your existing init() function or document ready handler
+    // document.getElementById('toggle-hints').addEventListener('click', function() {
+    //     const hintsContainer = document.getElementById('hints-container');
+    //     const isHidden = hintsContainer.classList.contains('hidden');
         
-        hintsContainer.classList.toggle('hidden');
-        this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
-    });
+    //     hintsContainer.classList.toggle('hidden');
+    //     this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+    // });
 }
 
 // Attach event listeners
@@ -202,6 +202,23 @@ function attachEventListeners() {
     modeButtons.learn.addEventListener('click', () => setMode('learn'));
     modeButtons.practice.addEventListener('click', () => setMode('practice'));
     modeButtons.challenge.addEventListener('click', () => setMode('challenge'));
+
+    // Add Toggle Hints Event Listener
+    const toggleHintsBtn = document.getElementById('toggle-hints');
+    if (toggleHintsBtn) {
+        toggleHintsBtn.addEventListener('click', function() {
+            const hintsContainer = document.getElementById('hints-container');
+            const isHidden = hintsContainer.classList.contains('hidden');
+            
+            hintsContainer.classList.toggle('hidden');
+            this.textContent = isHidden ? 'Hide Hints' : 'Show Hints';
+        });
+    }
+    
+    // Node click handlers
+    mainTreeNodes.forEach(node => {
+        node.addEventListener('click', () => handleNodeClick(node.getAttribute('data-node-id')));
+    });
     
     // Node click handlers
     mainTreeNodes.forEach(node => {
